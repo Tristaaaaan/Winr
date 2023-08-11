@@ -90,7 +90,7 @@ class History : Fragment() {
                     }
 
                     // Create a WinRates object with the retrieved data
-                    val user = WinRates(image, name, formattedWR, desiredWR.toInt())
+                    val user = WinRates(image, name, formattedWR, currentProgress.toInt())
 
                     // Add the WinRates object to the ArrayList
                     historyArrayList.add(user)

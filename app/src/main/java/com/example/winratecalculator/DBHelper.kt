@@ -75,10 +75,17 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
 
         // below code returns a cursor to
         // read data from the database
-        val columns = arrayOf(IMG, NAME, PROGRESS, DESIRED_WINRATE)
-        val query = "SELECT ${columns.joinToString()} FROM $TABLE_NAME"
+        val columns = arrayOf(IMG, NAME, PROGRESS, DESIRED_WINRATE, ID_COL)
+        val query = "SELECT ${columns.joinToString()} FROM $TABLE_NAME ORDER BY $ID_COL DESC"
         return db.rawQuery(query, null)
 
+    }
+
+    // Add a method to delete all data from a specific table
+    fun deleteAllDataFromTable(tableName: String) {
+        val db = this.writableDatabase
+        db.delete(tableName, null, null)
+        db.close()
     }
 
 //  Table Details
