@@ -11,19 +11,19 @@ With Winr, you can:
 
 • Precise Win Rate Calculation
         
-Calculate the exact number of wins required to reach your desired win rate for any character you're aiming to dominate.
+   Calculate the exact number of wins required to reach your desired win rate for any character you're aiming to dominate.
 
 • Effortless Progress Recording
 
-Store and update your character's progress seamlessly on your mobile device. No more messy spreadsheets or forgotten notes!
+   Store and update your character's progress seamlessly on your mobile device. No more messy spreadsheets or forgotten notes!
         
 • Personalized Character Profiles
 
-Create profiles for each character you're grinding. Easily recognize your progress and achievements for every unique gaming experience.
+   Create profiles for each character you're grinding. Easily recognize your progress and achievements for every unique gaming experience.
 
 • Multi-Game Progress Tracking
 
-Track your advancement across all your favorite games. Winr supports a wide variety of games, ensuring you're always on top of your gaming goals.
+   Track your advancement across all your favorite games. Winr supports a wide variety of games, ensuring you're always on top of your gaming goals.
 
 # Others
 
