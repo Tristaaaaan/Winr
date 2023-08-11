@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="pink">#EF665B</color>
+    <color name="red">#71192F</color>
+    <color name="pinkish">#FCE8DB</color>
+    <color name="navBarColor">#263238</color>
+    <color name="background">#EEEEEE</color>
+</resources>
