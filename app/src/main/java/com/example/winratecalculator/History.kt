@@ -1,5 +1,6 @@
 package com.example.winratecalculator
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
@@ -25,6 +26,7 @@ class History : Fragment() {
     lateinit var name : Array<String>
     lateinit var desiredWR : Array<String>
     lateinit var currentProgress : Array<Int>
+    lateinit var id : Array<String>
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -61,7 +63,16 @@ class History : Fragment() {
             historyList.setHasFixedSize(true)
             adapter = HistoryAdapter(historyArrayList)
             historyList.adapter = adapter
+
+            // Set up item click listener to open DetailsActivity
+            adapter.onItemClick = { selectedItem ->
+                Log.d("ItemClick", "Selected item ID: ${selectedItem.id}")
+                val intent = Intent(requireContext(), MainActivity2::class.java)
+                intent.putExtra("selectedItem", selectedItem.id)
+                startActivity(intent)
+            }
         }
+
     }
 
     private fun dataInitialize() {
@@ -79,7 +90,7 @@ class History : Fragment() {
                 val name = cursor.getString(cursor.getColumnIndex("dbName"))
                 val desiredWRStr = cursor.getString(cursor.getColumnIndex("dbdesiredWinrate"))
                 val currentProgress = cursor.getString(cursor.getColumnIndex("dbProgress"))
-
+                val id = cursor.getString(cursor.getColumnIndex("id"))
 
                 val desiredWR = desiredWRStr.toDoubleOrNull()
                 if (desiredWR != null) {
@@ -90,10 +101,11 @@ class History : Fragment() {
                     }
 
                     // Create a WinRates object with the retrieved data
-                    val user = WinRates(image, name, formattedWR, currentProgress.toInt())
+                    val user = WinRates(image, name, formattedWR, currentProgress.toInt(), id)
 
                     // Add the WinRates object to the ArrayList
                     historyArrayList.add(user)
+
                 } else {
                     // Handle the case where parsing failed for desiredWR
                     // You might want to use a default value or handle the error in another way

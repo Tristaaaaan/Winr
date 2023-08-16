@@ -1,5 +1,6 @@
 package com.example.winratecalculator
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 
 
 class HistoryAdapter (private val historyList: ArrayList<WinRates>) : RecyclerView.Adapter<HistoryAdapter.MyViewHolder> () {
+
+        var onItemClick : ((WinRates) -> Unit)? = null
 
         override fun onCreateViewHolder(
                 parent: ViewGroup,
@@ -26,8 +29,11 @@ class HistoryAdapter (private val historyList: ArrayList<WinRates>) : RecyclerVi
                 holder.progressName.text = currentItem.name
                 holder.yourDesiredWinRate.text = currentItem.desiredWR
                 holder.progressVal.progress = currentItem.currentprogress
+                holder.itemView.setOnClickListener {
+                        onItemClick?.invoke(currentItem)
+                }
 
-                // Set the image
+
         }
 
         override fun getItemCount(): Int {

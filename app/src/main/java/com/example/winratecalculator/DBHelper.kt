@@ -80,6 +80,13 @@ class DBHelper(context: Context, factory: SQLiteDatabase.CursorFactory?) :
         return db.rawQuery(query, null)
 
     }
+    fun loadData(id: String): Cursor? {
+        val db = this.writableDatabase
+
+        val columns = arrayOf(IMG, NAME, DESIRED_WINRATE, NUMBER_OF_BATTLES, CURRENT_WINRATE)
+        val query = "SELECT * FROM $TABLE_NAME WHERE $ID_COL = ?"
+        return db.rawQuery(query, arrayOf(id))
+    }
 
     // Add a method to delete all data from a specific table
     fun deleteAllDataFromTable(tableName: String) {

@@ -3,13 +3,14 @@ package com.example.winratecalculator
 import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
+import android.text.Editable
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -21,11 +22,11 @@ import com.google.android.material.textfield.TextInputLayout
 import java.io.ByteArrayOutputStream
 import kotlin.math.ceil
 
-class Home : Fragment() {
+class MainActivity2 : AppCompatActivity() {
 
-    private lateinit var desiredWinrate : TextInputEditText
-    private lateinit var numberOfBattles : TextInputEditText
-    private lateinit var currentWinrate : TextInputEditText
+    private lateinit var editDesiredWinrate : TextInputEditText
+    private lateinit var editNumberOfBattles : TextInputEditText
+    private lateinit var editCurrentWinrate : TextInputEditText
     private lateinit var winsNeeded : TextView
     private lateinit var submitButton : Button
     private lateinit var relativeBox : RelativeLayout
@@ -34,42 +35,83 @@ class Home : Fragment() {
     private lateinit var refreshButton : ImageButton
     private lateinit var imageHolder : ImageView
     private lateinit var cardImage : LinearLayout
-    private lateinit var progressName : TextInputEditText
+    private lateinit var editProgressName : TextInputEditText
     private lateinit var textInputLayout4 : TextInputLayout
     private lateinit var textInputLayout3 : TextInputLayout
     private lateinit var textInputLayout2 : TextInputLayout
     private lateinit var textInputLayout : TextInputLayout
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-        }
-    }
+        setContentView(R.layout.activity_main2)
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        val rootView = inflater.inflate(R.layout.fragment_home, container, false)
-        imageHolder = rootView.findViewById(R.id.uploadImage)
-        desiredWinrate = rootView.findViewById(R.id.desiredWinrate)
-        numberOfBattles = rootView.findViewById(R.id.numberOfBattles)
-        currentWinrate = rootView.findViewById(R.id.currentWinrate)
-        winsNeeded = rootView.findViewById(R.id.winsNeeded)
-        submitButton = rootView.findViewById(R.id.submitButton)
-        relativeBox = rootView.findViewById(R.id.relativeBox)
-        closeButton = rootView.findViewById(R.id.closeButton)
-        infoView = rootView.findViewById(R.id.infoView)
-        refreshButton = rootView.findViewById(R.id.refreshButton)
+        imageHolder = findViewById(R.id.updateImage)
+        editDesiredWinrate = findViewById(R.id.updateDesiredWinRate)
+        editNumberOfBattles = findViewById(R.id.updateNumberOfBattles)
+        editCurrentWinrate = findViewById(R.id.updateCurrentWinRate)
+        winsNeeded = findViewById(R.id.winsNeeded)
+        submitButton = findViewById(R.id.submitButton)
+        relativeBox = findViewById(R.id.relativeBox)
+        closeButton = findViewById(R.id.closeButton)
+        infoView = findViewById(R.id.infoView)
+        refreshButton = findViewById(R.id.refreshButton)
         relativeBox.visibility = View.GONE
-        cardImage = rootView.findViewById(R.id.cardHolder)
-        progressName = rootView.findViewById(R.id.progressName)
-        textInputLayout4 = rootView.findViewById(R.id.textInputLayout4)
-        textInputLayout3 = rootView.findViewById(R.id.textInputLayout3)
-        textInputLayout2 = rootView.findViewById(R.id.textInputLayout2)
-        textInputLayout = rootView.findViewById(R.id.textInputLayout)
+        cardImage = findViewById(R.id.cardHolder)
+        editProgressName = findViewById(R.id.updateProgressName)
+        textInputLayout4 = findViewById(R.id.textInputLayout4)
+        textInputLayout3 = findViewById(R.id.textInputLayout3)
+        textInputLayout2 = findViewById(R.id.textInputLayout2)
+        textInputLayout = findViewById(R.id.textInputLayout)
 
-        progressName.setOnFocusChangeListener { _, hasFocus ->
+        // Retrieve the data from the intent
+        val receivedData = intent.getStringExtra("selectedItem")
+
+        // Log the received data
+        Log.d("NewActivity", "Received data: $receivedData")
+
+
+        // Initialize the database helper
+        val db = DBHelper(this, null)
+
+        if (receivedData != null) {
+            val loadedData = db.loadData(receivedData.toString())
+
+            if (loadedData != null && loadedData.moveToFirst()) {
+                val imageIndex = loadedData.getColumnIndex("dbImage")
+                val nameIndex = loadedData.getColumnIndex("dbName")
+                val desiredWRIndex = loadedData.getColumnIndex("dbdesiredWinrate")
+                val numberOfBattlesIndex = loadedData.getColumnIndex("dbnumberOfBattles")
+                val currentWinrateIndex = loadedData.getColumnIndex("dbcurrentWinrate")
+
+                val image = loadedData.getBlob(imageIndex)
+                val name = loadedData.getString(nameIndex)
+                val desiredWRStr = loadedData.getString(desiredWRIndex)
+                val numberOfBattles = loadedData.getInt(numberOfBattlesIndex)
+                val currentWinrate = loadedData.getInt(currentWinrateIndex)
+
+                // Populate UI elements with loaded data
+                imageHolder.setImageBitmap(BitmapFactory.decodeByteArray(image, 0, image?.size ?: 0))
+                editProgressName.setText(name)
+
+                val editableDesiredWinrate = Editable.Factory.getInstance().newEditable(desiredWRStr)
+                editDesiredWinrate.text = editableDesiredWinrate
+
+                val editableTextBattles = Editable.Factory.getInstance().newEditable(numberOfBattles.toString())
+                editNumberOfBattles.text = editableTextBattles
+
+                val editableTextCWR = Editable.Factory.getInstance().newEditable(currentWinrate.toString())
+                editCurrentWinrate.text = editableTextCWR
+
+            } else {
+                Log.d("MainActivity2", "No data found for the provided ID: $receivedData")
+            }
+
+            loadedData?.close() // Close the Cursor when done
+        } else {
+            Log.d("MainActivity2", "No ID received.")
+        }
+
+
+        editProgressName.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 textInputLayout4.helperText = "(e.g. Ixia, Novaria)"
             } else {
@@ -77,7 +119,7 @@ class Home : Fragment() {
             }
         }
 
-        desiredWinrate.setOnFocusChangeListener { _, hasFocus ->
+        editDesiredWinrate.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 textInputLayout.helperText = "Must be below 100"
             } else {
@@ -85,7 +127,7 @@ class Home : Fragment() {
             }
         }
 
-        currentWinrate.setOnFocusChangeListener { _, hasFocus ->
+        editCurrentWinrate.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 textInputLayout3.helperText = "Must be below 100 and lower than desired win rate"
             } else {
@@ -93,24 +135,24 @@ class Home : Fragment() {
             }
         }
 
-        cardImage.setOnClickListener() {
+        cardImage.setOnClickListener {
             uploadImage(imageHolder)
         }
 
-        submitButton.setOnClickListener() {
+        submitButton.setOnClickListener {
             computeWinRate()
         }
 
-        closeButton.setOnClickListener() {
+        closeButton.setOnClickListener {
             removeNotice()
         }
 
-        refreshButton.setOnClickListener() {
+        refreshButton.setOnClickListener {
             clearWidgets()
         }
-        return rootView
 
     }
+
 
     private fun uploadImage(imageHolder: ImageView?) {
         val intent = Intent()
@@ -131,10 +173,10 @@ class Home : Fragment() {
 
     private fun clearWidgets() {
         relativeBox.visibility = View.GONE
-        desiredWinrate.setText("")
-        currentWinrate.setText("")
-        numberOfBattles.setText("")
-        progressName.setText("")
+        editDesiredWinrate.setText("")
+        editCurrentWinrate.setText("")
+        editNumberOfBattles.setText("")
+        editProgressName.setText("")
     }
 
     private fun removeNotice() {
@@ -143,9 +185,9 @@ class Home : Fragment() {
 
 
     private fun computeWinRate() {
-        if (desiredWinrate.text.isNullOrEmpty() ||
-            numberOfBattles.text.isNullOrEmpty() ||
-            currentWinrate.text.isNullOrEmpty()) {
+        if (editDesiredWinrate.text.isNullOrEmpty() ||
+            editNumberOfBattles.text.isNullOrEmpty() ||
+            editCurrentWinrate.text.isNullOrEmpty()) {
             if (relativeBox.visibility == View.GONE) {
                 relativeBox.visibility = View.VISIBLE
             }
@@ -156,10 +198,10 @@ class Home : Fragment() {
             relativeBox.setBackgroundColor(Color.parseColor("#FCE8DB"))
             winsNeeded.text = "Make sure the fields are not empty."
         } else {
-            val numberOfBattles = numberOfBattles.text.toString().toDouble()
-            val currentWinrate = currentWinrate.text.toString().toDouble()
-            val desiredWinrate = desiredWinrate.text.toString().toDouble()
-            val progressIdentity = progressName.text.toString()
+            val numberOfBattles = editNumberOfBattles.text.toString().toDouble()
+            val currentWinrate = editCurrentWinrate.text.toString().toDouble()
+            val desiredWinrate = editDesiredWinrate.text.toString().toDouble()
+            val progressIdentity = editProgressName.text.toString()
             val neededWins =
                 (desiredWinrate * numberOfBattles - currentWinrate * numberOfBattles) / (100 - desiredWinrate)
             if (neededWins.toInt() <= 0) {
@@ -173,7 +215,7 @@ class Home : Fragment() {
                 closeButton.setImageResource(R.drawable.baseline_close2_24)
                 winsNeeded.text = "Make sure the inputs are valid."
             } else {
-                val db = DBHelper(requireContext(), null)
+                val db = DBHelper(this, null)
 
                 val drawable = imageHolder.drawable
                 val bitmap = (drawable as BitmapDrawable).bitmap
@@ -184,6 +226,9 @@ class Home : Fragment() {
                 val progress = (currentWinrate / desiredWinrate) * 100
                 // calling method to add
                 // name to our database
+
+
+                // THIS SHOULD BE UPDATE NOT ADD
                 db.addName(imgByteArray, progressIdentity, desiredWinrate.toString(), numberOfBattles.toString(), currentWinrate.toString(), progress.toInt().toString(), neededWins.toString())
 
                 if (relativeBox.visibility == View.GONE) {

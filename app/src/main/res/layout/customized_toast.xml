@@ -20,7 +20,7 @@
             android:layout_centerHorizontal="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="25dp"
-            app:cardElevation="20dp"
+
             android:layout_marginRight="25dp"
             app:cardCornerRadius="4dp">
 
