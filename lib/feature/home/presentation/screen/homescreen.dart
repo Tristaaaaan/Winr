@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:winr/common/components/buttons/regular_button.dart';
 
 class WinrateInputFormatter extends TextInputFormatter {
   final bool integersOnly;
@@ -104,6 +105,16 @@ class HomeScreen extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'What is your winrate? (by Percentage)',
               ),
+            ),
+            SizedBox(height: 50),
+            RegularButton(
+              suffixIcon: false,
+              withIcon: false,
+              text: "Calculate",
+              backgroundColor: Theme.of(context).colorScheme.primary,
+              textColor: Theme.of(context).colorScheme.surface,
+              buttonKey: "calculateButton",
+              width: double.infinity,
             ),
           ],
         ),

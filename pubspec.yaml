@@ -1,7 +1,7 @@
 name: winr
-description: "A new Flutter project."
+description: "A win rate calculator"
 publish_to: 'none'
-version: 0.1.0
+version: 1.0.1+1
 
 environment:
   sdk: ^3.8.1
@@ -13,6 +13,8 @@ dependencies:
   flutter_riverpod: ^2.6.1
   shared_preferences: ^2.5.3
   url_launcher: ^6.3.2
+  loading_animation_widget: ^1.3.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
