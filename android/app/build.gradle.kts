@@ -8,6 +8,17 @@ plugins {
     id("dev.flutter.flutter-gradle-plugin")
 }
 
+val localProperties = Properties()
+val localPropertiesFile = rootProject.file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.reader(Charsets.UTF_8).use { reader ->
+        localProperties.load(reader)
+    }
+}
+
+val flutterVersionCode: Int = localProperties.getProperty("flutter.versionCode")?.toInt() ?: 1
+val flutterVersionName: String = localProperties.getProperty("flutter.versionName") ?: "1.0.1"
+
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
@@ -35,8 +46,8 @@ android {
         // For more information, see: https://flutter.dev/to/review-gradle-config.
         minSdk = 27
         targetSdk = 35
-        versionCode = flutter.versionCode
-        versionName = flutter.versionName
+        versionCode = flutterVersionCode
+        versionName = flutterVersionName
     }
 
     signingConfigs {
