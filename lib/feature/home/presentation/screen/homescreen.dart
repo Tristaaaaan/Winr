@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/components/buttons/regular_button.dart';
+import 'package:winr/feature/home/presentation/provider/result_provider.dart';
 
 class WinrateInputFormatter extends TextInputFormatter {
   final bool integersOnly;
@@ -46,16 +48,11 @@ class WinrateInputFormatter extends TextInputFormatter {
   }
 }
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final TextEditingController desiredWinRateController =
-        TextEditingController();
-    final TextEditingController numberOfBattlesController =
-        TextEditingController();
-    final TextEditingController winRateController = TextEditingController();
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -65,7 +62,6 @@ class HomeScreen extends StatelessWidget {
             // TextField 1 → Decimal allowed, max 100
             TextField(
               key: const Key('desiredWinRate'),
-              controller: desiredWinRateController,
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
@@ -75,13 +71,14 @@ class HomeScreen extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'What is your desired winrate? (by Percentage)',
               ),
+              onChanged: (value) =>
+                  ref.read(desiredWinRateProvider.notifier).state = value,
             ),
             const SizedBox(height: 12),
 
             // TextField 2 → Integer only
             TextField(
               key: const Key('numberOfBattles'),
-              controller: numberOfBattlesController,
               keyboardType: TextInputType.number,
               inputFormatters: const [
                 WinrateInputFormatter(integersOnly: true, max: double.infinity),
@@ -89,13 +86,14 @@ class HomeScreen extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'What is your current number of battles?',
               ),
+              onChanged: (value) =>
+                  ref.read(numberOfBattlesProvider.notifier).state = value,
             ),
             const SizedBox(height: 12),
 
             // TextField 3 → Decimal allowed, max 100
             TextField(
               key: const Key('winRate'),
-              controller: winRateController,
               keyboardType: const TextInputType.numberWithOptions(
                 decimal: true,
               ),
@@ -105,15 +103,22 @@ class HomeScreen extends StatelessWidget {
               decoration: const InputDecoration(
                 labelText: 'What is your winrate? (by Percentage)',
               ),
+              onChanged: (value) =>
+                  ref.read(winRateProvider.notifier).state = value,
             ),
-            SizedBox(height: 50),
+            const SizedBox(height: 50),
+
+            // Dynamic text using providers
+            Text(ref.watch(requiredWinsProvider)),
+            const SizedBox(height: 20),
+
             RegularButton(
               suffixIcon: false,
               withIcon: false,
-              text: "Calculate",
+              text: "Save",
               backgroundColor: Theme.of(context).colorScheme.primary,
               textColor: Theme.of(context).colorScheme.surface,
-              buttonKey: "calculateButton",
+              buttonKey: "saveButton",
               width: double.infinity,
             ),
           ],
