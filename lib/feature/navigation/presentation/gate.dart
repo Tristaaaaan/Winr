@@ -23,10 +23,11 @@ class _NavigationGateState extends State<NavigationGate> {
 
   List<Widget> get _screens => [
     const HomeScreen(),
-    HistoryScreen(),
+    HistoryScreen(
+      onGoHome: () => _onTabSelected(0), // ✅ tell nav gate to switch tab
+    ),
     const SettingsScreen(),
   ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

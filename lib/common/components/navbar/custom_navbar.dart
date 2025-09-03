@@ -25,7 +25,7 @@ class CustomBottomNavBar extends StatelessWidget {
             ),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(40),
-              color: Theme.of(context).colorScheme.primaryFixedDim,
+              color: Theme.of(context).colorScheme.primary,
               boxShadow: const [
                 BoxShadow(
                   color: Colors.black12,

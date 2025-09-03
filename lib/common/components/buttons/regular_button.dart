@@ -40,10 +40,7 @@ class RegularButton extends ConsumerWidget {
         color: backgroundColor,
         borderRadius: BorderRadius.circular(16),
         border: withBorder!
-            ? Border.all(
-                color: Theme.of(context).colorScheme.inversePrimary,
-                width: 1,
-              )
+            ? Border.all(color: Theme.of(context).colorScheme.primary, width: 3)
             : null,
       ),
       child: Padding(
