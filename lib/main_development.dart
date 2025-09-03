@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/config/app_config.dart';
 import 'package:winr/config/app_environments.dart';
+import 'package:winr/feature/history/data/records_database.dart';
 
 import 'core/approutes/app_routes.dart';
 import 'core/appthemes/app_themes.dart';
 
-void main() {
+void main() async {
   AppConfig.setEnvironment(Flavors.development);
+  WidgetsFlutterBinding.ensureInitialized();
+  await RecordDatabase().initializeDatabase();
   runApp(const ProviderScope(child: MainApp()));
 }
 
