@@ -171,10 +171,7 @@ class RecordForm extends ConsumerWidget {
                 ref.read(numberOfBattlesProvider.notifier).state = value,
           ),
         ],
-        SizedBox(height: 15),
-        Divider(thickness: 2),
 
-        SizedBox(height: 15),
         TextField(
           key: const Key('numberOfBattles'),
           keyboardType: TextInputType.number,
