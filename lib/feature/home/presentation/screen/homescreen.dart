@@ -63,23 +63,6 @@ class HomeScreen extends ConsumerWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            // TextField 1 → Decimal allowed, max 100
-            TextField(
-              key: const Key('desiredWinRate'),
-              keyboardType: const TextInputType.numberWithOptions(
-                decimal: true,
-              ),
-              inputFormatters: const [
-                WinrateInputFormatter(integersOnly: false, max: 100),
-              ],
-              decoration: const InputDecoration(
-                labelText: 'What is your desired winrate? (by Percentage)',
-              ),
-              onChanged: (value) =>
-                  ref.read(desiredWinRateProvider.notifier).state = value,
-            ),
-            const SizedBox(height: 12),
-
             // TextField 2 → Integer only
             TextField(
               key: const Key('numberOfBattles'),
@@ -105,11 +88,30 @@ class HomeScreen extends ConsumerWidget {
                 WinrateInputFormatter(integersOnly: false, max: 100),
               ],
               decoration: const InputDecoration(
-                labelText: 'What is your winrate? (by Percentage)',
+                labelText: 'What is your current win rate? (in Percentage)',
+                suffixText: '%',
               ),
               onChanged: (value) =>
                   ref.read(winRateProvider.notifier).state = value,
             ),
+            const SizedBox(height: 12),
+            // TextField 1 → Decimal allowed, max 100
+            TextField(
+              key: const Key('desiredWinRate'),
+              keyboardType: const TextInputType.numberWithOptions(
+                decimal: true,
+              ),
+              inputFormatters: const [
+                WinrateInputFormatter(integersOnly: false, max: 100),
+              ],
+              decoration: const InputDecoration(
+                labelText: 'What is your desired win rate? (in Percentage)',
+                suffixText: '%',
+              ),
+              onChanged: (value) =>
+                  ref.read(desiredWinRateProvider.notifier).state = value,
+            ),
+
             const SizedBox(height: 50),
 
             // Dynamic text using providers

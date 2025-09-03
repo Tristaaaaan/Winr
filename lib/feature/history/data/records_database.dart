@@ -30,6 +30,8 @@ class RecordDatabase {
 
   Future<Database> initializeDatabase() async {
     final path = await localPath;
+
+    // await deleteDatabase(path);
     return await openDatabase(
       path,
       version: 1,

@@ -7,7 +7,7 @@ class ThemeNotifier extends StateNotifier<bool> {
   static final ThemeData lightMode = ThemeData(
     colorScheme: const ColorScheme.light(
       surface: Colors.white,
-      primary: Color(0xff196EEE),
+      primary: Color(0xff574667),
       onPrimaryContainer: Color(0xff3592E7),
       secondary: Color(0xff2DD7A4),
       tertiary: Color(0xffB47820),
