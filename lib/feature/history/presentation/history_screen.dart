@@ -1,15 +1,13 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/components/placeholder/place_holder.dart';
 import 'package:winr/core/appimages/app_images.dart';
+import 'package:winr/feature/history/presentation/widgets/record_container.dart';
 import 'package:winr/feature/home/presentation/provider/result_provider.dart';
 import 'package:winr/feature/records/presentation/widgets/add_record.dart';
 
 class HistoryScreen extends ConsumerWidget {
-  final VoidCallback onGoHome;
-  const HistoryScreen({super.key, required this.onGoHome});
+  const HistoryScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -29,7 +27,7 @@ class HistoryScreen extends ConsumerWidget {
                         imagePath: AppImages.noData,
                         imageHeight: 300,
                         imageWidth: 300,
-                        onTap: () => onGoHome(),
+                        onTap: () => showRecordSheet(context, false, null),
                         withButton: true,
                         title: "Win Rate Records",
                         description:
@@ -40,28 +38,13 @@ class HistoryScreen extends ConsumerWidget {
                 }
 
                 return SliverList(
-                  delegate: SliverChildBuilderDelegate((context, index) {
-                    final record = records[index];
-                    return GestureDetector(
-                      onTap: () {
-                        developer.log("Record: ${record.id}");
-                        showRecordSheet(context, true, record);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Current Win Rate: ${record.currentWinRate}%"),
-                            Text(
-                              "Current Number of Battles: ${record.currentNumberOfBattles}",
-                            ),
-                            Text("Desired Win Rate: ${record.desiredWinRate}%"),
-                          ],
-                        ),
-                      ),
-                    );
-                  }, childCount: records.length),
+                  delegate: SliverChildBuilderDelegate(
+                    childCount: records.length,
+                    (context, index) {
+                      final record = records[index];
+                      return RecordContainer(record: record);
+                    },
+                  ),
                 );
               },
               loading: () => const SliverFillRemaining(

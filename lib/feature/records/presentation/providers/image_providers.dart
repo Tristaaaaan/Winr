@@ -7,3 +7,5 @@ final uploadImagePathProvider = StateProvider<List<File>>((ref) => []);
 final uploadImagePathNameProvider = StateProvider<List<String>>((ref) => []);
 
 final uploadImageNameProvider = StateProvider<List<String>>((ref) => []);
+
+final isImageRemovedProvider = StateProvider<bool>((ref) => false);

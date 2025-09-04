@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
@@ -27,14 +28,19 @@ class RecordForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImages = ref.watch(uploadImagePathProvider);
+    final isRemoved = ref.watch(isImageRemovedProvider);
+
+    final showPlaceholder =
+        selectedImages.isEmpty &&
+        (recordData?.backgroundImage == null || isRemoved);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         if (isUpdate) ...[
-          (recordData?.backgroundImage == null && selectedImages.isEmpty)
+          showPlaceholder
               ? SizedBox(
-                  height: 250,
+                  height: 200,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(20),
                     onTap: () async {
@@ -54,7 +60,6 @@ class RecordForm extends ConsumerWidget {
                         return;
                       }
 
-                      // Update state providers (replace old one)
                       final newFile = File(pickedImage.path);
                       ref.read(uploadImagePathProvider.notifier).state = [
                         newFile,
@@ -65,6 +70,7 @@ class RecordForm extends ConsumerWidget {
                       ref.read(uploadImageNameProvider.notifier).state = [
                         pickedImage.name,
                       ];
+                      ref.read(isImageRemovedProvider.notifier).state = false;
 
                       developer.log('Picked image path: ${pickedImage.path}');
                       developer.log('Picked image name: ${pickedImage.name}');
@@ -84,13 +90,12 @@ class RecordForm extends ConsumerWidget {
                             width: 100,
                             AppImages.uploadImage,
                           ),
-                          const SizedBox(height: 25),
                           const Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Icon(Icons.file_upload_outlined),
                               SizedBox(width: 10),
-                              Text("Select Image"),
+                              Text("Add Image (optional)"),
                             ],
                           ),
                           const SizedBox(height: 25),
@@ -107,34 +112,43 @@ class RecordForm extends ConsumerWidget {
                   ),
                 )
               : SizedBox(
-                  height: 325,
+                  height: 200,
                   child: Stack(
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.circular(20),
-                        child: selectedImages.isNotEmpty
-                            ? Image.file(
-                                selectedImages.first, // 👈 provider image first
+                        child: Builder(
+                          builder: (context) {
+                            if (selectedImages.isNotEmpty) {
+                              return Image.file(
+                                selectedImages.first,
                                 height: double.infinity,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
                                     const Icon(Icons.broken_image),
-                              )
-                            : Image.file(
-                                File(
-                                  recordData!.backgroundImage!,
-                                ), // 👈 fallback
+                              );
+                            }
+
+                            if (!isRemoved &&
+                                recordData?.backgroundImage != null) {
+                              return Image.memory(
+                                base64Decode(recordData!.backgroundImage!),
                                 height: double.infinity,
                                 width: double.infinity,
                                 fit: BoxFit.cover,
                                 errorBuilder: (context, error, stackTrace) =>
                                     const Icon(Icons.broken_image),
-                              ),
+                              );
+                            }
+
+                            return const SizedBox(); // should never hit here
+                          },
+                        ),
                       ),
                       Positioned(
-                        top: 5,
-                        right: 5,
+                        top: 10,
+                        right: 10,
                         child: Container(
                           decoration: const BoxDecoration(
                             color: Colors.black54,
@@ -152,6 +166,8 @@ class RecordForm extends ConsumerWidget {
                                   [];
                               ref.read(uploadImageNameProvider.notifier).state =
                                   [];
+                              ref.read(isImageRemovedProvider.notifier).state =
+                                  true;
                             },
                             child: const Icon(
                               Icons.close,
@@ -164,9 +180,10 @@ class RecordForm extends ConsumerWidget {
                     ],
                   ),
                 ),
+          SizedBox(height: 20),
           FormTextField(
             fieldKey: 'name',
-            labelText: 'How about adding a name?',
+            labelText: 'How about adding a name? (optional)',
             inputFormatters: const [MaxLengthFormatter()],
             isUpdate: true,
             initialValue: recordData?.name,
