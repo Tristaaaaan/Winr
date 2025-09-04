@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:winr/core/appmodels/record.dart';
 import 'package:winr/feature/records/presentation/widgets/record_form.dart';
 
-void showRecordSheet(BuildContext context, bool isUpdate) {
+void showRecordSheet(
+  BuildContext context,
+  bool isUpdate,
+  WinRateRecords? record,
+) {
   showModalBottomSheet(
     context: context,
     isScrollControlled: true,
@@ -23,7 +28,7 @@ void showRecordSheet(BuildContext context, bool isUpdate) {
             child: SingleChildScrollView(
               controller: scrollController,
               padding: const EdgeInsets.all(16.0),
-              child: RecordForm(isUpdate: isUpdate),
+              child: RecordForm(isUpdate: isUpdate, recordData: record),
             ),
           );
         },

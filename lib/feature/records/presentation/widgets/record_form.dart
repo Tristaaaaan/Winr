@@ -8,12 +8,16 @@ import 'package:image_picker/image_picker.dart';
 import 'package:winr/common/components/buttons/loading_state_notifier.dart';
 import 'package:winr/common/components/buttons/regular_button.dart';
 import 'package:winr/common/components/snackbar/information_snackbar.dart';
+import 'package:winr/common/components/textfield/form_textfield.dart';
+import 'package:winr/common/utils/convert_images.dart';
+import 'package:winr/common/utils/winrate_input_formatter.dart';
 import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/core/appmodels/record.dart';
 import 'package:winr/feature/history/data/records_database.dart';
 import 'package:winr/feature/home/presentation/provider/result_provider.dart';
-import 'package:winr/feature/home/presentation/screen/homescreen.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';
+
+import '../../../../common/utils/name_formatter.dart';
 
 class RecordForm extends ConsumerWidget {
   final bool isUpdate;
@@ -160,58 +164,53 @@ class RecordForm extends ConsumerWidget {
                     ],
                   ),
                 ),
-          TextField(
-            key: const Key('name'),
-            keyboardType: TextInputType.number,
-            inputFormatters: const [
-              WinrateInputFormatter(integersOnly: true, max: double.infinity),
-            ],
-            decoration: const InputDecoration(labelText: 'Add a name?'),
-            onChanged: (value) =>
-                ref.read(numberOfBattlesProvider.notifier).state = value,
+          FormTextField(
+            fieldKey: 'name',
+            labelText: 'How about adding a name?',
+            inputFormatters: const [MaxLengthFormatter()],
+            isUpdate: true,
+            initialValue: recordData?.name,
+            onChanged: (value) => ref.read(nameProvider.notifier).state = value,
           ),
         ],
 
-        TextField(
-          key: const Key('numberOfBattles'),
-          keyboardType: TextInputType.number,
+        // TextField 2 → Integers only, no max limit
+        FormTextField(
+          fieldKey: 'numberOfBattles',
+          labelText: 'What is your current number of battles?',
           inputFormatters: const [
             WinrateInputFormatter(integersOnly: true, max: double.infinity),
           ],
-          decoration: const InputDecoration(
-            labelText: 'What is your current number of battles?',
-          ),
+          isUpdate: isUpdate,
+          initialValue: recordData?.currentNumberOfBattles.toString(),
           onChanged: (value) =>
               ref.read(numberOfBattlesProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
 
         // TextField 3 → Decimal allowed, max 100
-        TextField(
-          key: const Key('winRate'),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        FormTextField(
+          fieldKey: 'winRate',
+          labelText: 'What is your current win rate? (in Percentage)',
           inputFormatters: const [
             WinrateInputFormatter(integersOnly: false, max: 100),
           ],
-          decoration: const InputDecoration(
-            labelText: 'What is your current win rate? (in Percentage)',
-            suffixText: '%',
-          ),
+          isUpdate: isUpdate,
+          initialValue: recordData?.currentWinRate.toString(),
           onChanged: (value) =>
               ref.read(winRateProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
+
         // TextField 1 → Decimal allowed, max 100
-        TextField(
-          key: const Key('desiredWinRate'),
-          keyboardType: const TextInputType.numberWithOptions(decimal: true),
+        FormTextField(
+          fieldKey: 'desiredWinRate',
+          labelText: 'What is your desired win rate? (in Percentage)',
           inputFormatters: const [
             WinrateInputFormatter(integersOnly: false, max: 100),
           ],
-          decoration: const InputDecoration(
-            labelText: 'What is your desired win rate? (in Percentage)',
-            suffixText: '%',
-          ),
+          isUpdate: isUpdate,
+          initialValue: recordData?.desiredWinRate.toString(),
           onChanged: (value) =>
               ref.read(desiredWinRateProvider.notifier).state = value,
         ),
@@ -231,8 +230,7 @@ class RecordForm extends ConsumerWidget {
           text: "Save",
           onTap: () async {
             final requiredWins = ref.read(requiredWinsProvider);
-
-            // ❌ Reject if invalid or already meets target
+            developer.log("requiredWins: $requiredWins");
             if (requiredWins == null) {
               if (!context.mounted) return;
               informationSnackBar(
@@ -247,8 +245,18 @@ class RecordForm extends ConsumerWidget {
 
             await Future.delayed(const Duration(seconds: 1));
 
+            final converter = ConvertImages();
+
             final record = WinRateRecords(
-              timestamp: DateTime.now().millisecondsSinceEpoch,
+              id: recordData?.id,
+              backgroundImage: selectedImages.isNotEmpty
+                  ? await converter.encodeImageToBase64(selectedImages.first)
+                  : recordData?.backgroundImage,
+              name: ref.read(nameProvider) ?? "",
+              timeAdded: isUpdate
+                  ? recordData!.timeAdded
+                  : DateTime.now().microsecondsSinceEpoch,
+              lastUpdated: isUpdate ? DateTime.now().millisecondsSinceEpoch : 0,
               desiredWinRate:
                   int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
               currentNumberOfBattles:
@@ -256,7 +264,12 @@ class RecordForm extends ConsumerWidget {
               currentWinRate: int.tryParse(ref.read(winRateProvider)) ?? 0,
             );
 
-            await RecordDatabase().insertRecord(record);
+            if (isUpdate) {
+              developer.log("ID: ${recordData!.id}");
+              await RecordDatabase().updateRecord(recordData!.id!, record);
+            } else {
+              await RecordDatabase().insertRecord(record);
+            }
 
             isLoading.setLoading("saveButton", false);
             if (!context.mounted) return;

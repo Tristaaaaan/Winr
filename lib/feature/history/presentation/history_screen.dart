@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/components/placeholder/place_holder.dart';
@@ -42,14 +44,15 @@ class HistoryScreen extends ConsumerWidget {
                     final record = records[index];
                     return GestureDetector(
                       onTap: () {
-                        showRecordSheet(context, true);
+                        developer.log("Record: ${record.id}");
+                        showRecordSheet(context, true, record);
                       },
                       child: Container(
                         padding: const EdgeInsets.all(16),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text("Current Win Rate: ${record.desiredWinRate}%"),
+                            Text("Current Win Rate: ${record.currentWinRate}%"),
                             Text(
                               "Current Number of Battles: ${record.currentNumberOfBattles}",
                             ),
@@ -58,19 +61,6 @@ class HistoryScreen extends ConsumerWidget {
                         ),
                       ),
                     );
-
-                    // ListTile(
-                    //   title: Text('Win Rate: ${record.currentWinRate}%'),
-                    //   subtitle: Text(
-                    //     'Battles: ${record.currentNumberOfBattles} • Desired: ${record.desiredWinRate}%',
-                    //   ),
-                    //   trailing: Text(
-                    //     DateTime.fromMillisecondsSinceEpoch(
-                    //       record.timestamp,
-                    //     ).toLocal().toString(),
-                    //     style: const TextStyle(fontSize: 12),
-                    //   ),
-                    // );
                   }, childCount: records.length),
                 );
               },

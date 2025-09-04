@@ -44,8 +44,10 @@ class RecordDatabase {
     await db.execute('''
       CREATE TABLE IF NOT EXISTS records (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
-        timestamp INTEGER NOT NULL,
+        timeAdded INTEGER NOT NULL,
+        lastUpdated INTEGER,
         backgroundImage TEXT,
+        name TEXT,
         desiredWinRate INTEGER NOT NULL,
         currentNumberOfBattles INTEGER NOT NULL,
         currentWinRate INTEGER NOT NULL,
@@ -73,7 +75,7 @@ class RecordDatabase {
   /// Get all records
   Future<List<WinRateRecords>> getRecords() async {
     final db = await detectionDb;
-    final result = await db.query('records', orderBy: 'timestamp DESC');
+    final result = await db.query('records', orderBy: 'timeAdded DESC');
     return result.map((e) => WinRateRecords.fromMap(e)).toList();
   }
 
