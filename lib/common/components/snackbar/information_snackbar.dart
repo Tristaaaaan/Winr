@@ -7,9 +7,8 @@ void informationSnackBar(BuildContext context, IconData icon, String text) {
       content: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(icon, color: Theme.of(context).colorScheme.primary),
+          Icon(icon, color: Theme.of(context).colorScheme.surface),
           const SizedBox(width: 10),
-          // Wrap text and allow it to expand vertically
           Expanded(
             child: Text(
               text,
@@ -21,13 +20,18 @@ void informationSnackBar(BuildContext context, IconData icon, String text) {
         ],
       ),
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
       backgroundColor: Theme.of(context).colorScheme.primary,
       elevation: 0,
-      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-      duration: const Duration(
-        milliseconds: 3000,
-      ), // increased to allow time to read
+      padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+      duration: const Duration(milliseconds: 3000),
+
+      // ✅ Position adjustment
+      margin: const EdgeInsets.only(
+        bottom: 100, // move up from bottom
+        left: 16, // side padding
+        right: 90,
+      ),
     ),
   );
 }
