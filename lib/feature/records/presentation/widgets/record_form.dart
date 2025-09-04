@@ -95,7 +95,7 @@ class RecordForm extends ConsumerWidget {
                           children: [
                             Icon(Icons.file_upload_outlined),
                             SizedBox(width: 10),
-                            Text("Add Image (Optional)"),
+                            Text("Add Image (optional)"),
                           ],
                         ),
 

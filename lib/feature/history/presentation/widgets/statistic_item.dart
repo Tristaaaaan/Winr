@@ -20,8 +20,8 @@ class StatisticItem extends StatelessWidget {
           label,
           style: TextStyle(
             color: withImage ? Colors.white70 : Colors.black,
-            fontSize: 11,
-            fontWeight: FontWeight.w400,
+            fontSize: 12,
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(height: 2),
@@ -29,7 +29,7 @@ class StatisticItem extends StatelessWidget {
           value,
           style: TextStyle(
             color: withImage ? Colors.white70 : Colors.black,
-            fontSize: 14,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
