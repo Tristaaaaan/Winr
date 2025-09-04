@@ -5,6 +5,7 @@ import 'package:winr/feature/history/data/records_database.dart';
 final desiredWinRateProvider = StateProvider<String>((ref) => "");
 final numberOfBattlesProvider = StateProvider<String>((ref) => "");
 final winRateProvider = StateProvider<String>((ref) => "");
+final nameProvider = StateProvider<String>((ref) => "");
 
 final requiredWinsProvider = Provider<String?>((ref) {
   final desiredWinRate =

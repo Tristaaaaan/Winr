@@ -22,9 +22,11 @@ WinRateRecords _$WinRateRecordsFromJson(Map<String, dynamic> json) {
 mixin _$WinRateRecords {
   int? get id =>
       throw _privateConstructorUsedError; // PRIMARY KEY AUTOINCREMENT
-  int get timestamp => throw _privateConstructorUsedError;
+  int get timeAdded => throw _privateConstructorUsedError;
+  int? get lastUpdated => throw _privateConstructorUsedError;
   String? get backgroundImage => throw _privateConstructorUsedError;
   int get desiredWinRate => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
   int get currentNumberOfBattles => throw _privateConstructorUsedError;
   int get currentWinRate => throw _privateConstructorUsedError;
   int? get progressiveWinRate => throw _privateConstructorUsedError;
@@ -43,9 +45,11 @@ abstract class $WinRateRecordsCopyWith<$Res> {
   @useResult
   $Res call(
       {int? id,
-      int timestamp,
+      int timeAdded,
+      int? lastUpdated,
       String? backgroundImage,
       int desiredWinRate,
+      String? name,
       int currentNumberOfBattles,
       int currentWinRate,
       int? progressiveWinRate});
@@ -65,9 +69,11 @@ class _$WinRateRecordsCopyWithImpl<$Res, $Val extends WinRateRecords>
   @override
   $Res call({
     Object? id = freezed,
-    Object? timestamp = null,
+    Object? timeAdded = null,
+    Object? lastUpdated = freezed,
     Object? backgroundImage = freezed,
     Object? desiredWinRate = null,
+    Object? name = freezed,
     Object? currentNumberOfBattles = null,
     Object? currentWinRate = null,
     Object? progressiveWinRate = freezed,
@@ -77,10 +83,14 @@ class _$WinRateRecordsCopyWithImpl<$Res, $Val extends WinRateRecords>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
+      timeAdded: null == timeAdded
+          ? _value.timeAdded
+          : timeAdded // ignore: cast_nullable_to_non_nullable
               as int,
+      lastUpdated: freezed == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as int?,
       backgroundImage: freezed == backgroundImage
           ? _value.backgroundImage
           : backgroundImage // ignore: cast_nullable_to_non_nullable
@@ -89,6 +99,10 @@ class _$WinRateRecordsCopyWithImpl<$Res, $Val extends WinRateRecords>
           ? _value.desiredWinRate
           : desiredWinRate // ignore: cast_nullable_to_non_nullable
               as int,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       currentNumberOfBattles: null == currentNumberOfBattles
           ? _value.currentNumberOfBattles
           : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
@@ -115,9 +129,11 @@ abstract class _$$WinRateRecordsImplCopyWith<$Res>
   @useResult
   $Res call(
       {int? id,
-      int timestamp,
+      int timeAdded,
+      int? lastUpdated,
       String? backgroundImage,
       int desiredWinRate,
+      String? name,
       int currentNumberOfBattles,
       int currentWinRate,
       int? progressiveWinRate});
@@ -135,9 +151,11 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = freezed,
-    Object? timestamp = null,
+    Object? timeAdded = null,
+    Object? lastUpdated = freezed,
     Object? backgroundImage = freezed,
     Object? desiredWinRate = null,
+    Object? name = freezed,
     Object? currentNumberOfBattles = null,
     Object? currentWinRate = null,
     Object? progressiveWinRate = freezed,
@@ -147,10 +165,14 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int?,
-      timestamp: null == timestamp
-          ? _value.timestamp
-          : timestamp // ignore: cast_nullable_to_non_nullable
+      timeAdded: null == timeAdded
+          ? _value.timeAdded
+          : timeAdded // ignore: cast_nullable_to_non_nullable
               as int,
+      lastUpdated: freezed == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as int?,
       backgroundImage: freezed == backgroundImage
           ? _value.backgroundImage
           : backgroundImage // ignore: cast_nullable_to_non_nullable
@@ -159,6 +181,10 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
           ? _value.desiredWinRate
           : desiredWinRate // ignore: cast_nullable_to_non_nullable
               as int,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
       currentNumberOfBattles: null == currentNumberOfBattles
           ? _value.currentNumberOfBattles
           : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
@@ -180,9 +206,11 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
 class _$WinRateRecordsImpl extends _WinRateRecords {
   const _$WinRateRecordsImpl(
       {this.id,
-      required this.timestamp,
+      required this.timeAdded,
+      this.lastUpdated,
       this.backgroundImage,
       required this.desiredWinRate,
+      this.name,
       required this.currentNumberOfBattles,
       required this.currentWinRate,
       this.progressiveWinRate})
@@ -195,11 +223,15 @@ class _$WinRateRecordsImpl extends _WinRateRecords {
   final int? id;
 // PRIMARY KEY AUTOINCREMENT
   @override
-  final int timestamp;
+  final int timeAdded;
+  @override
+  final int? lastUpdated;
   @override
   final String? backgroundImage;
   @override
   final int desiredWinRate;
+  @override
+  final String? name;
   @override
   final int currentNumberOfBattles;
   @override
@@ -209,7 +241,7 @@ class _$WinRateRecordsImpl extends _WinRateRecords {
 
   @override
   String toString() {
-    return 'WinRateRecords(id: $id, timestamp: $timestamp, backgroundImage: $backgroundImage, desiredWinRate: $desiredWinRate, currentNumberOfBattles: $currentNumberOfBattles, currentWinRate: $currentWinRate, progressiveWinRate: $progressiveWinRate)';
+    return 'WinRateRecords(id: $id, timeAdded: $timeAdded, lastUpdated: $lastUpdated, backgroundImage: $backgroundImage, desiredWinRate: $desiredWinRate, name: $name, currentNumberOfBattles: $currentNumberOfBattles, currentWinRate: $currentWinRate, progressiveWinRate: $progressiveWinRate)';
   }
 
   @override
@@ -218,12 +250,15 @@ class _$WinRateRecordsImpl extends _WinRateRecords {
         (other.runtimeType == runtimeType &&
             other is _$WinRateRecordsImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.timestamp, timestamp) ||
-                other.timestamp == timestamp) &&
+            (identical(other.timeAdded, timeAdded) ||
+                other.timeAdded == timeAdded) &&
+            (identical(other.lastUpdated, lastUpdated) ||
+                other.lastUpdated == lastUpdated) &&
             (identical(other.backgroundImage, backgroundImage) ||
                 other.backgroundImage == backgroundImage) &&
             (identical(other.desiredWinRate, desiredWinRate) ||
                 other.desiredWinRate == desiredWinRate) &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.currentNumberOfBattles, currentNumberOfBattles) ||
                 other.currentNumberOfBattles == currentNumberOfBattles) &&
             (identical(other.currentWinRate, currentWinRate) ||
@@ -237,9 +272,11 @@ class _$WinRateRecordsImpl extends _WinRateRecords {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      timestamp,
+      timeAdded,
+      lastUpdated,
       backgroundImage,
       desiredWinRate,
+      name,
       currentNumberOfBattles,
       currentWinRate,
       progressiveWinRate);
@@ -262,9 +299,11 @@ class _$WinRateRecordsImpl extends _WinRateRecords {
 abstract class _WinRateRecords extends WinRateRecords {
   const factory _WinRateRecords(
       {final int? id,
-      required final int timestamp,
+      required final int timeAdded,
+      final int? lastUpdated,
       final String? backgroundImage,
       required final int desiredWinRate,
+      final String? name,
       required final int currentNumberOfBattles,
       required final int currentWinRate,
       final int? progressiveWinRate}) = _$WinRateRecordsImpl;
@@ -276,11 +315,15 @@ abstract class _WinRateRecords extends WinRateRecords {
   @override
   int? get id;
   @override // PRIMARY KEY AUTOINCREMENT
-  int get timestamp;
+  int get timeAdded;
+  @override
+  int? get lastUpdated;
   @override
   String? get backgroundImage;
   @override
   int get desiredWinRate;
+  @override
+  String? get name;
   @override
   int get currentNumberOfBattles;
   @override

@@ -7,5 +7,5 @@ class AppImages {
 
   static const noData = "${basePath}undraw_void_wez2.svg";
 
-  static const appLogo = "${basePath}athousandwords.png";
+  static const uploadImage = "${basePath}undraw_image-options_zchk.svg";
 }

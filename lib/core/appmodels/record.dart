@@ -9,9 +9,11 @@ class WinRateRecords with _$WinRateRecords {
 
   const factory WinRateRecords({
     int? id, // PRIMARY KEY AUTOINCREMENT
-    required int timestamp,
+    required int timeAdded,
+    int? lastUpdated,
     String? backgroundImage,
     required int desiredWinRate,
+    String? name,
     required int currentNumberOfBattles,
     required int currentWinRate,
     int? progressiveWinRate, // ✅ made nullable
@@ -23,9 +25,11 @@ class WinRateRecords with _$WinRateRecords {
   /// ✅ Manual Map conversion for SQLite
   Map<String, dynamic> toMap() => {
     'id': id,
-    'timestamp': timestamp,
+    'timeAdded': timeAdded,
+    'lastUpdated': lastUpdated,
     'backgroundImage': backgroundImage,
     'desiredWinRate': desiredWinRate,
+    'name': name,
     'currentNumberOfBattles': currentNumberOfBattles,
     'currentWinRate': currentWinRate,
     'progressiveWinRate': progressiveWinRate, // stays null if not set
@@ -33,7 +37,9 @@ class WinRateRecords with _$WinRateRecords {
 
   factory WinRateRecords.fromMap(Map<String, dynamic> map) => WinRateRecords(
     id: map['id'] as int?,
-    timestamp: map['timestamp'] as int,
+    timeAdded: map['timeAdded'] as int,
+    name: map['name'] as String?,
+    lastUpdated: map['lastUpdated'] as int?,
     backgroundImage: map['backgroundImage'] as String?,
     desiredWinRate: map['desiredWinRate'] as int,
     currentNumberOfBattles: map['currentNumberOfBattles'] as int,
