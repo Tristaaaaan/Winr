@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer' as developer;
 import 'dart:io';
 
@@ -14,7 +15,7 @@ import 'package:winr/common/utils/winrate_input_formatter.dart';
 import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/core/appmodels/record.dart';
 import 'package:winr/feature/history/data/records_database.dart';
-import 'package:winr/feature/home/presentation/provider/result_provider.dart';
+import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';
 
 import '../../../../common/utils/name_formatter.dart';
@@ -27,152 +28,165 @@ class RecordForm extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImages = ref.watch(uploadImagePathProvider);
+    final isRemoved = ref.watch(isImageRemovedProvider);
+
+    final showPlaceholder =
+        selectedImages.isEmpty &&
+        (recordData?.backgroundImage == null || isRemoved);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        if (isUpdate) ...[
-          (recordData?.backgroundImage == null && selectedImages.isEmpty)
-              ? SizedBox(
-                  height: 250,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(20),
-                    onTap: () async {
-                      final imagePicker = ImagePicker();
-                      final XFile? pickedImage = await imagePicker.pickImage(
-                        source: ImageSource.gallery,
-                      );
+        showPlaceholder
+            ? SizedBox(
+                height: 200,
+                child: InkWell(
+                  borderRadius: BorderRadius.circular(20),
+                  onTap: () async {
+                    final imagePicker = ImagePicker();
+                    final XFile? pickedImage = await imagePicker.pickImage(
+                      source: ImageSource.gallery,
+                    );
 
-                      if (pickedImage == null) {
-                        if (context.mounted) {
-                          informationSnackBar(
-                            context,
-                            Icons.info_outline,
-                            "No image has been selected.",
-                          );
-                        }
-                        return;
+                    if (pickedImage == null) {
+                      if (context.mounted) {
+                        informationSnackBar(
+                          context,
+                          Icons.info_outline,
+                          "No image has been selected.",
+                        );
                       }
+                      return;
+                    }
 
-                      // Update state providers (replace old one)
-                      final newFile = File(pickedImage.path);
-                      ref.read(uploadImagePathProvider.notifier).state = [
-                        newFile,
-                      ];
-                      ref.read(uploadImagePathNameProvider.notifier).state = [
-                        pickedImage.path,
-                      ];
-                      ref.read(uploadImageNameProvider.notifier).state = [
-                        pickedImage.name,
-                      ];
+                    final newFile = File(pickedImage.path);
+                    ref.read(uploadImagePathProvider.notifier).state = [
+                      newFile,
+                    ];
+                    ref.read(uploadImagePathNameProvider.notifier).state = [
+                      pickedImage.path,
+                    ];
+                    ref.read(uploadImageNameProvider.notifier).state = [
+                      pickedImage.name,
+                    ];
+                    ref.read(isImageRemovedProvider.notifier).state = false;
 
-                      developer.log('Picked image path: ${pickedImage.path}');
-                      developer.log('Picked image name: ${pickedImage.name}');
-                    },
-                    child: Container(
-                      padding: const EdgeInsets.all(15),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Theme.of(context).colorScheme.surface,
-                      ),
-                      width: double.infinity,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            height: 100,
-                            width: 100,
-                            AppImages.uploadImage,
+                    developer.log('Picked image path: ${pickedImage.path}');
+                    developer.log('Picked image name: ${pickedImage.name}');
+                  },
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                    width: double.infinity,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          height: 100,
+                          width: 100,
+                          AppImages.uploadImage,
+                        ),
+                        const SizedBox(height: 25),
+                        const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.file_upload_outlined),
+                            SizedBox(width: 10),
+                            Text("Add Image (Optional)"),
+                          ],
+                        ),
+
+                        const Text(
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontStyle: FontStyle.italic,
                           ),
-                          const SizedBox(height: 25),
-                          const Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(Icons.file_upload_outlined),
-                              SizedBox(width: 10),
-                              Text("Select Image"),
-                            ],
-                          ),
-                          const SizedBox(height: 25),
-                          const Text(
-                            style: TextStyle(
-                              fontSize: 12,
-                              fontStyle: FontStyle.italic,
-                            ),
-                            "You can only select 1 image.",
-                          ),
-                        ],
-                      ),
+                          "You can only select 1 image.",
+                        ),
+                      ],
                     ),
                   ),
-                )
-              : SizedBox(
-                  height: 325,
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: selectedImages.isNotEmpty
-                            ? Image.file(
-                                selectedImages.first, // 👈 provider image first
-                                height: double.infinity,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.broken_image),
-                              )
-                            : Image.file(
-                                File(
-                                  recordData!.backgroundImage!,
-                                ), // 👈 fallback
-                                height: double.infinity,
-                                width: double.infinity,
-                                fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) =>
-                                    const Icon(Icons.broken_image),
-                              ),
+                ),
+              )
+            : SizedBox(
+                height: 200,
+                child: Stack(
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Builder(
+                        builder: (context) {
+                          if (selectedImages.isNotEmpty) {
+                            return Image.file(
+                              selectedImages.first,
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.broken_image),
+                            );
+                          }
+
+                          if (!isRemoved &&
+                              recordData?.backgroundImage != null) {
+                            return Image.memory(
+                              base64Decode(recordData!.backgroundImage!),
+                              height: double.infinity,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  const Icon(Icons.broken_image),
+                            );
+                          }
+
+                          return const SizedBox(); // should never hit here
+                        },
                       ),
-                      Positioned(
-                        top: 5,
-                        right: 5,
-                        child: Container(
-                          decoration: const BoxDecoration(
-                            color: Colors.black54,
-                            shape: BoxShape.circle,
-                          ),
-                          child: InkWell(
-                            onTap: () {
-                              ref.read(uploadImagePathProvider.notifier).state =
-                                  [];
-                              ref
-                                      .read(
-                                        uploadImagePathNameProvider.notifier,
-                                      )
-                                      .state =
-                                  [];
-                              ref.read(uploadImageNameProvider.notifier).state =
-                                  [];
-                            },
-                            child: const Icon(
-                              Icons.close,
-                              size: 20,
-                              color: Colors.white,
-                            ),
+                    ),
+                    Positioned(
+                      top: 10,
+                      right: 10,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          color: Colors.black54,
+                          shape: BoxShape.circle,
+                        ),
+                        child: InkWell(
+                          onTap: () {
+                            ref.read(uploadImagePathProvider.notifier).state =
+                                [];
+                            ref
+                                    .read(uploadImagePathNameProvider.notifier)
+                                    .state =
+                                [];
+                            ref.read(uploadImageNameProvider.notifier).state =
+                                [];
+                            ref.read(isImageRemovedProvider.notifier).state =
+                                true;
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            size: 20,
+                            color: Colors.white,
                           ),
                         ),
                       ),
-                    ],
-                  ),
+                    ),
+                  ],
                 ),
-          FormTextField(
-            fieldKey: 'name',
-            labelText: 'How about adding a name?',
-            inputFormatters: const [MaxLengthFormatter()],
-            isUpdate: true,
-            initialValue: recordData?.name,
-            onChanged: (value) => ref.read(nameProvider.notifier).state = value,
-          ),
-        ],
+              ),
+        SizedBox(height: 20),
+        FormTextField(
+          fieldKey: 'name',
+          labelText: 'How about adding a name? (optional)',
+          inputFormatters: const [MaxLengthFormatter()],
+          isUpdate: true,
+          initialValue: recordData?.name,
+          onChanged: (value) => ref.read(nameProvider.notifier).state = value,
+        ),
 
         // TextField 2 → Integers only, no max limit
         FormTextField(

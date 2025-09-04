@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:winr/common/components/navbar/custom_navbar.dart';
 import 'package:winr/feature/history/presentation/history_screen.dart';
-import 'package:winr/feature/home/presentation/screen/homescreen.dart';
 import 'package:winr/feature/settings/presentation/settings_screen.dart';
 
 class NavigationGate extends StatefulWidget {
@@ -21,13 +20,7 @@ class _NavigationGateState extends State<NavigationGate> {
     });
   }
 
-  List<Widget> get _screens => [
-    const HomeScreen(),
-    HistoryScreen(
-      onGoHome: () => _onTabSelected(0), // ✅ tell nav gate to switch tab
-    ),
-    const SettingsScreen(),
-  ];
+  List<Widget> get _screens => [HistoryScreen(), const SettingsScreen()];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

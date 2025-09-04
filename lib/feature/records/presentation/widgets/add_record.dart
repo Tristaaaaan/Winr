@@ -17,7 +17,7 @@ void showRecordSheet(
     builder: (context) {
       return DraggableScrollableSheet(
         expand: false,
-        initialChildSize: 0.5,
+        initialChildSize: 0.9,
         minChildSize: 0.4,
         maxChildSize: 0.9,
         builder: (context, scrollController) {
