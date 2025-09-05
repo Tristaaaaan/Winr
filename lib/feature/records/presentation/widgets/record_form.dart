@@ -238,70 +238,146 @@ class RecordForm extends ConsumerWidget {
         ),
         const SizedBox(height: 20),
 
-        RegularButton(
-          suffixIcon: false,
-          withIcon: false,
-          text: "Save",
-          onTap: () async {
-            final requiredWins = ref.read(requiredWinsProvider);
-            developer.log("requiredWins: $requiredWins");
-            if (requiredWins == null) {
-              if (!context.mounted) return;
-              informationSnackBar(
-                context,
-                Icons.error_outline,
-                "Invalid input or you already meet your target.",
-              );
-              return;
-            }
-            final isLoading = ref.read(regularButtonLoadingProvider.notifier);
-            isLoading.setLoading("saveButton", true);
+        Row(
+          children: [
+            if (isUpdate)
+              IconButton(
+                icon: const Icon(Icons.delete_forever_outlined),
+                color: Theme.of(context).colorScheme.primary,
+                onPressed: () async {
+                  if (!context.mounted) return;
 
-            await Future.delayed(const Duration(seconds: 1));
+                  final confirm = await showDialog<bool>(
+                    context: context,
+                    builder: (ctx) {
+                      return AlertDialog(
+                        title: const Text("Record Deletion"),
+                        content: const Text(
+                          "Are you sure you want to delete this record? This action cannot be undone.",
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(false),
+                            child: const Text("Cancel"),
+                          ),
+                          TextButton(
+                            onPressed: () => Navigator.of(ctx).pop(true),
+                            style: TextButton.styleFrom(
+                              foregroundColor: Theme.of(
+                                context,
+                              ).colorScheme.error,
+                            ),
+                            child: const Text("Delete"),
+                          ),
+                        ],
+                      );
+                    },
+                  );
 
-            final converter = ConvertImages();
+                  if (confirm != true) return;
 
-            final record = WinRateRecords(
-              id: recordData?.id,
-              backgroundImage: selectedImages.isNotEmpty
-                  ? await converter.encodeImageToBase64(selectedImages.first)
-                  : recordData?.backgroundImage,
-              name: ref.read(nameProvider) ?? "",
-              timeAdded: isUpdate
-                  ? recordData!.timeAdded
-                  : DateTime.now().microsecondsSinceEpoch,
-              lastUpdated: isUpdate ? DateTime.now().millisecondsSinceEpoch : 0,
-              desiredWinRate:
-                  int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
-              currentNumberOfBattles:
-                  int.tryParse(ref.read(numberOfBattlesProvider)) ?? 0,
-              currentWinRate: int.tryParse(ref.read(winRateProvider)) ?? 0,
-            );
+                  final isLoading = ref.read(
+                    regularButtonLoadingProvider.notifier,
+                  );
+                  isLoading.setLoading("deleteButton", true);
 
-            if (isUpdate) {
-              developer.log("ID: ${recordData!.id}");
+                  try {
+                    await ref
+                        .read(historyControllerProvider.notifier)
+                        .deleteRecord(recordData!.id!);
 
-              ref
-                  .read(historyControllerProvider.notifier)
-                  .updateRecord(recordData!.id!, record);
-            } else {
-              ref.read(historyControllerProvider.notifier).addRecord(record);
-            }
+                    if (!context.mounted) return;
+                    Navigator.pop(context);
+                    informationSnackBar(
+                      context,
+                      Icons.delete_outline,
+                      "Record has been deleted!",
+                    );
+                  } finally {
+                    isLoading.setLoading("deleteButton", false);
+                  }
+                },
+              ),
+            SizedBox(width: 10),
+            Expanded(
+              child: RegularButton(
+                suffixIcon: false,
+                withIcon: false,
+                text: "Save",
+                onTap: () async {
+                  final requiredWins = ref.read(requiredWinsProvider);
+                  developer.log("requiredWins: $requiredWins");
 
-            isLoading.setLoading("saveButton", false);
+                  if (requiredWins == null) {
+                    if (!context.mounted) return;
+                    informationSnackBar(
+                      context,
+                      Icons.error_outline,
+                      "Invalid input or you already meet your target.",
+                    );
+                    return;
+                  }
 
-            if (!context.mounted) return;
-            Navigator.pop(context);
-            informationSnackBar(
-              context,
-              Icons.check_circle_outline_outlined,
-              "Record has been saved!",
-            );
-          },
-          backgroundColor: Theme.of(context).colorScheme.primary,
-          textColor: Theme.of(context).colorScheme.surface,
-          buttonKey: "saveButton",
-          width: double.infinity,
+                  final isLoading = ref.read(
+                    regularButtonLoadingProvider.notifier,
+                  );
+                  isLoading.setLoading("saveButton", true);
+
+                  try {
+                    await Future.delayed(const Duration(seconds: 1));
+
+                    final converter = ConvertImages();
+                    final record = WinRateRecords(
+                      id: recordData?.id,
+                      backgroundImage: selectedImages.isNotEmpty
+                          ? await converter.encodeImageToBase64(
+                              selectedImages.first,
+                            )
+                          : recordData?.backgroundImage,
+                      name: ref.read(nameProvider) ?? "",
+                      timeAdded: isUpdate
+                          ? recordData!.timeAdded
+                          : DateTime.now().microsecondsSinceEpoch,
+                      lastUpdated: isUpdate
+                          ? DateTime.now().millisecondsSinceEpoch
+                          : 0,
+                      desiredWinRate:
+                          int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
+                      currentNumberOfBattles:
+                          int.tryParse(ref.read(numberOfBattlesProvider)) ?? 0,
+                      currentWinRate:
+                          int.tryParse(ref.read(winRateProvider)) ?? 0,
+                    );
+
+                    if (isUpdate) {
+                      developer.log("ID: ${recordData!.id}");
+                      await ref
+                          .read(historyControllerProvider.notifier)
+                          .updateRecord(recordData!.id!, record);
+                    } else {
+                      await ref
+                          .read(historyControllerProvider.notifier)
+                          .addRecord(record);
+                    }
+
+                    if (!context.mounted) return;
+                    Navigator.pop(context);
+                    informationSnackBar(
+                      context,
+                      Icons.check_circle_outline_outlined,
+                      "Record has been saved!",
+                    );
+                  } finally {
+                    isLoading.setLoading("saveButton", false);
+                  }
+                },
+                backgroundColor: Theme.of(context).colorScheme.primary,
+                textColor: Theme.of(context).colorScheme.surface,
+                buttonKey: "saveButton",
+                width: double.infinity,
+              ),
+            ),
+          ],
         ),
       ],
     );
