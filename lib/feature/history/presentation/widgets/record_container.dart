@@ -159,8 +159,9 @@ class RecordContainer extends ConsumerWidget {
                             text: "$neededWins",
                             style: const TextStyle(fontWeight: FontWeight.bold),
                           ),
-                          const TextSpan(
-                            text: " more battles consecutively to reach ",
+                          TextSpan(
+                            text:
+                                " ${(neededWins == 1) ? "battle" : "battles"} consecutively to reach ",
                           ),
                           TextSpan(
                             text: "${record.desiredWinRate}%",
