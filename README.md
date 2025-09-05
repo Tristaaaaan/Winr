@@ -22,5 +22,7 @@ With Winr, you can:
 
    Track your advancement across all your favorite games. Winr supports a wide variety of games, ensuring you're always on top of your gaming goals.
 
+
+
 Disclaimer:
 Winr is not linked, associated, sponsored, supported, or otherwise associated with any offline or online games.
