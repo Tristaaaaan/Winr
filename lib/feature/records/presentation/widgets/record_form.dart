@@ -231,16 +231,34 @@ class RecordForm extends ConsumerWidget {
 
         const SizedBox(height: 50),
 
-        // Dynamic text using providers
-        Text(
-          ref.watch(requiredWinsProvider) ?? "Please enter valid values",
-          style: const TextStyle(fontSize: 14),
-        ),
+        if (ref.watch(requiredWinsProvider) != null)
+          // Dynamic text using providers
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+            decoration: BoxDecoration(
+              color: Theme.of(
+                context,
+              ).colorScheme.primary.withValues(alpha: 0.1),
+              borderRadius: BorderRadius.circular(20),
+              border: Border.all(
+                color: Theme.of(context).colorScheme.primary,
+                width: 1.2,
+              ),
+            ),
+            child: Text(
+              ref.watch(requiredWinsProvider) ?? "",
+              style: TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.w600,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
         const SizedBox(height: 20),
 
         Row(
           children: [
-            if (isUpdate)
+            if (isUpdate) ...[
               IconButton(
                 icon: const Icon(Icons.delete_forever_outlined),
                 color: Theme.of(context).colorScheme.primary,
@@ -298,7 +316,9 @@ class RecordForm extends ConsumerWidget {
                   }
                 },
               ),
-            SizedBox(width: 10),
+              SizedBox(width: 10),
+            ],
+
             Expanded(
               child: RegularButton(
                 suffixIcon: false,
@@ -324,8 +344,6 @@ class RecordForm extends ConsumerWidget {
                   isLoading.setLoading("saveButton", true);
 
                   try {
-                    await Future.delayed(const Duration(seconds: 1));
-
                     final converter = ConvertImages();
                     final record = WinRateRecords(
                       id: recordData?.id,
