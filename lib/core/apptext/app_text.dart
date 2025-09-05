@@ -11,7 +11,7 @@ class AppText {
   static const aboutUs = "About Us";
 
   static const aboutApp = "About the app";
-
+  static const bugAndSuggestion = "Bugs & Suggestions";
   static const help = "Help";
 
   static const appVersion = "App Version";
