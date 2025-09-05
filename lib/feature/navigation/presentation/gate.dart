@@ -55,6 +55,7 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
                   ref.read(uploadImagePathProvider.notifier).state = [];
                   ref.read(uploadImagePathNameProvider.notifier).state = [];
                   // reset inputs instead of requiredWinsProvider
+                  ref.read(nameProvider.notifier).state = "";
                   ref.read(desiredWinRateProvider.notifier).state = "0";
                   ref.read(numberOfBattlesProvider.notifier).state = "0";
                   ref.read(winRateProvider.notifier).state = "0";

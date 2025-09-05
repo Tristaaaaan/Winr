@@ -1,8 +1,15 @@
 import 'dart:async';
 
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
 import 'package:winr/core/appmodels/record.dart';
+
+final recordDatabaseProvider = Provider<RecordDatabase>((ref) {
+  final db = RecordDatabase();
+  ref.onDispose(() => db.dispose());
+  return db;
+});
 
 class RecordDatabase {
   Database? _recordDatabase;

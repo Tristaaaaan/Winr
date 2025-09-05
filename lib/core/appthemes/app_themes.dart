@@ -23,7 +23,7 @@ class ThemeNotifier extends StateNotifier<bool> {
   static final ThemeData darkMode = ThemeData(
     colorScheme: ColorScheme.dark(
       surface: Colors.black,
-      primary: Colors.white,
+      primary: Color(0xff574667),
       secondary: Colors.white,
       tertiary: const Color.fromARGB(255, 180, 180, 180).withValues(alpha: 0.2),
       inversePrimary: Colors.grey.shade900,
