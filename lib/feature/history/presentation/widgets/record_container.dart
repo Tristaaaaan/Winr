@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/utils/calculate_winrate.dart';
 import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/history/presentation/widgets/statistic_item.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';
 
@@ -34,12 +35,18 @@ class RecordContainer extends ConsumerWidget {
       onTap: () {
         developer.log("Record: ${record.id}");
         ref.read(isImageRemovedProvider.notifier).state = false;
-
+        ref.read(uploadImageNameProvider.notifier).state = [];
+        ref.read(uploadImagePathProvider.notifier).state = [];
+        ref.read(uploadImagePathNameProvider.notifier).state = [];
+        // reset inputs instead of requiredWinsProvider
+        ref.read(desiredWinRateProvider.notifier).state = "0";
+        ref.read(numberOfBattlesProvider.notifier).state = "0";
+        ref.read(winRateProvider.notifier).state = "0";
         showRecordSheet(context, true, record);
       },
       child: Container(
         margin: const EdgeInsets.all(12),
-        height: 150,
+
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           image: backgroundImage != null
@@ -50,7 +57,7 @@ class RecordContainer extends ConsumerWidget {
               : null,
         ),
         child: Container(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
             gradient: backgroundImage != null
@@ -80,7 +87,7 @@ class RecordContainer extends ConsumerWidget {
                       borderRadius: BorderRadius.circular(16),
                       color: Theme.of(
                         context,
-                      ).colorScheme.primary.withValues(alpha: 0.9),
+                      ).colorScheme.primary.withValues(alpha: 0.5),
                     ),
                     child: Text(
                       record.name?.toUpperCase() ?? "          ",
@@ -102,38 +109,69 @@ class RecordContainer extends ConsumerWidget {
                 ],
               ),
               const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.all(5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.primary.withValues(alpha: 0.15),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // First row
+                    Row(
+                      children: [
+                        Expanded(
+                          child: StatisticItem(
+                            withImage: record.backgroundImage != null,
+                            label: "Current Win Rate",
+                            value: "${record.currentWinRate}%",
+                          ),
+                        ),
+                        Expanded(
+                          child: StatisticItem(
+                            withImage: record.backgroundImage != null,
+                            label: record.currentNumberOfBattles == 1
+                                ? "Match"
+                                : "Matches",
+                            value: "${record.currentNumberOfBattles}",
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 12),
 
-              // Stats in rows
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  StatisticItem(
-                    withImage: record.backgroundImage != null,
-                    label: "Current Win Rate",
-                    value: "${record.currentWinRate}%",
-                  ),
-                  StatisticItem(
-                    withImage: record.backgroundImage != null,
-                    label: "Battles",
-                    value: "${record.currentNumberOfBattles}",
-                  ),
-                ],
-              ),
-              const SizedBox(height: 6),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  StatisticItem(
-                    withImage: record.backgroundImage != null,
-                    label: "Desired Win Rate",
-                    value: "${record.desiredWinRate}%",
-                  ),
-                  StatisticItem(
-                    label: "Needed Wins",
-                    value: "$neededWins",
-                    withImage: record.backgroundImage != null,
-                  ),
-                ],
+                    // Second row
+                    Text.rich(
+                      TextSpan(
+                        text: "You need to win ",
+                        style: TextStyle(
+                          color: record.backgroundImage != null
+                              ? Colors.white70
+                              : Colors.black,
+                          fontSize: 14,
+                          fontWeight: FontWeight.normal,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: "$neededWins",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const TextSpan(
+                            text: " more battles consecutively to reach ",
+                          ),
+                          TextSpan(
+                            text: "${record.desiredWinRate}%",
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const TextSpan(text: " win rate."),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

@@ -14,7 +14,7 @@ import 'package:winr/common/utils/convert_images.dart';
 import 'package:winr/common/utils/winrate_input_formatter.dart';
 import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/core/appmodels/record.dart';
-import 'package:winr/feature/history/data/records_database.dart';
+import 'package:winr/feature/history/presentation/providers/history_controller.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';
 
@@ -95,7 +95,7 @@ class RecordForm extends ConsumerWidget {
                           children: [
                             Icon(Icons.file_upload_outlined),
                             SizedBox(width: 10),
-                            Text("Add Image (Optional)"),
+                            Text("Add Image (optional)"),
                           ],
                         ),
 
@@ -280,13 +280,18 @@ class RecordForm extends ConsumerWidget {
 
             if (isUpdate) {
               developer.log("ID: ${recordData!.id}");
-              await RecordDatabase().updateRecord(recordData!.id!, record);
+
+              ref
+                  .read(historyControllerProvider.notifier)
+                  .updateRecord(recordData!.id!, record);
             } else {
-              await RecordDatabase().insertRecord(record);
+              ref.read(historyControllerProvider.notifier).addRecord(record);
             }
 
             isLoading.setLoading("saveButton", false);
+
             if (!context.mounted) return;
+            Navigator.pop(context);
             informationSnackBar(
               context,
               Icons.check_circle_outline_outlined,
