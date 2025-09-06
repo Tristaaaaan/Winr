@@ -12,58 +12,63 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        IntrinsicHeight(
-          child: Container(
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-            margin: const EdgeInsets.only(
-              bottom: 20,
-              left: 20,
-              right: 20,
-              top: 10,
-            ),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(40),
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.primary.withValues(alpha: 0.9),
-                  Theme.of(
-                    context,
-                  ).colorScheme.inversePrimary.withValues(alpha: 0.9),
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
+    return SafeArea(
+      bottom: true,
+      child: Stack(
+        children: [
+          IntrinsicHeight(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+              margin: const EdgeInsets.only(
+                bottom: 10,
+                left: 20,
+                right: 20,
+                top: 10,
               ),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black26,
-                  blurRadius: 10,
-                  offset: Offset(0, 4),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(40),
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.9),
+                    Theme.of(
+                      context,
+                    ).colorScheme.inversePrimary.withValues(alpha: 0.9),
+                  ],
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
                 ),
-              ],
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                _buildNavItem(
-                  icon: Icons.history_outlined,
-                  label: "Records",
-                  index: 0,
-                  context: context,
-                ),
-                SizedBox(width: 10),
-                _buildNavItem(
-                  icon: Icons.settings_outlined,
-                  label: "Settings",
-                  index: 1,
-                  context: context,
-                ),
-              ],
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black26,
+                    blurRadius: 10,
+                    offset: Offset(0, 4),
+                  ),
+                ],
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  _buildNavItem(
+                    icon: Icons.history_outlined,
+                    label: "Records",
+                    index: 0,
+                    context: context,
+                  ),
+                  SizedBox(width: 10),
+                  _buildNavItem(
+                    icon: Icons.settings_outlined,
+                    label: "Settings",
+                    index: 1,
+                    context: context,
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
