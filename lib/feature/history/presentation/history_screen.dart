@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:winr/common/components/loading/record_loading.dart';
 import 'package:winr/common/components/placeholder/place_holder.dart';
 import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/feature/history/presentation/providers/history_controller.dart';
@@ -28,10 +30,20 @@ class HistoryScreen extends ConsumerWidget {
                   hasScrollBody: false,
                   child: Center(child: CircularProgressIndicator()),
                 ),
-                loading: () => const SliverFillRemaining(
+                loading: () => SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Center(child: CircularProgressIndicator()),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[400]!,
+                    highlightColor: Colors.grey[300]!,
+                    child: Column(
+                      children: List.generate(
+                        3,
+                        (index) => const RecordLoading(),
+                      ),
+                    ),
+                  ),
                 ),
+
                 error: (message) => SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(child: Text(message)),
