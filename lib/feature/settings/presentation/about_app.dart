@@ -14,7 +14,7 @@ class AboutApp extends ConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(AppText.aboutApp, style: TextStyle(fontSize: 16)),
         ),
 

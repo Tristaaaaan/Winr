@@ -42,7 +42,7 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
           // ✅ FAB above nav bar (only on HistoryScreen)
           if (_selectedIndex == 0)
             Positioned(
-              bottom: 100, // adjust to sit above your custom nav
+              bottom: 90, // adjust to sit above your custom nav
               right: 20,
               child: FloatingActionButton(
                 elevation: 0,

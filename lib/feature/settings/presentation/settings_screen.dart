@@ -18,7 +18,6 @@ class SettingsScreen extends ConsumerWidget {
           slivers: [
             SliverList(
               delegate: SliverChildListDelegate([
-                SizedBox(height: 25),
                 BugSuggestionsReport(),
                 SizedBox(height: 50),
                 AboutApp(),
