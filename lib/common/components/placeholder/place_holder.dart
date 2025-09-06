@@ -10,6 +10,7 @@ class DataPlaceHolder extends StatelessWidget {
   final String description;
   final bool? withButton;
   final VoidCallback? onTap;
+  final String buttonText;
   const DataPlaceHolder({
     super.key,
     required this.imagePath,
@@ -19,6 +20,7 @@ class DataPlaceHolder extends StatelessWidget {
     required this.description,
     this.withButton = false,
     this.onTap,
+    required this.buttonText,
   });
 
   @override
@@ -56,12 +58,12 @@ class DataPlaceHolder extends StatelessWidget {
                 }
               },
               suffixIcon: false,
-              text: "Add a record",
+              text: buttonText,
               backgroundColor: Theme.of(context).colorScheme.surface,
               withBorder: true,
 
               textColor: Theme.of(context).colorScheme.primary,
-              buttonKey: "addRecord",
+              buttonKey: buttonText,
               width: 300,
               withIcon: false,
             ),

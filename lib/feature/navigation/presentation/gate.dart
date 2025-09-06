@@ -6,6 +6,7 @@ import 'package:winr/feature/history/presentation/providers/result_provider.dart
 import 'package:winr/feature/records/presentation/widgets/add_record.dart';
 import 'package:winr/feature/settings/presentation/settings_screen.dart';
 
+import '../../history/presentation/providers/history_controller.dart';
 import '../../records/presentation/providers/image_providers.dart';
 
 class NavigationGate extends ConsumerStatefulWidget {
@@ -29,6 +30,8 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
 
   @override
   Widget build(BuildContext context) {
+    final historyState = ref.watch(historyControllerProvider);
+
     return Scaffold(
       body: Stack(
         alignment: Alignment.bottomCenter,
@@ -40,7 +43,8 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
           ),
 
           // ✅ FAB above nav bar (only on HistoryScreen)
-          if (_selectedIndex == 0)
+          if (_selectedIndex == 0 &&
+              historyState.maybeWhen(loaded: (_) => true, orElse: () => false))
             Positioned(
               bottom: 90, // adjust to sit above your custom nav
               right: 20,
@@ -54,7 +58,6 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
                   ref.read(uploadImageNameProvider.notifier).state = [];
                   ref.read(uploadImagePathProvider.notifier).state = [];
                   ref.read(uploadImagePathNameProvider.notifier).state = [];
-                  // reset inputs instead of requiredWinsProvider
                   ref.read(nameProvider.notifier).state = "";
                   ref.read(desiredWinRateProvider.notifier).state = "0";
                   ref.read(numberOfBattlesProvider.notifier).state = "0";
@@ -67,7 +70,6 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
                 ),
               ),
             ),
-
           // bottom nav bar
           Align(
             alignment: Alignment.bottomCenter,

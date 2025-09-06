@@ -46,12 +46,24 @@ class HistoryScreen extends ConsumerWidget {
 
                 error: (message) => SliverFillRemaining(
                   hasScrollBody: false,
-                  child: Center(child: Text(message)),
+                  child: Center(
+                    child: DataPlaceHolder(
+                      buttonText: "Try Again",
+                      imagePath: AppImages.errorImage,
+                      imageHeight: 300,
+                      imageWidth: 300,
+                      onTap: refreshRecord,
+                      withButton: false,
+                      title: "Error",
+                      description: "Seems like something went wrong.",
+                    ),
+                  ),
                 ),
                 empty: () => SliverFillRemaining(
                   hasScrollBody: false,
                   child: Center(
                     child: DataPlaceHolder(
+                      buttonText: "Add Record",
                       imagePath: AppImages.noData,
                       imageHeight: 300,
                       imageWidth: 300,
