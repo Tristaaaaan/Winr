@@ -187,7 +187,7 @@ class RecordForm extends ConsumerWidget {
           initialValue: recordData?.name,
           onChanged: (value) => ref.read(nameProvider.notifier).state = value,
         ),
-
+        SizedBox(height: 12),
         // TextField 2 → Integers only, no max limit
         FormTextField(
           fieldKey: 'numberOfBattles',
