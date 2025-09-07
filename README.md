@@ -2,7 +2,7 @@
 
 Winr is a win rate calculator that lets users track their progress. Whether offline or online games, Winr got you.
 
-<img width="4096" height="1789" alt="Winr Ad" src="https://github.com/user-attachments/assets/777954a0-4752-490a-a93b-4a3948928735" />
+<img width="4096" height="1789" alt="Winr Ad" src="https://github.com/user-attachments/assets/0695da39-1ec5-41bc-bebd-4965306fb09a" />
 
 # Features
 
