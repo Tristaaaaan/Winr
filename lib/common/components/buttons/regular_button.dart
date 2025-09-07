@@ -33,26 +33,29 @@ class RegularButton extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isLoading =
         ref.watch(regularButtonLoadingProvider)[buttonKey] ?? false;
-    return Container(
-      height: 55,
-      width: width,
-      decoration: BoxDecoration(
-        color: backgroundColor,
-        borderRadius: BorderRadius.circular(16),
-        border: withBorder!
-            ? Border.all(color: Theme.of(context).colorScheme.primary, width: 3)
-            : null,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
-        child: GestureDetector(
-          onTap: withoutLoading!
-              ? onTap
-              : isLoading
-              ? () {}
-              : () async {
-                  onTap!();
-                },
+    return GestureDetector(
+      onTap: withoutLoading!
+          ? onTap
+          : isLoading
+          ? () {}
+          : () async {
+              onTap!();
+            },
+      child: Container(
+        height: 55,
+        width: width,
+        decoration: BoxDecoration(
+          color: backgroundColor,
+          borderRadius: BorderRadius.circular(16),
+          border: withBorder!
+              ? Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 3,
+                )
+              : null,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
               // if (withIcon == true)
