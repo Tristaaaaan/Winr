@@ -48,6 +48,12 @@ class RecordContainer extends ConsumerWidget {
         margin: const EdgeInsets.all(12),
 
         decoration: BoxDecoration(
+          border: record.backgroundImage != null
+              ? null
+              : Border.all(
+                  width: 2,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
           borderRadius: BorderRadius.circular(20),
           image: backgroundImage != null
               ? DecorationImage(
@@ -78,27 +84,29 @@ class RecordContainer extends ConsumerWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 4,
-                    ),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Theme.of(
-                        context,
-                      ).colorScheme.primary.withValues(alpha: 0.5),
-                    ),
-                    child: Text(
-                      record.name?.toUpperCase() ?? "          ",
-                      style: const TextStyle(
-                        color: Colors.white,
-                        fontSize: 13,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 0.5,
-                      ),
-                    ),
-                  ),
+                  record.name != ""
+                      ? Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 4,
+                          ),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: Theme.of(
+                              context,
+                            ).colorScheme.primary.withValues(alpha: 0.5),
+                          ),
+                          child: Text(
+                            record.name!.toUpperCase(),
+                            style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 13,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        )
+                      : const SizedBox.shrink(),
                   Icon(
                     Icons.chevron_right_outlined,
                     size: 24,
@@ -110,7 +118,7 @@ class RecordContainer extends ConsumerWidget {
               ),
               const SizedBox(height: 12),
               Container(
-                padding: const EdgeInsets.all(5),
+                padding: const EdgeInsets.all(10),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   color: Theme.of(
