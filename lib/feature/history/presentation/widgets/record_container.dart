@@ -18,9 +18,13 @@ class RecordContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // Decode base64 image
+    // Check if record really has an image
+    final hasImage =
+        record.backgroundImage != null && record.backgroundImage!.isNotEmpty;
+
+    // Decode base64 image if exists
     Uint8List? backgroundImage;
-    if (record.backgroundImage != null && record.backgroundImage!.isNotEmpty) {
+    if (hasImage) {
       backgroundImage = base64Decode(record.backgroundImage!);
     }
 
@@ -38,7 +42,6 @@ class RecordContainer extends ConsumerWidget {
         ref.read(uploadImageNameProvider.notifier).state = [];
         ref.read(uploadImagePathProvider.notifier).state = [];
         ref.read(uploadImagePathNameProvider.notifier).state = [];
-        // reset inputs instead of requiredWinsProvider
         ref.read(desiredWinRateProvider.notifier).state = "0";
         ref.read(numberOfBattlesProvider.notifier).state = "0";
         ref.read(winRateProvider.notifier).state = "0";
@@ -46,18 +49,17 @@ class RecordContainer extends ConsumerWidget {
       },
       child: Container(
         margin: const EdgeInsets.all(12),
-
         decoration: BoxDecoration(
-          border: record.backgroundImage != null
+          border: hasImage
               ? null
               : Border.all(
                   width: 2,
                   color: Theme.of(context).colorScheme.primary,
                 ),
           borderRadius: BorderRadius.circular(20),
-          image: backgroundImage != null
+          image: hasImage
               ? DecorationImage(
-                  image: MemoryImage(backgroundImage),
+                  image: MemoryImage(backgroundImage!),
                   fit: BoxFit.cover,
                 )
               : null,
@@ -66,7 +68,7 @@ class RecordContainer extends ConsumerWidget {
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            gradient: backgroundImage != null
+            gradient: hasImage
                 ? LinearGradient(
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
@@ -110,9 +112,7 @@ class RecordContainer extends ConsumerWidget {
                   Icon(
                     Icons.chevron_right_outlined,
                     size: 24,
-                    color: record.backgroundImage != null
-                        ? Colors.white
-                        : Colors.black,
+                    color: hasImage ? Colors.white : Colors.black,
                   ),
                 ],
               ),
@@ -133,14 +133,14 @@ class RecordContainer extends ConsumerWidget {
                       children: [
                         Expanded(
                           child: StatisticItem(
-                            withImage: record.backgroundImage != null,
+                            withImage: hasImage,
                             label: "Current Win Rate",
                             value: "${record.currentWinRate}%",
                           ),
                         ),
                         Expanded(
                           child: StatisticItem(
-                            withImage: record.backgroundImage != null,
+                            withImage: hasImage,
                             label: record.currentNumberOfBattles == 1
                                 ? "Match"
                                 : "Matches",
@@ -156,9 +156,7 @@ class RecordContainer extends ConsumerWidget {
                       TextSpan(
                         text: "You need to win ",
                         style: TextStyle(
-                          color: record.backgroundImage != null
-                              ? Colors.white70
-                              : Colors.black,
+                          color: hasImage ? Colors.white70 : Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),
