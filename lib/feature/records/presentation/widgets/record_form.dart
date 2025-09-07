@@ -25,6 +25,24 @@ class RecordForm extends ConsumerWidget {
   final WinRateRecords? recordData;
   const RecordForm({super.key, required this.isUpdate, this.recordData});
 
+  /// Helper to decide what backgroundImage should be saved
+  Future<String?> _getBackgroundImage(
+    WidgetRef ref,
+    List<File> selectedImages,
+    WinRateRecords? recordData,
+  ) async {
+    final isRemoved = ref.read(isImageRemovedProvider);
+
+    if (selectedImages.isNotEmpty) {
+      final converter = ConvertImages();
+      return await converter.encodeImageToBase64(selectedImages.first);
+    }
+
+    if (isRemoved) return ""; // Overwrite with empty string when removed
+
+    return recordData?.backgroundImage;
+  }
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final selectedImages = ref.watch(uploadImagePathProvider);
@@ -32,7 +50,9 @@ class RecordForm extends ConsumerWidget {
 
     final showPlaceholder =
         selectedImages.isEmpty &&
-        (recordData?.backgroundImage == null || isRemoved);
+        (recordData?.backgroundImage == null ||
+            recordData?.backgroundImage?.isEmpty == true ||
+            isRemoved);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -98,7 +118,6 @@ class RecordForm extends ConsumerWidget {
                             Text("Add Image (optional)"),
                           ],
                         ),
-
                         const Text(
                           style: TextStyle(
                             fontSize: 12,
@@ -131,7 +150,8 @@ class RecordForm extends ConsumerWidget {
                           }
 
                           if (!isRemoved &&
-                              recordData?.backgroundImage != null) {
+                              recordData?.backgroundImage != null &&
+                              recordData!.backgroundImage!.isNotEmpty) {
                             return Image.memory(
                               base64Decode(recordData!.backgroundImage!),
                               height: double.infinity,
@@ -142,7 +162,7 @@ class RecordForm extends ConsumerWidget {
                             );
                           }
 
-                          return const SizedBox(); // should never hit here
+                          return const SizedBox(); // fallback
                         },
                       ),
                     ),
@@ -178,7 +198,7 @@ class RecordForm extends ConsumerWidget {
                   ],
                 ),
               ),
-        SizedBox(height: 20),
+        const SizedBox(height: 20),
         FormTextField(
           fieldKey: 'name',
           labelText: 'How about adding a name? (optional)',
@@ -187,8 +207,7 @@ class RecordForm extends ConsumerWidget {
           initialValue: recordData?.name,
           onChanged: (value) => ref.read(nameProvider.notifier).state = value,
         ),
-        SizedBox(height: 12),
-        // TextField 2 → Integers only, no max limit
+        const SizedBox(height: 12),
         FormTextField(
           fieldKey: 'numberOfBattles',
           labelText: 'What is your current number of battles?',
@@ -201,8 +220,6 @@ class RecordForm extends ConsumerWidget {
               ref.read(numberOfBattlesProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
-
-        // TextField 3 → Decimal allowed, max 100
         FormTextField(
           fieldKey: 'winRate',
           labelText: 'What is your current win rate? (in Percentage)',
@@ -215,8 +232,6 @@ class RecordForm extends ConsumerWidget {
               ref.read(winRateProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
-
-        // TextField 1 → Decimal allowed, max 100
         FormTextField(
           fieldKey: 'desiredWinRate',
           labelText: 'What is your desired win rate? (in Percentage)',
@@ -228,11 +243,8 @@ class RecordForm extends ConsumerWidget {
           onChanged: (value) =>
               ref.read(desiredWinRateProvider.notifier).state = value,
         ),
-
         const SizedBox(height: 50),
-
         if (ref.watch(requiredWinsProvider) != null)
-          // Dynamic text using providers
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
@@ -255,7 +267,6 @@ class RecordForm extends ConsumerWidget {
             ),
           ),
         const SizedBox(height: 20),
-
         Row(
           children: [
             if (isUpdate) ...[
@@ -316,9 +327,8 @@ class RecordForm extends ConsumerWidget {
                   }
                 },
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
             ],
-
             Expanded(
               child: RegularButton(
                 suffixIcon: false,
@@ -344,14 +354,13 @@ class RecordForm extends ConsumerWidget {
                   isLoading.setLoading("saveButton", true);
 
                   try {
-                    final converter = ConvertImages();
                     final record = WinRateRecords(
                       id: recordData?.id,
-                      backgroundImage: selectedImages.isNotEmpty
-                          ? await converter.encodeImageToBase64(
-                              selectedImages.first,
-                            )
-                          : recordData?.backgroundImage,
+                      backgroundImage: await _getBackgroundImage(
+                        ref,
+                        selectedImages,
+                        recordData,
+                      ),
                       name: ref.read(nameProvider) ?? "",
                       timeAdded: isUpdate
                           ? recordData!.timeAdded
