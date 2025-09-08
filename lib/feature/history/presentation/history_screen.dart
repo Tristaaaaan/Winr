@@ -81,6 +81,12 @@ class HistoryScreen extends ConsumerWidget {
                   }, childCount: records!.length),
                 ),
               ),
+              SliverPadding(
+                padding: EdgeInsets.only(
+                  bottom: kBottomNavigationBarHeight + 15,
+                  // 🔹 +80 leaves room for FAB too
+                ),
+              ),
             ],
           ),
         ),
