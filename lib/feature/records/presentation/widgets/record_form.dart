@@ -222,6 +222,7 @@ class RecordForm extends ConsumerWidget {
         const SizedBox(height: 12),
         FormTextField(
           fieldKey: 'winRate',
+          showPercentSuffix: true,
           labelText: 'What is your current win rate? (in Percentage)',
           inputFormatters: const [
             WinrateInputFormatter(integersOnly: false, max: 100),
@@ -234,6 +235,7 @@ class RecordForm extends ConsumerWidget {
         const SizedBox(height: 12),
         FormTextField(
           fieldKey: 'desiredWinRate',
+          showPercentSuffix: true,
           labelText: 'What is your desired win rate? (in Percentage)',
           inputFormatters: const [
             WinrateInputFormatter(integersOnly: false, max: 100),

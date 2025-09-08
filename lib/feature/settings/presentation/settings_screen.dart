@@ -88,6 +88,12 @@ class SettingsScreen extends ConsumerWidget {
                 ),
               ]),
             ),
+            SliverPadding(
+              padding: EdgeInsets.only(
+                bottom: kBottomNavigationBarHeight + 15,
+                // 🔹 +80 leaves room for FAB too
+              ),
+            ),
           ],
         ),
       ),
