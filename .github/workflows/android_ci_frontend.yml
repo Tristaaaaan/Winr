@@ -1,0 +1,334 @@
+name: Android CI Frontend
+
+on:
+  pull_request:
+    branches: [main, development] # Includes staging target branch trigger
+    paths: # Optional: Trigger only if relevant files change
+      - "lib/**"
+      - "test/**"
+      - "integration_test/**"
+      - "android/**"
+      - "pubspec.yaml"
+      - ".github/workflows/android_ci_frontend.yml"
+      - ".github/workflows/auto-rebase-prs.yml"
+
+# Prevent concurrent runs on the same ref. Cancel older runs.
+concurrency:
+  group: android-ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ###########################################################################
+  # Job 1: format-check-android
+  # - Checks out code, sets up Flutter.
+  # - Installs dependencies, runs build_runner (for consistency).
+  # - Checks code formatting.
+  # - Caches generated files for subsequent jobs.
+  ###########################################################################
+  format-check-android:
+    name: Format Check (Android Runner)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.3" # Updated to match other jobs
+          channel: "stable"
+          cache: true
+
+      # Create dummy .env file for CI
+      - name: Create dummy .env file
+        run: |
+          echo "# Dummy file for CI" > .env
+          echo "BASE_API_URL=http://localhost:8000/api/v1" >> .env
+          echo "ENV=test" >> .env
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Generate Code (Ensure consistency)
+        # Removed --dart-define=ENV=dev
+        run: flutter pub run build_runner build --delete-conflicting-outputs
+
+      - name: Check Formatting
+        run: dart format --output none --set-exit-if-changed lib/ test/
+
+      - name: Cache Generated Files
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/*.freezed.dart
+            **/*.g.dart
+          key: generated-files-android-${{ github.sha }}
+          restore-keys: |
+            generated-files-android-${{ github.sha }}
+
+      - name: Debug Info (if failed)
+        if: failure()
+        run: |
+          echo "Job status is ${{ job.status }}"
+          echo "=== DEBUG OUTPUT: format-check-android failed ==="
+          flutter --version
+          which flutter
+          which dart
+          dart --version
+
+  ###########################################################################
+  # Job 2: flutter-analyze-android
+  # - Uses cached generated files.
+  # - Runs code analysis with Flutter.
+  ###########################################################################
+  flutter-analyze-android:
+    name: Analyze (Android Runner)
+    needs: format-check-android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.3"
+          channel: "stable"
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Create dummy .env file
+        run: |
+          echo "# Dummy file for CI" > .env
+          echo "BASE_API_URL=http://localhost:8000/api/v1" >> .env
+          echo "ENV=test" >> .env
+
+      - name: Restore Generated Files
+        id: restore-generated
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/*.freezed.dart
+            **/*.g.dart
+          key: generated-files-android-${{ github.sha }}
+
+      - name: Generate Code (fallback if cache missed)
+        if: steps.restore-generated.outputs.cache-hit != 'true'
+        # Removed --dart-define=ENV=dev
+        run: flutter pub run build_runner build --delete-conflicting-outputs --define="build_web_compilers|entrypoint=compiler=dart2js"
+
+      - name: Create test environment file
+        run: |
+          echo "BASE_API_URL=https://test-api.example.com" > .env.test
+
+      - name: Flutter Analyze
+        run: flutter analyze
+
+      - name: Debug Info (if failed)
+        if: failure()
+        run: |
+          echo "Job status is ${{ job.status }}"
+          echo "=== DEBUG OUTPUT: flutter-analyze-android failed ==="
+          flutter --version
+          which flutter
+          which dart
+          dart --version
+
+  ###########################################################################
+  # Job 3: test-coverage-android
+  # - Uses cached generated files.
+  # - Runs unit and widget tests with coverage.
+  # - Uploads the coverage artifact.
+  ###########################################################################
+  test-coverage-android:
+    name: Unit/Widget Tests (Android Runner)
+    needs: flutter-analyze-android
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.3"
+          channel: "stable"
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Create dummy .env file
+        run: |
+          echo "# Dummy file for CI" > .env
+          echo "BASE_API_URL=http://localhost:8000/api/v1" >> .env
+          echo "ENV=test" >> .env
+
+      - name: Restore Generated Files
+        id: restore-generated
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/*.freezed.dart
+            **/*.g.dart
+          key: generated-files-android-${{ github.sha }}
+
+      - name: Generate Code (fallback if cache missed)
+        if: steps.restore-generated.outputs.cache-hit != 'true'
+        # Removed --dart-define=ENV=dev
+        run: flutter pub run build_runner build --delete-conflicting-outputs --define="build_web_compilers|entrypoint=compiler=dart2js"
+
+      - name: Run Tests with Coverage
+        # KEEP --dart-define here for test command
+        run: flutter test --coverage
+
+      - name: Upload Coverage Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report-android
+          path: coverage/lcov.info
+          retention-days: 14
+
+      - name: Debug Info (if failed)
+        if: failure()
+        run: |
+          echo "Job status is ${{ job.status }}"
+          echo "=== DEBUG OUTPUT: test-coverage-android failed ==="
+          flutter --version
+          which flutter
+          which dart
+          dart --version
+
+  ###########################################################################
+  # Job 4: build-apk (Optional)
+  # - Runs only based on labels, title, or specific path changes.
+  # - Builds an Android APK (debug) to ensure build success.
+  ###########################################################################
+  build-apk:
+    name: Build APK (Debug)
+    needs: test-coverage-android
+    if: >
+      contains(github.event.pull_request.labels.*.name, 'needs-build') ||
+      contains(github.event.pull_request.title, '[build]') ||
+      contains(join(github.event.pull_request.changed_files.*.filename, ' '), 'android/') ||
+      contains(join(github.event.pull_request.changed_files.*.filename, ' '), 'pubspec.yaml')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: "3.29.3"
+          channel: "stable"
+          cache: true
+
+      - name: Install Dependencies
+        run: flutter pub get
+
+      - name: Restore Generated Files
+        id: restore-generated
+        uses: actions/cache@v3
+        with:
+          path: |
+            **/*.freezed.dart
+            **/*.g.dart
+          key: generated-files-android-${{ github.sha }}
+
+      - name: Generate Code (fallback if cache missed)
+        if: steps.restore-generated.outputs.cache-hit != 'true'
+        # Removed --dart-define=ENV=dev
+        run: flutter pub run build_runner build --delete-conflicting-outputs --define="build_web_compilers|entrypoint=compiler=dart2js"
+
+      - name: Build Android APK (Debug)
+        # KEEP --dart-define here for build command
+        run: flutter build apk --debug --dart-define=ENV=dev
+
+      - name: Debug Info (if failed)
+        if: failure()
+        run: |
+          echo "Job status is ${{ job.status }}"
+          echo "=== DEBUG OUTPUT: build-apk failed ==="
+          flutter --version
+          which flutter
+          which dart
+          dart --version
+
+#  ###########################################################################
+#  # Job 5: integration-test-android (Optional) - CURRENTLY DISABLED
+#  # - Runs only based on labels, title, or specific path changes.
+#  # - Uses the Android emulator to run integration tests against STAGING backend.
+#  # - Re-enable by uncommenting and ensure STAGING_API_BASE_URL secret is set.
+#  # - Also ensure 'integration-test-android' is added back to required checks
+#  #   in branch protection rules for staging/main if re-enabled.
+#  ###########################################################################
+#  integration-test-android:
+#    name: Integration Tests (Android Emulator)
+#    needs: test-coverage-android
+#    if: >
+#      contains(github.event.pull_request.labels.*.name, 'integration-test') ||
+#      contains(join(github.event.pull_request.changed_files.*.filename, ' '), 'integration_test/') ||
+#      contains(github.event.pull_request.title, '[integration]')
+#    runs-on: ubuntu-latest
+#    steps:
+#      - name: Check out code
+#        uses: actions/checkout@v4
+#
+#      - name: Set up Flutter
+#        uses: subosito/flutter-action@v2
+#        with:
+#          flutter-version: '3.19.6'
+#          channel: 'stable'
+#          cache: true
+#
+#      - name: Install Dependencies
+#        run: flutter pub get
+#
+#      - name: Restore Generated Files
+#        id: restore-generated
+#        uses: actions/cache@v3
+#        with:
+#          path: |
+#            **/*.freezed.dart
+#            **/*.g.dart
+#          key: generated-files-android-${{ github.sha }}
+#
+#      - name: Generate Code (fallback if cache missed)
+#        if: steps.restore-generated.outputs.cache-hit != 'true'
+#        # Removed --dart-define=ENV=staging
+#        run: flutter pub run build_runner build --delete-conflicting-outputs --define="build_web_compilers|entrypoint=compiler=dart2js"
+#
+#      - name: Run Integration Tests on Android Emulator
+#        uses: reactivecircus/android-emulator-runner@v2
+#        with:
+#          api-level: 29
+#          arch: x86_64
+#          profile: Nexus 6
+#          script: |
+#            echo "--- Running Integration Tests ---"
+#            # KEEP --dart-define here for test command
+#            flutter test integration_test \
+#              --dart-define=ENV=staging \
+#              --dart-define=API_BASE_URL=${{ secrets.STAGING_API_BASE_URL }}
+#        env:
+#          # Make secret available to context for debug check
+#          STAGING_API_URL_ENV: ${{ secrets.STAGING_API_BASE_URL }}
+#
+#      - name: Debug Info (if failed)
+#        if: failure()
+#        run: |
+#          echo "Job status is ${{ job.status }}"
+#          echo "=== DEBUG OUTPUT: integration-test-android failed ==="
+#          # Check if the secret was available using shell parameter expansion check
+#          if [ -n "${{ env.STAGING_API_URL_ENV }}" ]; then
+#            echo "STAGING_API_URL_ENV secret was set."
+#          else
+#            echo "STAGING_API_URL_ENV secret was NOT set or is empty."
+#          fi
+#          flutter --version
+#          which flutter
+#          which dart
+#          dart --version
