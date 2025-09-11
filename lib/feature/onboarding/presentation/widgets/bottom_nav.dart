@@ -7,7 +7,12 @@ import 'package:winr/feature/onboarding/presentation/providers/onboarding_provid
 
 class BottomNavSheet extends ConsumerWidget {
   final PageController controller;
-  const BottomNavSheet({super.key, required this.controller});
+  final bool isSettings;
+  const BottomNavSheet({
+    super.key,
+    required this.controller,
+    this.isSettings = false,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -20,8 +25,7 @@ class BottomNavSheet extends ConsumerWidget {
       height: 80,
       child: Stack(
         children: [
-          // Show Skip button on first three pages only
-          if (currentPage < 3)
+          if (!isSettings && currentPage < 3)
             Align(
               alignment: Alignment.centerLeft,
               child: TextButton(
@@ -37,7 +41,6 @@ class BottomNavSheet extends ConsumerWidget {
                 },
               ),
             ),
-
           Center(
             child: SmoothPageIndicator(
               controller: controller,
@@ -60,44 +63,44 @@ class BottomNavSheet extends ConsumerWidget {
               ),
             ),
           ),
-
-          Align(
-            alignment: Alignment.centerRight,
-            child: isGetStartedLoading
-                ? const Center(child: CircularProgressIndicator())
-                : TextButton(
-                    onPressed: isGetStartedLoading
-                        ? null
-                        : () async {
-                            final loadFirstTime = ref.read(
-                              isGetStartedLoadingProvider.notifier,
-                            );
-
-                            if (!lastPage) {
-                              controller.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeIn,
+          if (!isSettings)
+            Align(
+              alignment: Alignment.centerRight,
+              child: isGetStartedLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : TextButton(
+                      onPressed: isGetStartedLoading
+                          ? null
+                          : () async {
+                              final loadFirstTime = ref.read(
+                                isGetStartedLoadingProvider.notifier,
                               );
-                              if (currentPage == 2) {
-                                ref.read(lastPageProvider.notifier).state =
-                                    true;
+
+                              if (!lastPage) {
+                                controller.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn,
+                                );
+                                if (currentPage == 2) {
+                                  ref.read(lastPageProvider.notifier).state =
+                                      true;
+                                }
+                              } else {
+                                loadFirstTime.state = true;
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setBool("isFirstTime", false);
+                                loadFirstTime.state = false;
                               }
-                            } else {
-                              loadFirstTime.state = true;
-                              final prefs =
-                                  await SharedPreferences.getInstance();
-                              await prefs.setBool("isFirstTime", false);
-                              loadFirstTime.state = false;
-                            }
-                          },
-                    child: lastPage
-                        ? const Text(
-                            AppText.getStarted,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          )
-                        : const Text(AppText.next),
-                  ),
-          ),
+                            },
+                      child: lastPage
+                          ? const Text(
+                              AppText.getStarted,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          : const Text(AppText.next),
+                    ),
+            ),
         ],
       ),
     );

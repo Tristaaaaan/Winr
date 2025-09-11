@@ -8,12 +8,16 @@ import 'package:winr/feature/onboarding/presentation/widgets/bottom_nav.dart';
 import 'package:winr/feature/onboarding/presentation/widgets/info_container.dart';
 
 class OnboardingScreen extends ConsumerWidget {
-  OnboardingScreen({super.key});
+  final bool isSettings;
+  OnboardingScreen({super.key, this.isSettings = false});
   final controller = PageController();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      appBar: isSettings
+          ? AppBar(centerTitle: true, title: const Text(AppText.winr101))
+          : null,
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -82,7 +86,10 @@ class OnboardingScreen extends ConsumerWidget {
           ],
         ),
       ),
-      bottomSheet: BottomNavSheet(controller: controller),
+      bottomSheet: BottomNavSheet(
+        controller: controller,
+        isSettings: isSettings,
+      ),
     );
   }
 }

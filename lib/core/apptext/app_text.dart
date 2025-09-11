@@ -11,6 +11,9 @@ class AppText {
   static const aboutUs = "About Us";
 
   static const aboutApp = "About the app";
+
+  static const winr101 = "Winr 101";
+
   static const bugAndSuggestion = "Bugs & Suggestions";
   static const help = "Help";
 
