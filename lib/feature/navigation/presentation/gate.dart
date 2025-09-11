@@ -46,7 +46,7 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
           if (_selectedIndex == 0 &&
               historyState.maybeWhen(loaded: (_) => true, orElse: () => false))
             Positioned(
-              bottom: 90, // adjust to sit above your custom nav
+              bottom: 150, // adjust to sit above your custom nav
               right: 20,
               child: FloatingActionButton(
                 elevation: 0,

@@ -25,6 +25,9 @@ dependencies:
   flutter_hooks: ^0.21.3+1
   package_info_plus: ^8.3.1
   hooks_riverpod: ^2.5.1
+  smooth_page_indicator: ^1.2.1
+  new_version_plus: ^0.1.1
+  connectivity_plus: ^6.1.5
 dev_dependencies:
   flutter_test:
     sdk: flutter

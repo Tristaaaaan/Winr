@@ -11,6 +11,9 @@ class AppText {
   static const aboutUs = "About Us";
 
   static const aboutApp = "About the app";
+
+  static const winr101 = "Winr 101";
+
   static const bugAndSuggestion = "Bugs & Suggestions";
   static const help = "Help";
 
@@ -35,6 +38,27 @@ class AppText {
   static const contactUs = "Contact Us";
 
   static const getStarted = "Get started";
+
+  static const whatsWinr1 =
+      "Winr is an application that not only calculates the number of wins required to reach the desired win rate of your favorite online or offline game character, but also helps you track your progress.";
+
+  static const whatsWinr2 =
+      "Each character's data can be saved in the application for future use.";
+
+  static const howWinr1 =
+      "The application collects the current number of battles, your current win rate, and your desired win rate for each character. Using these values, it calculates the exact number of consecutive wins needed to achieve your target win rate.";
+
+  static const howWinr2 =
+      "You can also add a name and image for the character to make tracking easier.";
+
+  static const winrStep1 =
+      'Step 1. To add or update a record, tap the "+" button at the bottom right of Records screen.';
+  static const winrStep2 =
+      "Step 2. Enter the current number of battles, current win rate, and desired win rate for the character. These three inputs are required. The character's name and image are optional, but can be added for easier record-keeping.";
+  static const winrStep3 =
+      "Step 3. The required number of consecutive wins will be displayed only when the inputs are valid. If no output appears, double-check that the current win rate is lower than the desired win rate and that all three required values are provided.";
+  static const winrDesc =
+      "Winr is developed to make progress tracking simple, clear, and motivating. Use it regularly to set goals, stay consistent, and celebrate your improvements in every game.";
 
   static const back = "Back";
 

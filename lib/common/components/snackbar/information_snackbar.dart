@@ -28,9 +28,9 @@ void informationSnackBar(BuildContext context, IconData icon, String text) {
 
       // ✅ Position adjustment
       margin: const EdgeInsets.only(
-        bottom: 100, // move up from bottom
+        bottom: 90, // move up from bottom
         left: 16, // side padding
-        right: 90,
+        right: 16,
       ),
     ),
   );

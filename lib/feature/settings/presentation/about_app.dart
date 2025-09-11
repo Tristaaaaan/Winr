@@ -17,7 +17,14 @@ class AboutApp extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(AppText.aboutApp, style: TextStyle(fontSize: 16)),
         ),
-
+        ProfileSettingsContainer(
+          withSwitch: false,
+          title: AppText.winr101,
+          icon: Icons.lightbulb_outlined,
+          onTap: () {
+            context.push('/winrintro', extra: true);
+          },
+        ),
         ProfileSettingsContainer(
           withSwitch: false,
           title: AppText.appVersion,
