@@ -20,15 +20,15 @@ _$WinRateRecordsImpl _$$WinRateRecordsImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$WinRateRecordsImplToJson(
-        _$WinRateRecordsImpl instance) =>
-    <String, dynamic>{
-      'id': instance.id,
-      'timeAdded': instance.timeAdded,
-      'lastUpdated': instance.lastUpdated,
-      'backgroundImage': instance.backgroundImage,
-      'desiredWinRate': instance.desiredWinRate,
-      'name': instance.name,
-      'currentNumberOfBattles': instance.currentNumberOfBattles,
-      'currentWinRate': instance.currentWinRate,
-      'progressiveWinRate': instance.progressiveWinRate,
-    };
+  _$WinRateRecordsImpl instance,
+) => <String, dynamic>{
+  'id': instance.id,
+  'timeAdded': instance.timeAdded,
+  'lastUpdated': instance.lastUpdated,
+  'backgroundImage': instance.backgroundImage,
+  'desiredWinRate': instance.desiredWinRate,
+  'name': instance.name,
+  'currentNumberOfBattles': instance.currentNumberOfBattles,
+  'currentWinRate': instance.currentWinRate,
+  'progressiveWinRate': instance.progressiveWinRate,
+};
