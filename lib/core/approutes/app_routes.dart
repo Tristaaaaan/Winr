@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:winr/feature/navigation/presentation/gate.dart';
+import 'package:winr/feature/onboarding/presentation/welcome_gate.dart';
 import 'package:winr/feature/settings/presentation/version_screen.dart';
 
 final GoRouter appRouter = GoRouter(
@@ -8,7 +8,7 @@ final GoRouter appRouter = GoRouter(
     GoRoute(
       path: '/',
       builder: (BuildContext context, GoRouterState state) {
-        return NavigationGate();
+        return Welcome();
       },
     ),
     GoRoute(
