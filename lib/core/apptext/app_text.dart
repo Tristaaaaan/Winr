@@ -52,7 +52,7 @@ class AppText {
       "You can also add a name and image for the character to make tracking easier.";
 
   static const winrStep1 =
-      'Step 1. To add or update a record, tap the "+" button at the bottom right of Records screen.';
+      'Step 1. To add or update a record, tap the "Add Record" or the "+" button on Records screen.';
   static const winrStep2 =
       "Step 2. Enter the current number of battles, current win rate, and desired win rate for the character. These three inputs are required. The character's name and image are optional, but can be added for easier record-keeping.";
   static const winrStep3 =
