@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -90,9 +89,6 @@ class RecordForm extends ConsumerWidget {
                       pickedImage.name,
                     ];
                     ref.read(isImageRemovedProvider.notifier).state = false;
-
-                    developer.log('Picked image path: ${pickedImage.path}');
-                    developer.log('Picked image name: ${pickedImage.name}');
                   },
                   child: Container(
                     padding: const EdgeInsets.all(15),
@@ -338,7 +334,6 @@ class RecordForm extends ConsumerWidget {
                 text: "Save",
                 onTap: () async {
                   final requiredWins = ref.read(requiredWinsProvider);
-                  developer.log("requiredWins: $requiredWins");
 
                   if (requiredWins == null) {
                     if (!context.mounted) return;
@@ -379,7 +374,6 @@ class RecordForm extends ConsumerWidget {
                     );
 
                     if (isUpdate) {
-                      developer.log("ID: ${recordData!.id}");
                       await ref
                           .read(historyControllerProvider.notifier)
                           .updateRecord(recordData!.id!, record);

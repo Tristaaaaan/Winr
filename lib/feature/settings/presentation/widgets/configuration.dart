@@ -1,5 +1,3 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -28,10 +26,6 @@ class AppConfiguration extends ConsumerWidget {
           title: AppText.appearance,
           icon: Icons.color_lens,
           onTap: () async {
-            developer.log(
-              "ProfileSettingsContainer",
-              name: "ProfileSettingsContainer",
-            );
             themeNotifier.toggleTheme();
 
             final isLightMode = ref.read(themeNotifierProvider);
