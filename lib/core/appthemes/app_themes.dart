@@ -23,7 +23,7 @@ class ThemeNotifier extends StateNotifier<bool> {
   static final ThemeData darkMode = ThemeData(
     colorScheme: ColorScheme.dark(
       surface: Colors.black,
-      primary: Color(0xff574667),
+      primary: Colors.white,
       secondary: Colors.white,
       tertiary: const Color.fromARGB(255, 180, 180, 180).withValues(alpha: 0.2),
       inversePrimary: Colors.grey.shade900,
@@ -35,6 +35,10 @@ class ThemeNotifier extends StateNotifier<bool> {
   ThemeData get currentTheme => state ? darkMode : lightMode;
   void toggleTheme() {
     state = !state;
+  }
+
+  void setTheme(bool isDark) {
+    state = isDark;
   }
 }
 

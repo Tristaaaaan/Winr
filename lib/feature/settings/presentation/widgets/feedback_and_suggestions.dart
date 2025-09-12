@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:winr/core/apptext/app_text.dart';
 
-import '../../../common/components/container/profile_settings.dart';
+import '../../../../common/components/container/profile_settings.dart';
 
 class BugSuggestionsReport extends ConsumerWidget {
   const BugSuggestionsReport({super.key});

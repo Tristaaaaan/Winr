@@ -1,6 +1,6 @@
 class AppText {
   static const profile = "Profile";
-
+  static const configuration = "Configuration";
   static const settings = "Settings";
 
   static const export = "Export Data";

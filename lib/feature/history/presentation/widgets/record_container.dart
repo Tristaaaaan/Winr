@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/utils/calculate_winrate.dart';
 import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appthemes/app_themes.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/history/presentation/widgets/statistic_item.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';
@@ -18,6 +19,7 @@ class RecordContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeNotifierProvider);
     // Check if record really has an image
     final hasImage =
         record.backgroundImage != null && record.backgroundImage!.isNotEmpty;
@@ -156,7 +158,11 @@ class RecordContainer extends ConsumerWidget {
                       TextSpan(
                         text: "You need to win ",
                         style: TextStyle(
-                          color: hasImage ? Colors.white70 : Colors.black,
+                          color: isDark
+                              ? Colors.white
+                              : hasImage
+                              ? Colors.white70
+                              : Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),
