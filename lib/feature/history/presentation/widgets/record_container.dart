@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer' as developer;
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
@@ -39,7 +38,6 @@ class RecordContainer extends ConsumerWidget {
 
     return GestureDetector(
       onTap: () {
-        developer.log("Record: ${record.id}");
         ref.read(isImageRemovedProvider.notifier).state = false;
         ref.read(uploadImageNameProvider.notifier).state = [];
         ref.read(uploadImagePathProvider.notifier).state = [];
