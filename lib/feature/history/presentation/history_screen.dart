@@ -92,7 +92,7 @@ class HistoryScreen extends ConsumerWidget {
                   ),
                   const SliverPadding(
                     padding: EdgeInsets.only(
-                      bottom: kBottomNavigationBarHeight + 15,
+                      bottom: kBottomNavigationBarHeight + 25,
                     ),
                   ),
                 ],

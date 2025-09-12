@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:winr/core/appthemes/app_themes.dart';
 
 class ProfileSettingsContainer extends ConsumerWidget {
   final bool withSwitch;
   final String title;
   final IconData icon;
-  final bool? notification;
   final void Function(bool)? onChanged;
   final void Function()? onTap;
   final WidgetRef? ref;
@@ -20,7 +20,6 @@ class ProfileSettingsContainer extends ConsumerWidget {
     required this.title,
     required this.icon,
     this.onTap,
-    this.notification,
     this.ref,
     this.withCaption = false,
     this.onChanged,
@@ -90,7 +89,27 @@ class ProfileSettingsContainer extends ConsumerWidget {
                         ),
                 ],
               ),
-
+              if (withSwitch)
+                Switch(
+                  key: Key(containerKey!),
+                  inactiveThumbColor: Theme.of(context).colorScheme.primary,
+                  activeThumbColor: Theme.of(context).colorScheme.primary,
+                  trackOutlineColor: WidgetStateProperty.resolveWith<Color?>((
+                    Set<WidgetState> states,
+                  ) {
+                    if (states.contains(WidgetState.disabled)) {
+                      return Theme.of(
+                        context,
+                      ).colorScheme.primary.withValues(alpha: .48);
+                    }
+                    if (states.contains(WidgetState.selected)) {
+                      return null;
+                    }
+                    return Theme.of(context).colorScheme.primary;
+                  }),
+                  value: ref.watch(themeNotifierProvider),
+                  onChanged: onChanged,
+                ),
               if (!withSwitch) Icon(Icons.chevron_right),
             ],
           ),
