@@ -12,7 +12,7 @@ import 'package:winr/common/components/textfield/form_textfield.dart';
 import 'package:winr/common/utils/convert_images.dart';
 import 'package:winr/common/utils/winrate_input_formatter.dart';
 import 'package:winr/core/appimages/app_images.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/feature/history/presentation/providers/history_controller.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';

@@ -5,6 +5,7 @@ import 'package:winr/common/components/loading/record_loading.dart';
 import 'package:winr/common/components/placeholder/place_holder.dart';
 import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/feature/history/presentation/providers/history_controller.dart';
+import 'package:winr/feature/history/presentation/providers/history_states.dart';
 import 'package:winr/feature/history/presentation/widgets/record_container.dart';
 import 'package:winr/feature/records/presentation/widgets/add_record.dart';
 

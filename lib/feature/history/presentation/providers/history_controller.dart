@@ -1,5 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/feature/history/data/history_repo_impl.dart';
 import 'package:winr/feature/history/domain/history_repo.dart';
 import 'package:winr/feature/history/presentation/providers/history_states.dart';

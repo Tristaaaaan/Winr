@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/feature/records/presentation/widgets/record_form.dart';
 
 void showRecordSheet(

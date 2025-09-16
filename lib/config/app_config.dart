@@ -4,7 +4,7 @@ class AppConfig {
   static Flavors flavors = Flavors.production;
   static Flavors get environment => flavors;
 
-  static setEnvironment(Flavors environment) {
+  static void setEnvironment(Flavors environment) {
     switch (environment) {
       case Flavors.development:
         flavors = Flavors.development;

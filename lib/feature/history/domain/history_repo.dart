@@ -1,4 +1,4 @@
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 
 abstract class HistoryRepository {
   Future<List<WinRateRecords>> getRecords();

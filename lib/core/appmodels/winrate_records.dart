@@ -1,14 +1,12 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'record.freezed.dart';
-part 'record.g.dart';
+part 'winrate_records.freezed.dart';
+part 'winrate_records.g.dart';
 
 @freezed
-class WinRateRecords with _$WinRateRecords {
-  const WinRateRecords._();
-
+abstract class WinRateRecords with _$WinRateRecords {
   const factory WinRateRecords({
-    int? id, // PRIMARY KEY AUTOINCREMENT
+    int? id,
     required int timeAdded,
     int? lastUpdated,
     String? backgroundImage,
@@ -23,6 +21,8 @@ class WinRateRecords with _$WinRateRecords {
       _$WinRateRecordsFromJson(json);
 
   /// ✅ Manual Map conversion for SQLite
+  const WinRateRecords._(); // keep private constructor for methods
+
   Map<String, dynamic> toMap() => {
     'id': id,
     'timeAdded': timeAdded,
@@ -32,18 +32,18 @@ class WinRateRecords with _$WinRateRecords {
     'name': name,
     'currentNumberOfBattles': currentNumberOfBattles,
     'currentWinRate': currentWinRate,
-    'progressiveWinRate': progressiveWinRate, // stays null if not set
+    'progressiveWinRate': progressiveWinRate,
   };
 
   factory WinRateRecords.fromMap(Map<String, dynamic> map) => WinRateRecords(
     id: map['id'] as int?,
     timeAdded: map['timeAdded'] as int,
-    name: map['name'] as String?,
     lastUpdated: map['lastUpdated'] as int?,
     backgroundImage: map['backgroundImage'] as String?,
     desiredWinRate: map['desiredWinRate'] as int,
+    name: map['name'] as String?,
     currentNumberOfBattles: map['currentNumberOfBattles'] as int,
     currentWinRate: map['currentWinRate'] as int,
-    progressiveWinRate: map['progressiveWinRate'] as int?, // ✅ allow null
+    progressiveWinRate: map['progressiveWinRate'] as int?,
   );
 }

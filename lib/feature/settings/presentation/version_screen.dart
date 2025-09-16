@@ -46,7 +46,7 @@ class VersionScreen extends HookConsumerWidget {
     );
   }
 
-  Widget buildListTile(trailing, title) {
+  Widget buildListTile(String trailing, String title) {
     return ListTile(title: Text(title), trailing: Text(trailing));
   }
 }
