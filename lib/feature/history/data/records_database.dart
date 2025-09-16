@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path/path.dart' as p;
 import 'package:sqflite/sqflite.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 
 final recordDatabaseProvider = Provider<RecordDatabase>((ref) {
   final db = RecordDatabase();

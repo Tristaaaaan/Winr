@@ -12,7 +12,7 @@ import 'package:winr/common/components/textfield/form_textfield.dart';
 import 'package:winr/common/utils/convert_images.dart';
 import 'package:winr/common/utils/winrate_input_formatter.dart';
 import 'package:winr/core/appimages/app_images.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/feature/history/presentation/providers/history_controller.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/records/presentation/providers/image_providers.dart';
@@ -57,142 +57,138 @@ class RecordForm extends ConsumerWidget {
       children: [
         showPlaceholder
             ? SizedBox(
-                height: 200,
-                child: InkWell(
-                  borderRadius: BorderRadius.circular(20),
-                  onTap: () async {
-                    final imagePicker = ImagePicker();
-                    final XFile? pickedImage = await imagePicker.pickImage(
-                      source: ImageSource.gallery,
-                    );
+              height: 200,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(20),
+                onTap: () async {
+                  final imagePicker = ImagePicker();
+                  final XFile? pickedImage = await imagePicker.pickImage(
+                    source: ImageSource.gallery,
+                  );
 
-                    if (pickedImage == null) {
-                      if (context.mounted) {
-                        informationSnackBar(
-                          context,
-                          Icons.info_outline,
-                          "No image has been selected.",
-                        );
-                      }
-                      return;
+                  if (pickedImage == null) {
+                    if (context.mounted) {
+                      informationSnackBar(
+                        context,
+                        Icons.info_outline,
+                        "No image has been selected.",
+                      );
                     }
+                    return;
+                  }
 
-                    final newFile = File(pickedImage.path);
-                    ref.read(uploadImagePathProvider.notifier).state = [
-                      newFile,
-                    ];
-                    ref.read(uploadImagePathNameProvider.notifier).state = [
-                      pickedImage.path,
-                    ];
-                    ref.read(uploadImageNameProvider.notifier).state = [
-                      pickedImage.name,
-                    ];
-                    ref.read(isImageRemovedProvider.notifier).state = false;
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.all(15),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Theme.of(context).colorScheme.surface,
-                    ),
-                    width: double.infinity,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                          height: 100,
-                          width: 100,
-                          AppImages.uploadImage,
+                  final newFile = File(pickedImage.path);
+                  ref.read(uploadImagePathProvider.notifier).state = [newFile];
+                  ref.read(uploadImagePathNameProvider.notifier).state = [
+                    pickedImage.path,
+                  ];
+                  ref.read(uploadImageNameProvider.notifier).state = [
+                    pickedImage.name,
+                  ];
+                  ref.read(isImageRemovedProvider.notifier).state = false;
+                },
+                child: Container(
+                  padding: const EdgeInsets.all(15),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Theme.of(context).colorScheme.surface,
+                  ),
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      SvgPicture.asset(
+                        height: 100,
+                        width: 100,
+                        AppImages.uploadImage,
+                      ),
+                      const SizedBox(height: 25),
+                      const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.file_upload_outlined),
+                          SizedBox(width: 10),
+                          Text("Add Image (optional)"),
+                        ],
+                      ),
+                      const Text(
+                        style: TextStyle(
+                          fontSize: 12,
+                          fontStyle: FontStyle.italic,
                         ),
-                        const SizedBox(height: 25),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Icon(Icons.file_upload_outlined),
-                            SizedBox(width: 10),
-                            Text("Add Image (optional)"),
-                          ],
-                        ),
-                        const Text(
-                          style: TextStyle(
-                            fontSize: 12,
-                            fontStyle: FontStyle.italic,
-                          ),
-                          "You can only select 1 image.",
-                        ),
-                      ],
-                    ),
+                        "You can only select 1 image.",
+                      ),
+                    ],
                   ),
                 ),
-              )
-            : SizedBox(
-                height: 200,
-                child: Stack(
-                  children: [
-                    ClipRRect(
-                      borderRadius: BorderRadius.circular(20),
-                      child: Builder(
-                        builder: (context) {
-                          if (selectedImages.isNotEmpty) {
-                            return Image.file(
-                              selectedImages.first,
-                              height: double.infinity,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.broken_image),
-                            );
-                          }
-
-                          if (!isRemoved &&
-                              recordData?.backgroundImage != null &&
-                              recordData!.backgroundImage!.isNotEmpty) {
-                            return Image.memory(
-                              base64Decode(recordData!.backgroundImage!),
-                              height: double.infinity,
-                              width: double.infinity,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) =>
-                                  const Icon(Icons.broken_image),
-                            );
-                          }
-
-                          return const SizedBox();
-                        },
-                      ),
-                    ),
-                    Positioned(
-                      top: 10,
-                      right: 10,
-                      child: Container(
-                        decoration: const BoxDecoration(
-                          color: Colors.black54,
-                          shape: BoxShape.circle,
-                        ),
-                        child: InkWell(
-                          onTap: () {
-                            ref.read(uploadImagePathProvider.notifier).state =
-                                [];
-                            ref
-                                    .read(uploadImagePathNameProvider.notifier)
-                                    .state =
-                                [];
-                            ref.read(uploadImageNameProvider.notifier).state =
-                                [];
-                            ref.read(isImageRemovedProvider.notifier).state =
-                                true;
-                          },
-                          child: const Icon(
-                            Icons.close,
-                            size: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
               ),
+            )
+            : SizedBox(
+              height: 200,
+              child: Stack(
+                children: [
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(20),
+                    child: Builder(
+                      builder: (context) {
+                        if (selectedImages.isNotEmpty) {
+                          return Image.file(
+                            selectedImages.first,
+                            height: double.infinity,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder:
+                                (context, error, stackTrace) =>
+                                    const Icon(Icons.broken_image),
+                          );
+                        }
+
+                        if (!isRemoved &&
+                            recordData?.backgroundImage != null &&
+                            recordData!.backgroundImage!.isNotEmpty) {
+                          return Image.memory(
+                            base64Decode(recordData!.backgroundImage!),
+                            height: double.infinity,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                            errorBuilder:
+                                (context, error, stackTrace) =>
+                                    const Icon(Icons.broken_image),
+                          );
+                        }
+
+                        return const SizedBox();
+                      },
+                    ),
+                  ),
+                  Positioned(
+                    top: 10,
+                    right: 10,
+                    child: Container(
+                      decoration: const BoxDecoration(
+                        color: Colors.black54,
+                        shape: BoxShape.circle,
+                      ),
+                      child: InkWell(
+                        onTap: () {
+                          ref.read(uploadImagePathProvider.notifier).state = [];
+                          ref.read(uploadImagePathNameProvider.notifier).state =
+                              [];
+                          ref.read(uploadImageNameProvider.notifier).state = [];
+                          ref.read(isImageRemovedProvider.notifier).state =
+                              true;
+                        },
+                        child: const Icon(
+                          Icons.close,
+                          size: 20,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
         const SizedBox(height: 20),
         FormTextField(
           fieldKey: 'name',
@@ -211,8 +207,9 @@ class RecordForm extends ConsumerWidget {
           ],
           isUpdate: isUpdate,
           initialValue: recordData?.currentNumberOfBattles.toString(),
-          onChanged: (value) =>
-              ref.read(numberOfBattlesProvider.notifier).state = value,
+          onChanged:
+              (value) =>
+                  ref.read(numberOfBattlesProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
         FormTextField(
@@ -224,8 +221,8 @@ class RecordForm extends ConsumerWidget {
           ],
           isUpdate: isUpdate,
           initialValue: recordData?.currentWinRate.toString(),
-          onChanged: (value) =>
-              ref.read(winRateProvider.notifier).state = value,
+          onChanged:
+              (value) => ref.read(winRateProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
         FormTextField(
@@ -237,11 +234,12 @@ class RecordForm extends ConsumerWidget {
           ],
           isUpdate: isUpdate,
           initialValue: recordData?.desiredWinRate.toString(),
-          onChanged: (value) =>
-              ref.read(desiredWinRateProvider.notifier).state = value,
+          onChanged:
+              (value) =>
+                  ref.read(desiredWinRateProvider.notifier).state = value,
         ),
         const SizedBox(height: 50),
-        if (ref.watch(requiredWinsProvider) != null)
+        if (ref.watch(requiredWinsMessageProvider) != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
@@ -255,7 +253,7 @@ class RecordForm extends ConsumerWidget {
               ),
             ),
             child: Text(
-              ref.watch(requiredWinsProvider) ?? "",
+              ref.watch(requiredWinsMessageProvider) ?? "",
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -289,9 +287,8 @@ class RecordForm extends ConsumerWidget {
                           TextButton(
                             onPressed: () => Navigator.of(ctx).pop(true),
                             style: TextButton.styleFrom(
-                              foregroundColor: Theme.of(
-                                context,
-                              ).colorScheme.error,
+                              foregroundColor:
+                                  Theme.of(context).colorScheme.error,
                             ),
                             child: const Text("Delete"),
                           ),
@@ -320,6 +317,10 @@ class RecordForm extends ConsumerWidget {
                       "Record has been deleted!",
                     );
                   } finally {
+                    ref.invalidate(requiredWinsProvider);
+                    ref.invalidate(desiredWinRateProvider);
+                    ref.invalidate(numberOfBattlesProvider);
+                    ref.invalidate(winRateProvider);
                     isLoading.setLoading("deleteButton", false);
                   }
                 },
@@ -332,7 +333,7 @@ class RecordForm extends ConsumerWidget {
                 withIcon: false,
                 text: "Save",
                 onTap: () async {
-                  final requiredWins = ref.read(requiredWinsProvider);
+                  final requiredWins = ref.read(requiredWinsMessageProvider);
 
                   if (requiredWins == null) {
                     if (!context.mounted) return;
@@ -358,12 +359,12 @@ class RecordForm extends ConsumerWidget {
                         recordData,
                       ),
                       name: ref.read(nameProvider) ?? "",
-                      timeAdded: isUpdate
-                          ? recordData!.timeAdded
-                          : DateTime.now().microsecondsSinceEpoch,
-                      lastUpdated: isUpdate
-                          ? DateTime.now().millisecondsSinceEpoch
-                          : 0,
+                      timeAdded:
+                          isUpdate
+                              ? recordData!.timeAdded
+                              : DateTime.now().microsecondsSinceEpoch,
+                      lastUpdated:
+                          isUpdate ? DateTime.now().millisecondsSinceEpoch : 0,
                       desiredWinRate:
                           int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
                       currentNumberOfBattles:
@@ -390,6 +391,10 @@ class RecordForm extends ConsumerWidget {
                       "Record has been saved!",
                     );
                   } finally {
+                    ref.invalidate(requiredWinsProvider);
+                    ref.invalidate(desiredWinRateProvider);
+                    ref.invalidate(numberOfBattlesProvider);
+                    ref.invalidate(winRateProvider);
                     isLoading.setLoading("saveButton", false);
                   }
                 },

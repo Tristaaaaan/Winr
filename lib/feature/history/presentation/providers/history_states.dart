@@ -1,5 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 
 part 'history_states.freezed.dart';
 

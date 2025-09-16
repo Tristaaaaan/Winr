@@ -4,7 +4,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/utils/calculate_winrate.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/core/appthemes/app_themes.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/history/presentation/widgets/statistic_item.dart';
@@ -50,34 +50,37 @@ class RecordContainer extends ConsumerWidget {
       child: Container(
         margin: const EdgeInsets.all(12),
         decoration: BoxDecoration(
-          border: hasImage
-              ? null
-              : Border.all(
-                  width: 2,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
+          border:
+              hasImage
+                  ? null
+                  : Border.all(
+                    width: 2,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
           borderRadius: BorderRadius.circular(20),
-          image: hasImage
-              ? DecorationImage(
-                  image: MemoryImage(backgroundImage!),
-                  fit: BoxFit.cover,
-                )
-              : null,
+          image:
+              hasImage
+                  ? DecorationImage(
+                    image: MemoryImage(backgroundImage!),
+                    fit: BoxFit.cover,
+                  )
+                  : null,
         ),
         child: Container(
           padding: const EdgeInsets.all(15),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),
-            gradient: hasImage
-                ? LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    colors: [
-                      Colors.black.withValues(alpha: .3),
-                      Colors.black.withValues(alpha: 0.6),
-                    ],
-                  )
-                : null,
+            gradient:
+                hasImage
+                    ? LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Colors.black.withValues(alpha: .3),
+                        Colors.black.withValues(alpha: 0.6),
+                      ],
+                    )
+                    : null,
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -88,26 +91,26 @@ class RecordContainer extends ConsumerWidget {
                 children: [
                   record.name != ""
                       ? Container(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 10,
-                            vertical: 4,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 10,
+                          vertical: 4,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          color: Theme.of(
+                            context,
+                          ).colorScheme.primary.withValues(alpha: 0.5),
+                        ),
+                        child: Text(
+                          record.name!.toUpperCase(),
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 13,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 0.5,
                           ),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16),
-                            color: Theme.of(
-                              context,
-                            ).colorScheme.primary.withValues(alpha: 0.5),
-                          ),
-                          child: Text(
-                            record.name!.toUpperCase(),
-                            style: const TextStyle(
-                              color: Colors.white,
-                              fontSize: 13,
-                              fontWeight: FontWeight.bold,
-                              letterSpacing: 0.5,
-                            ),
-                          ),
-                        )
+                        ),
+                      )
                       : const SizedBox.shrink(),
                   Icon(Icons.chevron_right_outlined, size: 24),
                 ],
@@ -137,9 +140,10 @@ class RecordContainer extends ConsumerWidget {
                         Expanded(
                           child: StatisticItem(
                             withImage: hasImage,
-                            label: record.currentNumberOfBattles == 1
-                                ? "Match"
-                                : "Matches",
+                            label:
+                                record.currentNumberOfBattles == 1
+                                    ? "Match"
+                                    : "Matches",
                             value: "${record.currentNumberOfBattles}",
                           ),
                         ),
@@ -152,11 +156,12 @@ class RecordContainer extends ConsumerWidget {
                       TextSpan(
                         text: "You need to win ",
                         style: TextStyle(
-                          color: isDark
-                              ? Colors.white
-                              : hasImage
-                              ? Colors.white70
-                              : Colors.black,
+                          color:
+                              isDark
+                                  ? Colors.white
+                                  : hasImage
+                                  ? Colors.white70
+                                  : Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),

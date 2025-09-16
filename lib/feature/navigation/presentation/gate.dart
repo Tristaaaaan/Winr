@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:winr/common/components/navbar/custom_navbar.dart';
 import 'package:winr/feature/history/presentation/history_screen.dart';
+import 'package:winr/feature/history/presentation/providers/history_states.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/records/presentation/widgets/add_record.dart';
 import 'package:winr/feature/settings/presentation/settings_screen.dart';

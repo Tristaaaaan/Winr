@@ -1,11 +1,15 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:winr/core/appmodels/record.dart';
+import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/feature/history/data/records_database.dart';
 
 final desiredWinRateProvider = StateProvider<String>((ref) => "");
 final numberOfBattlesProvider = StateProvider<String>((ref) => "");
 final winRateProvider = StateProvider<String>((ref) => "");
 final nameProvider = StateProvider<String>((ref) => "");
+
+final requiredWinsMessageProvider = StateProvider<String?>((ref) {
+  return ref.watch(requiredWinsProvider);
+});
 
 final requiredWinsProvider = Provider<String?>((ref) {
   final desiredWinRate =
