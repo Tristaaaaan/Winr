@@ -34,25 +34,27 @@ class RegularButton extends ConsumerWidget {
     final isLoading =
         ref.watch(regularButtonLoadingProvider)[buttonKey] ?? false;
     return GestureDetector(
-      onTap: withoutLoading!
-          ? onTap
-          : isLoading
+      onTap:
+          withoutLoading!
+              ? onTap
+              : isLoading
               ? () {}
               : () async {
-                  onTap!();
-                },
+                onTap!();
+              },
       child: Container(
         height: 55,
         width: width,
         decoration: BoxDecoration(
           color: backgroundColor,
           borderRadius: BorderRadius.circular(16),
-          border: withBorder!
-              ? Border.all(
-                  color: Theme.of(context).colorScheme.primary,
-                  width: 3,
-                )
-              : null,
+          border:
+              withBorder!
+                  ? Border.all(
+                    color: Theme.of(context).colorScheme.primary,
+                    width: 3,
+                  )
+                  : null,
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -61,35 +63,37 @@ class RegularButton extends ConsumerWidget {
               // if (withIcon == true)
               //   SvgPicture.asset(AppImages.googleLogo, height: 20, width: 20),
               Expanded(
-                child: isLoading
-                    ? Center(
-                        child: LoadingAnimationWidget.stretchedDots(
-                          color: withIcon == true
-                              ? Theme.of(context).colorScheme.primary
-                              : Theme.of(context).colorScheme.surface,
-                          size: 30,
-                        ),
-                      )
-                    : Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            text,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: textColor,
-                            ),
+                child:
+                    isLoading
+                        ? Center(
+                          child: LoadingAnimationWidget.stretchedDots(
+                            color:
+                                withIcon == true
+                                    ? Theme.of(context).colorScheme.primary
+                                    : Theme.of(context).colorScheme.surface,
+                            size: 30,
                           ),
-                          const SizedBox(width: 10),
-                          if (suffixIcon!)
-                            Icon(
-                              Icons.chevron_right,
-                              color: Theme.of(context).colorScheme.surface,
+                        )
+                        : Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              text,
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                color: textColor,
+                              ),
                             ),
-                        ],
-                      ),
+                            const SizedBox(width: 10),
+                            if (suffixIcon!)
+                              Icon(
+                                Icons.chevron_right,
+                                color: Theme.of(context).colorScheme.surface,
+                              ),
+                          ],
+                        ),
               ),
               if (withIcon == true) const SizedBox(width: 20),
             ],

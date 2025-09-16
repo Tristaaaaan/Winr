@@ -34,9 +34,10 @@ class ProfileSettingsContainer extends ConsumerWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          decoration: withBorder!
-              ? BoxDecoration(border: Border(bottom: BorderSide(width: 1)))
-              : null,
+          decoration:
+              withBorder!
+                  ? BoxDecoration(border: Border(bottom: BorderSide(width: 1)))
+                  : null,
           height: 60,
           width: double.infinity,
           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -50,43 +51,42 @@ class ProfileSettingsContainer extends ConsumerWidget {
                   const SizedBox(width: 10),
                   !withCaption!
                       ? Text(
-                          title,
-                          style: TextStyle(
-                            fontSize: 12,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        )
-                      : Container(
-                          width: 200,
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                title,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                              const SizedBox(height: 3),
-                              Expanded(
-                                child: Text(
-                                  containerKey == "notificationKey"
-                                      ? "Enabling this will notify you when a sample containing infested berries is detected."
-                                      : "Enabling this will allow you to detect using image sample from your device.",
-                                  style: TextStyle(
-                                    fontSize: 8,
-                                    color: Theme.of(
-                                      context,
-                                    ).colorScheme.secondary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
+                        title,
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Theme.of(context).colorScheme.primary,
                         ),
+                      )
+                      : Container(
+                        width: 200,
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              title,
+                              style: TextStyle(
+                                fontSize: 10,
+                                color: Theme.of(context).colorScheme.primary,
+                              ),
+                            ),
+                            const SizedBox(height: 3),
+                            Expanded(
+                              child: Text(
+                                containerKey == "notificationKey"
+                                    ? "Enabling this will notify you when a sample containing infested berries is detected."
+                                    : "Enabling this will allow you to detect using image sample from your device.",
+                                style: TextStyle(
+                                  fontSize: 8,
+                                  color:
+                                      Theme.of(context).colorScheme.secondary,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                 ],
               ),
               if (withSwitch)
@@ -121,8 +121,8 @@ class ProfileSettingsContainer extends ConsumerWidget {
 
 final detectionStatusProvider =
     StateNotifierProvider<DetectionStatusNotifier, bool>((ref) {
-  return DetectionStatusNotifier();
-});
+      return DetectionStatusNotifier();
+    });
 
 class DetectionStatusNotifier extends StateNotifier<bool> {
   DetectionStatusNotifier() : super(false);

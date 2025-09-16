@@ -88,9 +88,10 @@ class CustomBottomNavBar extends StatelessWidget {
           duration: const Duration(milliseconds: 500),
           curve: Curves.easeInOut,
           decoration: BoxDecoration(
-            color: isSelected
-                ? Theme.of(context).colorScheme.surface
-                : Colors.transparent,
+            color:
+                isSelected
+                    ? Theme.of(context).colorScheme.surface
+                    : Colors.transparent,
             borderRadius: BorderRadius.circular(40),
           ),
           padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 12),
@@ -99,9 +100,10 @@ class CustomBottomNavBar extends StatelessWidget {
             children: [
               Icon(
                 icon,
-                color: isSelected
-                    ? Theme.of(context).colorScheme.primary
-                    : Theme.of(context).colorScheme.surface,
+                color:
+                    isSelected
+                        ? Theme.of(context).colorScheme.primary
+                        : Theme.of(context).colorScheme.surface,
               ),
               if (isSelected)
                 Padding(

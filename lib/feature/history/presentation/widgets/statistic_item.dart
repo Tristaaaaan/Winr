@@ -22,9 +22,10 @@ class StatisticItem extends ConsumerWidget {
         Text(
           label,
           style: TextStyle(
-            color: isDark
-                ? Colors.white
-                : withImage
+            color:
+                isDark
+                    ? Colors.white
+                    : withImage
                     ? Colors.white70
                     : Colors.black,
             fontSize: 12,
@@ -35,9 +36,10 @@ class StatisticItem extends ConsumerWidget {
         Text(
           value,
           style: TextStyle(
-            color: isDark
-                ? Colors.white
-                : withImage
+            color:
+                isDark
+                    ? Colors.white
+                    : withImage
                     ? Colors.white70
                     : Colors.black,
             fontSize: 16,
