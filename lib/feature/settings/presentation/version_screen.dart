@@ -31,7 +31,6 @@ class VersionScreen extends HookConsumerWidget {
                 packageInfo.value?.appName ?? AppText.unknown,
                 AppText.appName,
               ),
-
               buildListTile(
                 packageInfo.value?.version ?? AppText.unknown,
                 AppText.appVersion,

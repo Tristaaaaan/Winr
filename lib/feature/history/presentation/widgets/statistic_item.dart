@@ -25,8 +25,8 @@ class StatisticItem extends ConsumerWidget {
             color: isDark
                 ? Colors.white
                 : withImage
-                ? Colors.white70
-                : Colors.black,
+                    ? Colors.white70
+                    : Colors.black,
             fontSize: 12,
             fontWeight: FontWeight.bold,
           ),
@@ -38,8 +38,8 @@ class StatisticItem extends ConsumerWidget {
             color: isDark
                 ? Colors.white
                 : withImage
-                ? Colors.white70
-                : Colors.black,
+                    ? Colors.white70
+                    : Colors.black,
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),

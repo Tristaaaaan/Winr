@@ -12,8 +12,7 @@ part of 'record.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 WinRateRecords _$WinRateRecordsFromJson(Map<String, dynamic> json) {
   return _WinRateRecords.fromJson(json);
@@ -41,21 +40,19 @@ mixin _$WinRateRecords {
 /// @nodoc
 abstract class $WinRateRecordsCopyWith<$Res> {
   factory $WinRateRecordsCopyWith(
-    WinRateRecords value,
-    $Res Function(WinRateRecords) then,
-  ) = _$WinRateRecordsCopyWithImpl<$Res, WinRateRecords>;
+          WinRateRecords value, $Res Function(WinRateRecords) then) =
+      _$WinRateRecordsCopyWithImpl<$Res, WinRateRecords>;
   @useResult
-  $Res call({
-    int? id,
-    int timeAdded,
-    int? lastUpdated,
-    String? backgroundImage,
-    int desiredWinRate,
-    String? name,
-    int currentNumberOfBattles,
-    int currentWinRate,
-    int? progressiveWinRate,
-  });
+  $Res call(
+      {int? id,
+      int timeAdded,
+      int? lastUpdated,
+      String? backgroundImage,
+      int desiredWinRate,
+      String? name,
+      int currentNumberOfBattles,
+      int currentWinRate,
+      int? progressiveWinRate});
 }
 
 /// @nodoc
@@ -81,70 +78,65 @@ class _$WinRateRecordsCopyWithImpl<$Res, $Val extends WinRateRecords>
     Object? currentWinRate = null,
     Object? progressiveWinRate = freezed,
   }) {
-    return _then(
-      _value.copyWith(
-            id: freezed == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            timeAdded: null == timeAdded
-                ? _value.timeAdded
-                : timeAdded // ignore: cast_nullable_to_non_nullable
-                      as int,
-            lastUpdated: freezed == lastUpdated
-                ? _value.lastUpdated
-                : lastUpdated // ignore: cast_nullable_to_non_nullable
-                      as int?,
-            backgroundImage: freezed == backgroundImage
-                ? _value.backgroundImage
-                : backgroundImage // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            desiredWinRate: null == desiredWinRate
-                ? _value.desiredWinRate
-                : desiredWinRate // ignore: cast_nullable_to_non_nullable
-                      as int,
-            name: freezed == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                      as String?,
-            currentNumberOfBattles: null == currentNumberOfBattles
-                ? _value.currentNumberOfBattles
-                : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
-                      as int,
-            currentWinRate: null == currentWinRate
-                ? _value.currentWinRate
-                : currentWinRate // ignore: cast_nullable_to_non_nullable
-                      as int,
-            progressiveWinRate: freezed == progressiveWinRate
-                ? _value.progressiveWinRate
-                : progressiveWinRate // ignore: cast_nullable_to_non_nullable
-                      as int?,
-          )
-          as $Val,
-    );
+    return _then(_value.copyWith(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeAdded: null == timeAdded
+          ? _value.timeAdded
+          : timeAdded // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastUpdated: freezed == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as int?,
+      backgroundImage: freezed == backgroundImage
+          ? _value.backgroundImage
+          : backgroundImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      desiredWinRate: null == desiredWinRate
+          ? _value.desiredWinRate
+          : desiredWinRate // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentNumberOfBattles: null == currentNumberOfBattles
+          ? _value.currentNumberOfBattles
+          : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentWinRate: null == currentWinRate
+          ? _value.currentWinRate
+          : currentWinRate // ignore: cast_nullable_to_non_nullable
+              as int,
+      progressiveWinRate: freezed == progressiveWinRate
+          ? _value.progressiveWinRate
+          : progressiveWinRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ) as $Val);
   }
 }
 
 /// @nodoc
 abstract class _$$WinRateRecordsImplCopyWith<$Res>
     implements $WinRateRecordsCopyWith<$Res> {
-  factory _$$WinRateRecordsImplCopyWith(
-    _$WinRateRecordsImpl value,
-    $Res Function(_$WinRateRecordsImpl) then,
-  ) = __$$WinRateRecordsImplCopyWithImpl<$Res>;
+  factory _$$WinRateRecordsImplCopyWith(_$WinRateRecordsImpl value,
+          $Res Function(_$WinRateRecordsImpl) then) =
+      __$$WinRateRecordsImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({
-    int? id,
-    int timeAdded,
-    int? lastUpdated,
-    String? backgroundImage,
-    int desiredWinRate,
-    String? name,
-    int currentNumberOfBattles,
-    int currentWinRate,
-    int? progressiveWinRate,
-  });
+  $Res call(
+      {int? id,
+      int timeAdded,
+      int? lastUpdated,
+      String? backgroundImage,
+      int desiredWinRate,
+      String? name,
+      int currentNumberOfBattles,
+      int currentWinRate,
+      int? progressiveWinRate});
 }
 
 /// @nodoc
@@ -152,9 +144,8 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
     extends _$WinRateRecordsCopyWithImpl<$Res, _$WinRateRecordsImpl>
     implements _$$WinRateRecordsImplCopyWith<$Res> {
   __$$WinRateRecordsImplCopyWithImpl(
-    _$WinRateRecordsImpl _value,
-    $Res Function(_$WinRateRecordsImpl) _then,
-  ) : super(_value, _then);
+      _$WinRateRecordsImpl _value, $Res Function(_$WinRateRecordsImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
@@ -169,70 +160,68 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
     Object? currentWinRate = null,
     Object? progressiveWinRate = freezed,
   }) {
-    return _then(
-      _$WinRateRecordsImpl(
-        id: freezed == id
-            ? _value.id
-            : id // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        timeAdded: null == timeAdded
-            ? _value.timeAdded
-            : timeAdded // ignore: cast_nullable_to_non_nullable
-                  as int,
-        lastUpdated: freezed == lastUpdated
-            ? _value.lastUpdated
-            : lastUpdated // ignore: cast_nullable_to_non_nullable
-                  as int?,
-        backgroundImage: freezed == backgroundImage
-            ? _value.backgroundImage
-            : backgroundImage // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        desiredWinRate: null == desiredWinRate
-            ? _value.desiredWinRate
-            : desiredWinRate // ignore: cast_nullable_to_non_nullable
-                  as int,
-        name: freezed == name
-            ? _value.name
-            : name // ignore: cast_nullable_to_non_nullable
-                  as String?,
-        currentNumberOfBattles: null == currentNumberOfBattles
-            ? _value.currentNumberOfBattles
-            : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
-                  as int,
-        currentWinRate: null == currentWinRate
-            ? _value.currentWinRate
-            : currentWinRate // ignore: cast_nullable_to_non_nullable
-                  as int,
-        progressiveWinRate: freezed == progressiveWinRate
-            ? _value.progressiveWinRate
-            : progressiveWinRate // ignore: cast_nullable_to_non_nullable
-                  as int?,
-      ),
-    );
+    return _then(_$WinRateRecordsImpl(
+      id: freezed == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as int?,
+      timeAdded: null == timeAdded
+          ? _value.timeAdded
+          : timeAdded // ignore: cast_nullable_to_non_nullable
+              as int,
+      lastUpdated: freezed == lastUpdated
+          ? _value.lastUpdated
+          : lastUpdated // ignore: cast_nullable_to_non_nullable
+              as int?,
+      backgroundImage: freezed == backgroundImage
+          ? _value.backgroundImage
+          : backgroundImage // ignore: cast_nullable_to_non_nullable
+              as String?,
+      desiredWinRate: null == desiredWinRate
+          ? _value.desiredWinRate
+          : desiredWinRate // ignore: cast_nullable_to_non_nullable
+              as int,
+      name: freezed == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      currentNumberOfBattles: null == currentNumberOfBattles
+          ? _value.currentNumberOfBattles
+          : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentWinRate: null == currentWinRate
+          ? _value.currentWinRate
+          : currentWinRate // ignore: cast_nullable_to_non_nullable
+              as int,
+      progressiveWinRate: freezed == progressiveWinRate
+          ? _value.progressiveWinRate
+          : progressiveWinRate // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
 class _$WinRateRecordsImpl extends _WinRateRecords {
-  const _$WinRateRecordsImpl({
-    this.id,
-    required this.timeAdded,
-    this.lastUpdated,
-    this.backgroundImage,
-    required this.desiredWinRate,
-    this.name,
-    required this.currentNumberOfBattles,
-    required this.currentWinRate,
-    this.progressiveWinRate,
-  }) : super._();
+  const _$WinRateRecordsImpl(
+      {this.id,
+      required this.timeAdded,
+      this.lastUpdated,
+      this.backgroundImage,
+      required this.desiredWinRate,
+      this.name,
+      required this.currentNumberOfBattles,
+      required this.currentWinRate,
+      this.progressiveWinRate})
+      : super._();
 
   factory _$WinRateRecordsImpl.fromJson(Map<String, dynamic> json) =>
       _$$WinRateRecordsImplFromJson(json);
 
   @override
   final int? id;
-  // PRIMARY KEY AUTOINCREMENT
+// PRIMARY KEY AUTOINCREMENT
   @override
   final int timeAdded;
   @override
@@ -281,45 +270,43 @@ class _$WinRateRecordsImpl extends _WinRateRecords {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-    runtimeType,
-    id,
-    timeAdded,
-    lastUpdated,
-    backgroundImage,
-    desiredWinRate,
-    name,
-    currentNumberOfBattles,
-    currentWinRate,
-    progressiveWinRate,
-  );
+      runtimeType,
+      id,
+      timeAdded,
+      lastUpdated,
+      backgroundImage,
+      desiredWinRate,
+      name,
+      currentNumberOfBattles,
+      currentWinRate,
+      progressiveWinRate);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$WinRateRecordsImplCopyWith<_$WinRateRecordsImpl> get copyWith =>
       __$$WinRateRecordsImplCopyWithImpl<_$WinRateRecordsImpl>(
-        this,
-        _$identity,
-      );
+          this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$WinRateRecordsImplToJson(this);
+    return _$$WinRateRecordsImplToJson(
+      this,
+    );
   }
 }
 
 abstract class _WinRateRecords extends WinRateRecords {
-  const factory _WinRateRecords({
-    final int? id,
-    required final int timeAdded,
-    final int? lastUpdated,
-    final String? backgroundImage,
-    required final int desiredWinRate,
-    final String? name,
-    required final int currentNumberOfBattles,
-    required final int currentWinRate,
-    final int? progressiveWinRate,
-  }) = _$WinRateRecordsImpl;
+  const factory _WinRateRecords(
+      {final int? id,
+      required final int timeAdded,
+      final int? lastUpdated,
+      final String? backgroundImage,
+      required final int desiredWinRate,
+      final String? name,
+      required final int currentNumberOfBattles,
+      required final int currentWinRate,
+      final int? progressiveWinRate}) = _$WinRateRecordsImpl;
   const _WinRateRecords._() : super._();
 
   factory _WinRateRecords.fromJson(Map<String, dynamic> json) =

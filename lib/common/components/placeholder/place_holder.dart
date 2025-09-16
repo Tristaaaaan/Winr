@@ -50,7 +50,6 @@ class DataPlaceHolder extends StatelessWidget {
               style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
             ),
             const SizedBox(height: 30),
-
             RegularButton(
               onTap: () {
                 if (withButton!) {
@@ -61,7 +60,6 @@ class DataPlaceHolder extends StatelessWidget {
               text: buttonText,
               backgroundColor: Theme.of(context).colorScheme.surface,
               withBorder: true,
-
               textColor: Theme.of(context).colorScheme.primary,
               buttonKey: buttonText,
               width: 300,

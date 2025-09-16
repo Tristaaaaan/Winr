@@ -17,7 +17,6 @@ class BugSuggestionsReport extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(AppText.bugAndSuggestion, style: TextStyle(fontSize: 16)),
         ),
-
         ProfileSettingsContainer(
           withSwitch: false,
           title: "Submit Suggestions / Feedback",

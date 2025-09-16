@@ -121,8 +121,8 @@ class ProfileSettingsContainer extends ConsumerWidget {
 
 final detectionStatusProvider =
     StateNotifierProvider<DetectionStatusNotifier, bool>((ref) {
-      return DetectionStatusNotifier();
-    });
+  return DetectionStatusNotifier();
+});
 
 class DetectionStatusNotifier extends StateNotifier<bool> {
   DetectionStatusNotifier() : super(false);

@@ -12,8 +12,7 @@ part of 'history_states.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
-);
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$HistoryState {
@@ -24,7 +23,8 @@ mixin _$HistoryState {
     required TResult Function(List<WinRateRecords>? record) loaded,
     required TResult Function(String message) error,
     required TResult Function() empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -32,7 +32,8 @@ mixin _$HistoryState {
     TResult? Function(List<WinRateRecords>? record)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -41,7 +42,8 @@ mixin _$HistoryState {
     TResult Function(String message)? error,
     TResult Function()? empty,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -49,7 +51,8 @@ mixin _$HistoryState {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Empty value) empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
@@ -57,7 +60,8 @@ mixin _$HistoryState {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Empty value)? empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -66,15 +70,15 @@ mixin _$HistoryState {
     TResult Function(_Error value)? error,
     TResult Function(_Empty value)? empty,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $HistoryStateCopyWith<$Res> {
   factory $HistoryStateCopyWith(
-    HistoryState value,
-    $Res Function(HistoryState) then,
-  ) = _$HistoryStateCopyWithImpl<$Res, HistoryState>;
+          HistoryState value, $Res Function(HistoryState) then) =
+      _$HistoryStateCopyWithImpl<$Res, HistoryState>;
 }
 
 /// @nodoc
@@ -91,9 +95,8 @@ class _$HistoryStateCopyWithImpl<$Res, $Val extends HistoryState>
 /// @nodoc
 abstract class _$$InitialImplCopyWith<$Res> {
   factory _$$InitialImplCopyWith(
-    _$InitialImpl value,
-    $Res Function(_$InitialImpl) then,
-  ) = __$$InitialImplCopyWithImpl<$Res>;
+          _$InitialImpl value, $Res Function(_$InitialImpl) then) =
+      __$$InitialImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -101,9 +104,8 @@ class __$$InitialImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$InitialImpl>
     implements _$$InitialImplCopyWith<$Res> {
   __$$InitialImplCopyWithImpl(
-    _$InitialImpl _value,
-    $Res Function(_$InitialImpl) _then,
-  ) : super(_value, _then);
+      _$InitialImpl _value, $Res Function(_$InitialImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -213,9 +215,8 @@ abstract class _Initial implements HistoryState {
 /// @nodoc
 abstract class _$$LoadingImplCopyWith<$Res> {
   factory _$$LoadingImplCopyWith(
-    _$LoadingImpl value,
-    $Res Function(_$LoadingImpl) then,
-  ) = __$$LoadingImplCopyWithImpl<$Res>;
+          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
+      __$$LoadingImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -223,9 +224,8 @@ class __$$LoadingImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$LoadingImpl>
     implements _$$LoadingImplCopyWith<$Res> {
   __$$LoadingImplCopyWithImpl(
-    _$LoadingImpl _value,
-    $Res Function(_$LoadingImpl) _then,
-  ) : super(_value, _then);
+      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc
@@ -335,9 +335,8 @@ abstract class _Loading implements HistoryState {
 /// @nodoc
 abstract class _$$LoadedImplCopyWith<$Res> {
   factory _$$LoadedImplCopyWith(
-    _$LoadedImpl value,
-    $Res Function(_$LoadedImpl) then,
-  ) = __$$LoadedImplCopyWithImpl<$Res>;
+          _$LoadedImpl value, $Res Function(_$LoadedImpl) then) =
+      __$$LoadedImplCopyWithImpl<$Res>;
   @useResult
   $Res call({List<WinRateRecords>? record});
 }
@@ -347,21 +346,20 @@ class __$$LoadedImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$LoadedImpl>
     implements _$$LoadedImplCopyWith<$Res> {
   __$$LoadedImplCopyWithImpl(
-    _$LoadedImpl _value,
-    $Res Function(_$LoadedImpl) _then,
-  ) : super(_value, _then);
+      _$LoadedImpl _value, $Res Function(_$LoadedImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? record = freezed}) {
-    return _then(
-      _$LoadedImpl(
-        record: freezed == record
-            ? _value._record
-            : record // ignore: cast_nullable_to_non_nullable
-                  as List<WinRateRecords>?,
-      ),
-    );
+  $Res call({
+    Object? record = freezed,
+  }) {
+    return _then(_$LoadedImpl(
+      record: freezed == record
+          ? _value._record
+          : record // ignore: cast_nullable_to_non_nullable
+              as List<WinRateRecords>?,
+    ));
   }
 }
 
@@ -496,9 +494,8 @@ abstract class _Loaded implements HistoryState {
 /// @nodoc
 abstract class _$$ErrorImplCopyWith<$Res> {
   factory _$$ErrorImplCopyWith(
-    _$ErrorImpl value,
-    $Res Function(_$ErrorImpl) then,
-  ) = __$$ErrorImplCopyWithImpl<$Res>;
+          _$ErrorImpl value, $Res Function(_$ErrorImpl) then) =
+      __$$ErrorImplCopyWithImpl<$Res>;
   @useResult
   $Res call({String message});
 }
@@ -508,21 +505,20 @@ class __$$ErrorImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$ErrorImpl>
     implements _$$ErrorImplCopyWith<$Res> {
   __$$ErrorImplCopyWithImpl(
-    _$ErrorImpl _value,
-    $Res Function(_$ErrorImpl) _then,
-  ) : super(_value, _then);
+      _$ErrorImpl _value, $Res Function(_$ErrorImpl) _then)
+      : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? message = null}) {
-    return _then(
-      _$ErrorImpl(
-        null == message
-            ? _value.message
-            : message // ignore: cast_nullable_to_non_nullable
-                  as String,
-      ),
-    );
+  $Res call({
+    Object? message = null,
+  }) {
+    return _then(_$ErrorImpl(
+      null == message
+          ? _value.message
+          : message // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
   }
 }
 
@@ -649,9 +645,8 @@ abstract class _Error implements HistoryState {
 /// @nodoc
 abstract class _$$EmptyImplCopyWith<$Res> {
   factory _$$EmptyImplCopyWith(
-    _$EmptyImpl value,
-    $Res Function(_$EmptyImpl) then,
-  ) = __$$EmptyImplCopyWithImpl<$Res>;
+          _$EmptyImpl value, $Res Function(_$EmptyImpl) then) =
+      __$$EmptyImplCopyWithImpl<$Res>;
 }
 
 /// @nodoc
@@ -659,9 +654,8 @@ class __$$EmptyImplCopyWithImpl<$Res>
     extends _$HistoryStateCopyWithImpl<$Res, _$EmptyImpl>
     implements _$$EmptyImplCopyWith<$Res> {
   __$$EmptyImplCopyWithImpl(
-    _$EmptyImpl _value,
-    $Res Function(_$EmptyImpl) _then,
-  ) : super(_value, _then);
+      _$EmptyImpl _value, $Res Function(_$EmptyImpl) _then)
+      : super(_value, _then);
 }
 
 /// @nodoc

@@ -23,7 +23,6 @@ class SettingsScreen extends ConsumerWidget {
                 SizedBox(height: 25),
                 BugSuggestionsReport(),
                 SizedBox(height: 25),
-
                 AboutApp(),
                 SizedBox(height: 25),
                 Padding(
