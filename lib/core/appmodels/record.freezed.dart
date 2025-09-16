@@ -83,51 +83,42 @@ class _$WinRateRecordsCopyWithImpl<$Res, $Val extends WinRateRecords>
   }) {
     return _then(
       _value.copyWith(
-            id:
-                freezed == id
-                    ? _value.id
-                    : id // ignore: cast_nullable_to_non_nullable
-                        as int?,
-            timeAdded:
-                null == timeAdded
-                    ? _value.timeAdded
-                    : timeAdded // ignore: cast_nullable_to_non_nullable
-                        as int,
-            lastUpdated:
-                freezed == lastUpdated
-                    ? _value.lastUpdated
-                    : lastUpdated // ignore: cast_nullable_to_non_nullable
-                        as int?,
-            backgroundImage:
-                freezed == backgroundImage
-                    ? _value.backgroundImage
-                    : backgroundImage // ignore: cast_nullable_to_non_nullable
-                        as String?,
-            desiredWinRate:
-                null == desiredWinRate
-                    ? _value.desiredWinRate
-                    : desiredWinRate // ignore: cast_nullable_to_non_nullable
-                        as int,
-            name:
-                freezed == name
-                    ? _value.name
-                    : name // ignore: cast_nullable_to_non_nullable
-                        as String?,
-            currentNumberOfBattles:
-                null == currentNumberOfBattles
-                    ? _value.currentNumberOfBattles
-                    : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
-                        as int,
-            currentWinRate:
-                null == currentWinRate
-                    ? _value.currentWinRate
-                    : currentWinRate // ignore: cast_nullable_to_non_nullable
-                        as int,
-            progressiveWinRate:
-                freezed == progressiveWinRate
-                    ? _value.progressiveWinRate
-                    : progressiveWinRate // ignore: cast_nullable_to_non_nullable
-                        as int?,
+            id: freezed == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            timeAdded: null == timeAdded
+                ? _value.timeAdded
+                : timeAdded // ignore: cast_nullable_to_non_nullable
+                      as int,
+            lastUpdated: freezed == lastUpdated
+                ? _value.lastUpdated
+                : lastUpdated // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            backgroundImage: freezed == backgroundImage
+                ? _value.backgroundImage
+                : backgroundImage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            desiredWinRate: null == desiredWinRate
+                ? _value.desiredWinRate
+                : desiredWinRate // ignore: cast_nullable_to_non_nullable
+                      as int,
+            name: freezed == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            currentNumberOfBattles: null == currentNumberOfBattles
+                ? _value.currentNumberOfBattles
+                : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
+                      as int,
+            currentWinRate: null == currentWinRate
+                ? _value.currentWinRate
+                : currentWinRate // ignore: cast_nullable_to_non_nullable
+                      as int,
+            progressiveWinRate: freezed == progressiveWinRate
+                ? _value.progressiveWinRate
+                : progressiveWinRate // ignore: cast_nullable_to_non_nullable
+                      as int?,
           )
           as $Val,
     );
@@ -180,51 +171,42 @@ class __$$WinRateRecordsImplCopyWithImpl<$Res>
   }) {
     return _then(
       _$WinRateRecordsImpl(
-        id:
-            freezed == id
-                ? _value.id
-                : id // ignore: cast_nullable_to_non_nullable
-                    as int?,
-        timeAdded:
-            null == timeAdded
-                ? _value.timeAdded
-                : timeAdded // ignore: cast_nullable_to_non_nullable
-                    as int,
-        lastUpdated:
-            freezed == lastUpdated
-                ? _value.lastUpdated
-                : lastUpdated // ignore: cast_nullable_to_non_nullable
-                    as int?,
-        backgroundImage:
-            freezed == backgroundImage
-                ? _value.backgroundImage
-                : backgroundImage // ignore: cast_nullable_to_non_nullable
-                    as String?,
-        desiredWinRate:
-            null == desiredWinRate
-                ? _value.desiredWinRate
-                : desiredWinRate // ignore: cast_nullable_to_non_nullable
-                    as int,
-        name:
-            freezed == name
-                ? _value.name
-                : name // ignore: cast_nullable_to_non_nullable
-                    as String?,
-        currentNumberOfBattles:
-            null == currentNumberOfBattles
-                ? _value.currentNumberOfBattles
-                : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
-                    as int,
-        currentWinRate:
-            null == currentWinRate
-                ? _value.currentWinRate
-                : currentWinRate // ignore: cast_nullable_to_non_nullable
-                    as int,
-        progressiveWinRate:
-            freezed == progressiveWinRate
-                ? _value.progressiveWinRate
-                : progressiveWinRate // ignore: cast_nullable_to_non_nullable
-                    as int?,
+        id: freezed == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        timeAdded: null == timeAdded
+            ? _value.timeAdded
+            : timeAdded // ignore: cast_nullable_to_non_nullable
+                  as int,
+        lastUpdated: freezed == lastUpdated
+            ? _value.lastUpdated
+            : lastUpdated // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        backgroundImage: freezed == backgroundImage
+            ? _value.backgroundImage
+            : backgroundImage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        desiredWinRate: null == desiredWinRate
+            ? _value.desiredWinRate
+            : desiredWinRate // ignore: cast_nullable_to_non_nullable
+                  as int,
+        name: freezed == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        currentNumberOfBattles: null == currentNumberOfBattles
+            ? _value.currentNumberOfBattles
+            : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
+                  as int,
+        currentWinRate: null == currentWinRate
+            ? _value.currentWinRate
+            : currentWinRate // ignore: cast_nullable_to_non_nullable
+                  as int,
+        progressiveWinRate: freezed == progressiveWinRate
+            ? _value.progressiveWinRate
+            : progressiveWinRate // ignore: cast_nullable_to_non_nullable
+                  as int?,
       ),
     );
   }

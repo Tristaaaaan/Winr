@@ -66,46 +66,40 @@ class BottomNavSheet extends ConsumerWidget {
           if (!isSettings)
             Align(
               alignment: Alignment.centerRight,
-              child:
-                  isGetStartedLoading
-                      ? const Center(child: CircularProgressIndicator())
-                      : TextButton(
-                        onPressed:
-                            isGetStartedLoading
-                                ? null
-                                : () async {
-                                  final loadFirstTime = ref.read(
-                                    isGetStartedLoadingProvider.notifier,
-                                  );
+              child: isGetStartedLoading
+                  ? const Center(child: CircularProgressIndicator())
+                  : TextButton(
+                      onPressed: isGetStartedLoading
+                          ? null
+                          : () async {
+                              final loadFirstTime = ref.read(
+                                isGetStartedLoadingProvider.notifier,
+                              );
 
-                                  if (!lastPage) {
-                                    controller.nextPage(
-                                      duration: const Duration(
-                                        milliseconds: 300,
-                                      ),
-                                      curve: Curves.easeIn,
-                                    );
-                                    if (currentPage == 2) {
-                                      ref
-                                          .read(lastPageProvider.notifier)
-                                          .state = true;
-                                    }
-                                  } else {
-                                    loadFirstTime.state = true;
-                                    final prefs =
-                                        await SharedPreferences.getInstance();
-                                    await prefs.setBool("isFirstTime", false);
-                                    loadFirstTime.state = false;
-                                  }
-                                },
-                        child:
-                            lastPage
-                                ? const Text(
-                                  AppText.getStarted,
-                                  style: TextStyle(fontWeight: FontWeight.bold),
-                                )
-                                : const Text(AppText.next),
-                      ),
+                              if (!lastPage) {
+                                controller.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn,
+                                );
+                                if (currentPage == 2) {
+                                  ref.read(lastPageProvider.notifier).state =
+                                      true;
+                                }
+                              } else {
+                                loadFirstTime.state = true;
+                                final prefs =
+                                    await SharedPreferences.getInstance();
+                                await prefs.setBool("isFirstTime", false);
+                                loadFirstTime.state = false;
+                              }
+                            },
+                      child: lastPage
+                          ? const Text(
+                              AppText.getStarted,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            )
+                          : const Text(AppText.next),
+                    ),
             ),
         ],
       ),

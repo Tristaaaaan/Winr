@@ -356,11 +356,10 @@ class __$$LoadedImplCopyWithImpl<$Res>
   $Res call({Object? record = freezed}) {
     return _then(
       _$LoadedImpl(
-        record:
-            freezed == record
-                ? _value._record
-                : record // ignore: cast_nullable_to_non_nullable
-                    as List<WinRateRecords>?,
+        record: freezed == record
+            ? _value._record
+            : record // ignore: cast_nullable_to_non_nullable
+                  as List<WinRateRecords>?,
       ),
     );
   }
@@ -521,7 +520,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                as String,
+                  as String,
       ),
     );
   }

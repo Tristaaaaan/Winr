@@ -15,10 +15,9 @@ class OnboardingScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar:
-          isSettings
-              ? AppBar(centerTitle: true, title: const Text(AppText.winr101))
-              : null,
+      appBar: isSettings
+          ? AppBar(centerTitle: true, title: const Text(AppText.winr101))
+          : null,
       body: Center(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
