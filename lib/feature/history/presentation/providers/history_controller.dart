@@ -6,14 +6,14 @@ import 'package:winr/feature/history/presentation/providers/history_states.dart'
 
 final historyControllerProvider =
     StateNotifierProvider<HistoryController, HistoryState>(
-  (ref) => HistoryController(ref.watch(historyRepositoryProvider)),
-);
+      (ref) => HistoryController(ref.watch(historyRepositoryProvider)),
+    );
 
 class HistoryController extends StateNotifier<HistoryState> {
   final HistoryRepository _historyRepository;
 
   HistoryController(this._historyRepository)
-      : super(const HistoryState.initial()) {
+    : super(const HistoryState.initial()) {
     getHistory();
   }
 

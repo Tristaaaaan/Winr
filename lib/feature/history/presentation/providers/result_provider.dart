@@ -33,8 +33,8 @@ final requiredWinsProvider = Provider<String?>((ref) {
   }
 
   final totalBattles = numberOfBattles + requiredWins;
-  final newWinRate =
-      ((currentWins + requiredWins) / totalBattles * 100).toStringAsFixed(2);
+  final newWinRate = ((currentWins + requiredWins) / totalBattles * 100)
+      .toStringAsFixed(2);
 
   // ✅ valid result
   return "You need to win $requiredWins consecutive battles "

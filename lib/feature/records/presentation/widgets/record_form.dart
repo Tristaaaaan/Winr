@@ -47,7 +47,8 @@ class RecordForm extends ConsumerWidget {
     final selectedImages = ref.watch(uploadImagePathProvider);
     final isRemoved = ref.watch(isImageRemovedProvider);
 
-    final showPlaceholder = selectedImages.isEmpty &&
+    final showPlaceholder =
+        selectedImages.isEmpty &&
         (recordData?.backgroundImage == null ||
             recordData?.backgroundImage?.isEmpty == true ||
             isRemoved);
@@ -174,8 +175,9 @@ class RecordForm extends ConsumerWidget {
                             ref.read(uploadImagePathProvider.notifier).state =
                                 [];
                             ref
-                                .read(uploadImagePathNameProvider.notifier)
-                                .state = [];
+                                    .read(uploadImagePathNameProvider.notifier)
+                                    .state =
+                                [];
                             ref.read(uploadImageNameProvider.notifier).state =
                                 [];
                             ref.read(isImageRemovedProvider.notifier).state =
@@ -360,8 +362,9 @@ class RecordForm extends ConsumerWidget {
                       timeAdded: isUpdate
                           ? recordData!.timeAdded
                           : DateTime.now().microsecondsSinceEpoch,
-                      lastUpdated:
-                          isUpdate ? DateTime.now().millisecondsSinceEpoch : 0,
+                      lastUpdated: isUpdate
+                          ? DateTime.now().millisecondsSinceEpoch
+                          : 0,
                       desiredWinRate:
                           int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
                       currentNumberOfBattles:

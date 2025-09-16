@@ -37,10 +37,10 @@ class RegularButton extends ConsumerWidget {
       onTap: withoutLoading!
           ? onTap
           : isLoading
-              ? () {}
-              : () async {
-                  onTap!();
-                },
+          ? () {}
+          : () async {
+              onTap!();
+            },
       child: Container(
         height: 55,
         width: width,
