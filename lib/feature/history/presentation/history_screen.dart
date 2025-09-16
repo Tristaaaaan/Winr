@@ -25,7 +25,6 @@ class HistoryScreen extends ConsumerWidget {
           onRefresh: refreshRecord,
           child: CustomScrollView(
             slivers: [
-              // 🔹 Handle all states consistently as Slivers
               ...records.when(
                 initial: () => [
                   const SliverFillRemaining(
