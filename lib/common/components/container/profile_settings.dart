@@ -30,12 +30,20 @@ class ProfileSettingsContainer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isDark = ref.watch(themeNotifierProvider);
     return IntrinsicHeight(
       child: InkWell(
         onTap: onTap,
         child: Container(
           decoration: withBorder!
-              ? BoxDecoration(border: Border(bottom: BorderSide(width: 1)))
+              ? BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      width: 1,
+                      color: isDark ? Colors.white : Colors.black,
+                    ),
+                  ),
+                )
               : null,
           height: 60,
           width: double.infinity,
