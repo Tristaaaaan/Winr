@@ -51,9 +51,8 @@ class SettingsScreen extends ConsumerWidget {
                               TextButton(
                                 onPressed: () => Navigator.of(ctx).pop(true),
                                 style: TextButton.styleFrom(
-                                  foregroundColor: Theme.of(
-                                    context,
-                                  ).colorScheme.error,
+                                  foregroundColor:
+                                      Theme.of(context).colorScheme.error,
                                 ),
                                 child: const Text("Delete"),
                               ),
