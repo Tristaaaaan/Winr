@@ -58,8 +58,6 @@ class RegularButton extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 10),
           child: Row(
             children: [
-              // if (withIcon == true)
-              //   SvgPicture.asset(AppImages.googleLogo, height: 20, width: 20),
               Expanded(
                 child: isLoading
                     ? Center(

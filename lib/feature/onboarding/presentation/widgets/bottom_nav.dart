@@ -31,7 +31,6 @@ class BottomNavSheet extends ConsumerWidget {
               child: TextButton(
                 child: const Text("Skip"),
                 onPressed: () {
-                  // Jump to last page (index 3)
                   controller.animateToPage(
                     3,
                     duration: const Duration(milliseconds: 500),
@@ -44,7 +43,7 @@ class BottomNavSheet extends ConsumerWidget {
           Center(
             child: SmoothPageIndicator(
               controller: controller,
-              count: 4, // ✅ fixed to match pages
+              count: 4,
               onDotClicked: (int index) {
                 ref.read(lastPageProvider.notifier).state = (index == 3);
                 controller.animateToPage(
