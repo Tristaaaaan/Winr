@@ -54,7 +54,7 @@ jobs:
         run: flutter pub run build_runner build --delete-conflicting-outputs
 
       - name: Check Formatting
-        run: find lib test -type f -name '*.dart' ! -name '*.g.dart' ! -name '*.freezed.dart' -print0 | xargs -0 dart format --output none --set-exit-if-changed
+        run: dart format --output none --set-exit-if-changed lib/ test/
 
       - name: Cache Generated Files
         uses: actions/cache@v3
