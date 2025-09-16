@@ -24,7 +24,6 @@ class RecordForm extends ConsumerWidget {
   final WinRateRecords? recordData;
   const RecordForm({super.key, required this.isUpdate, this.recordData});
 
-  /// Helper to decide what backgroundImage should be saved
   Future<String?> _getBackgroundImage(
     WidgetRef ref,
     List<File> selectedImages,
@@ -37,7 +36,7 @@ class RecordForm extends ConsumerWidget {
       return await converter.encodeImageToBase64(selectedImages.first);
     }
 
-    if (isRemoved) return ""; // Overwrite with empty string when removed
+    if (isRemoved) return "";
 
     return recordData?.backgroundImage;
   }
@@ -158,7 +157,7 @@ class RecordForm extends ConsumerWidget {
                             );
                           }
 
-                          return const SizedBox(); // fallback
+                          return const SizedBox();
                         },
                       ),
                     ),

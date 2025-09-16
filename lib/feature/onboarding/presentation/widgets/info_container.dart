@@ -51,7 +51,7 @@ class AppInfo extends StatelessWidget {
             textAlign: TextAlign.left,
             style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
           ),
-          const SizedBox(height: 10), // Adds spacing
+          const SizedBox(height: 10),
 
           if (description2 != null)
             Text(
@@ -59,7 +59,7 @@ class AppInfo extends StatelessWidget {
               textAlign: TextAlign.left,
               style: const TextStyle(fontSize: 15, fontStyle: FontStyle.italic),
             ),
-          const SizedBox(height: 10), // Adds spacing
+          const SizedBox(height: 10),
 
           if (description3 != null)
             Text(
