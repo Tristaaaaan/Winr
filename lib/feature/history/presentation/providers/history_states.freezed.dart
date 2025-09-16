@@ -24,7 +24,8 @@ mixin _$HistoryState {
     required TResult Function(List<WinRateRecords>? record) loaded,
     required TResult Function(String message) error,
     required TResult Function() empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
@@ -32,7 +33,8 @@ mixin _$HistoryState {
     TResult? Function(List<WinRateRecords>? record)? loaded,
     TResult? Function(String message)? error,
     TResult? Function()? empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -41,7 +43,8 @@ mixin _$HistoryState {
     TResult Function(String message)? error,
     TResult Function()? empty,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(_Initial value) initial,
@@ -49,7 +52,8 @@ mixin _$HistoryState {
     required TResult Function(_Loaded value) loaded,
     required TResult Function(_Error value) error,
     required TResult Function(_Empty value) empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(_Initial value)? initial,
@@ -57,7 +61,8 @@ mixin _$HistoryState {
     TResult? Function(_Loaded value)? loaded,
     TResult? Function(_Error value)? error,
     TResult? Function(_Empty value)? empty,
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(_Initial value)? initial,
@@ -66,7 +71,8 @@ mixin _$HistoryState {
     TResult Function(_Error value)? error,
     TResult Function(_Empty value)? empty,
     required TResult orElse(),
-  }) => throw _privateConstructorUsedError;
+  }) =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -359,7 +365,7 @@ class __$$LoadedImplCopyWithImpl<$Res>
         record: freezed == record
             ? _value._record
             : record // ignore: cast_nullable_to_non_nullable
-                  as List<WinRateRecords>?,
+                as List<WinRateRecords>?,
       ),
     );
   }
@@ -520,7 +526,7 @@ class __$$ErrorImplCopyWithImpl<$Res>
         null == message
             ? _value.message
             : message // ignore: cast_nullable_to_non_nullable
-                  as String,
+                as String,
       ),
     );
   }

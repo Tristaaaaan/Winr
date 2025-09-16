@@ -155,8 +155,8 @@ class RecordContainer extends ConsumerWidget {
                           color: isDark
                               ? Colors.white
                               : hasImage
-                              ? Colors.white70
-                              : Colors.black,
+                                  ? Colors.white70
+                                  : Colors.black,
                           fontSize: 14,
                           fontWeight: FontWeight.normal,
                         ),
