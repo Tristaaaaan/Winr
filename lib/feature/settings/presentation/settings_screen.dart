@@ -23,7 +23,6 @@ class SettingsScreen extends ConsumerWidget {
                 SizedBox(height: 25),
                 BugSuggestionsReport(),
                 SizedBox(height: 25),
-
                 AboutApp(),
                 SizedBox(height: 25),
                 Padding(
@@ -93,10 +92,7 @@ class SettingsScreen extends ConsumerWidget {
               ]),
             ),
             SliverPadding(
-              padding: EdgeInsets.only(
-                bottom: kBottomNavigationBarHeight + 25,
-                // 🔹 +80 leaves room for FAB too
-              ),
+              padding: EdgeInsets.only(bottom: kBottomNavigationBarHeight + 25),
             ),
           ],
         ),

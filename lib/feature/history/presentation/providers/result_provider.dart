@@ -14,7 +14,7 @@ final requiredWinsProvider = Provider<String?>((ref) {
   final winRate = double.tryParse(ref.watch(winRateProvider)) ?? 0;
 
   if (desiredWinRate <= 0 || desiredWinRate >= 100 || numberOfBattles <= 0) {
-    return null; // ❌ invalid
+    return null;
   }
 
   final currentWins = ((winRate * numberOfBattles) / 100).round();
@@ -23,20 +23,19 @@ final requiredWinsProvider = Provider<String?>((ref) {
   final denominator = 100 - desiredWinRate;
 
   if (denominator <= 0) {
-    return null; // ❌ invalid
+    return null;
   }
 
   final requiredWins = (numerator / denominator).ceil();
 
   if (requiredWins <= 0) {
-    return null; // ❌ already meets target
+    return null;
   }
 
   final totalBattles = numberOfBattles + requiredWins;
   final newWinRate = ((currentWins + requiredWins) / totalBattles * 100)
       .toStringAsFixed(2);
 
-  // ✅ valid result
   return "You need to win $requiredWins consecutive battles "
       "to reach about $newWinRate% winrate.";
 });
@@ -46,7 +45,6 @@ final recordsStreamProvider = StreamProvider.autoDispose<List<WinRateRecords>>((
 ) {
   final db = RecordDatabase();
 
-  // Clean up when provider is disposed
   ref.onDispose(() => db.dispose());
 
   return db.recordsStream;

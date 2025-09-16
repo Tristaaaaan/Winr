@@ -36,7 +36,6 @@ class HistoryController extends StateNotifier<HistoryState> {
     await getHistory();
   }
 
-  // 🔹 CRUD wrappers with refresh
   Future<void> addRecord(WinRateRecords record) async {
     await _historyRepository.insertRecord(record);
     await getHistory();

@@ -109,11 +109,7 @@ class RecordContainer extends ConsumerWidget {
                           ),
                         )
                       : const SizedBox.shrink(),
-                  Icon(
-                    Icons.chevron_right_outlined,
-                    size: 24,
-                    color: hasImage ? Colors.white : Colors.black,
-                  ),
+                  Icon(Icons.chevron_right_outlined, size: 24),
                 ],
               ),
               const SizedBox(height: 12),

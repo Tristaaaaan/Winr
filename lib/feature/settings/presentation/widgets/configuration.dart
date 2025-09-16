@@ -19,7 +19,6 @@ class AppConfiguration extends ConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Text(AppText.configuration, style: TextStyle(fontSize: 16)),
         ),
-
         ProfileSettingsContainer(
           containerKey: "appearanceKey",
           withSwitch: true,
