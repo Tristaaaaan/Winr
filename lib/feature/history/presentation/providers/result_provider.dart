@@ -7,6 +7,10 @@ final numberOfBattlesProvider = StateProvider<String>((ref) => "");
 final winRateProvider = StateProvider<String>((ref) => "");
 final nameProvider = StateProvider<String>((ref) => "");
 
+final requiredWinsMessageProvider = StateProvider<String?>((ref) {
+  return ref.watch(requiredWinsProvider);
+});
+
 final requiredWinsProvider = Provider<String?>((ref) {
   final desiredWinRate =
       double.tryParse(ref.watch(desiredWinRateProvider)) ?? 0;

@@ -241,7 +241,7 @@ class RecordForm extends ConsumerWidget {
               ref.read(desiredWinRateProvider.notifier).state = value,
         ),
         const SizedBox(height: 50),
-        if (ref.watch(requiredWinsProvider) != null)
+        if (ref.watch(requiredWinsMessageProvider) != null)
           Container(
             padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
             decoration: BoxDecoration(
@@ -255,7 +255,7 @@ class RecordForm extends ConsumerWidget {
               ),
             ),
             child: Text(
-              ref.watch(requiredWinsProvider) ?? "",
+              ref.watch(requiredWinsMessageProvider) ?? "",
               style: TextStyle(
                 fontSize: 14,
                 fontWeight: FontWeight.w600,
@@ -320,6 +320,10 @@ class RecordForm extends ConsumerWidget {
                       "Record has been deleted!",
                     );
                   } finally {
+                    ref.invalidate(requiredWinsProvider);
+                    ref.invalidate(desiredWinRateProvider);
+                    ref.invalidate(numberOfBattlesProvider);
+                    ref.invalidate(winRateProvider);
                     isLoading.setLoading("deleteButton", false);
                   }
                 },
@@ -332,7 +336,7 @@ class RecordForm extends ConsumerWidget {
                 withIcon: false,
                 text: "Save",
                 onTap: () async {
-                  final requiredWins = ref.read(requiredWinsProvider);
+                  final requiredWins = ref.read(requiredWinsMessageProvider);
 
                   if (requiredWins == null) {
                     if (!context.mounted) return;
@@ -390,6 +394,10 @@ class RecordForm extends ConsumerWidget {
                       "Record has been saved!",
                     );
                   } finally {
+                    ref.invalidate(requiredWinsProvider);
+                    ref.invalidate(desiredWinRateProvider);
+                    ref.invalidate(numberOfBattlesProvider);
+                    ref.invalidate(winRateProvider);
                     isLoading.setLoading("saveButton", false);
                   }
                 },
