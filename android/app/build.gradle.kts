@@ -16,13 +16,19 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-val flutterVersionCode: Int = localProperties.getProperty("flutter.versionCode")?.toInt() ?: 7
-val flutterVersionName: String = localProperties.getProperty("flutter.versionName") ?: "1.0.7"
+val flutterVersionCode: Int = localProperties.getProperty("flutter.versionCode")?.toInt() ?: 8
+val flutterVersionName: String = localProperties.getProperty("flutter.versionName") ?: "1.0.8"
 
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")
 if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+}
+
+val secrets = Properties()
+val secretsFile = rootProject.file("secrets.properties")
+if (secretsFile.exists()) {
+    secrets.load(FileInputStream(secretsFile))
 }
 
 android {
@@ -48,6 +54,9 @@ android {
         targetSdk = 36
         versionCode = flutterVersionCode
         versionName = flutterVersionName
+        secrets.getProperty("ADS_APPLICATION_ID")?.let {
+            resValue("string", "ad_app_id", it)
+        }
     }
 
     signingConfigs {

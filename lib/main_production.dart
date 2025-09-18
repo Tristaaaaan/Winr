@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:winr/config/app_config.dart';
 import 'package:winr/config/app_environments.dart';
 import 'package:winr/feature/history/data/records_database.dart';
@@ -10,6 +13,8 @@ import 'core/appthemes/app_themes.dart';
 void main() async {
   AppConfig.setEnvironment(Flavors.production);
   WidgetsFlutterBinding.ensureInitialized();
+  unawaited(MobileAds.instance.initialize());
+
   await RecordDatabase().initializeDatabase();
 
   runApp(const ProviderScope(child: MainApp()));
