@@ -53,8 +53,8 @@ android {
         targetSdk = 36
         versionCode = flutterVersionCode
         versionName = flutterVersionName
-        secrets.getProperty("BANNER_ADS_APPLICATION_ID")?.let {
-            resValue("string", "banner_ad_app_id", it)
+        secrets.getProperty("ADS_APPLICATION_ID")?.let {
+            resValue("string", "ad_app_id", it)
         }    }
 
     signingConfigs {
