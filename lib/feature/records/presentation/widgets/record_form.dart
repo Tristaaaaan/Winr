@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:winr/common/components/ad/interstital_ad.dart';
 import 'package:winr/common/components/buttons/loading_state_notifier.dart';
 import 'package:winr/common/components/buttons/regular_button.dart';
 import 'package:winr/common/components/snackbar/information_snackbar.dart';
@@ -396,6 +397,8 @@ class RecordForm extends ConsumerWidget {
                     ref.invalidate(numberOfBattlesProvider);
                     ref.invalidate(winRateProvider);
                     isLoading.setLoading("saveButton", false);
+
+                    InterstitialAdManager().maybeShowInterstitial();
                   }
                 },
                 backgroundColor: Theme.of(context).colorScheme.primary,
