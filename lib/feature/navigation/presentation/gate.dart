@@ -36,7 +36,8 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const BannerAdWidget(), // your banner covers full AppBar
+        surfaceTintColor: Colors.transparent, // removes overlay tint
+        title: const BannerAdWidget(),
       ),
       body: Stack(
         alignment: Alignment.bottomCenter,
