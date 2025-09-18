@@ -29,6 +29,8 @@ dependencies:
   smooth_page_indicator: ^1.2.1
   new_version_plus: ^0.1.1
   connectivity_plus: ^7.0.0
+  google_mobile_ads: ^6.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

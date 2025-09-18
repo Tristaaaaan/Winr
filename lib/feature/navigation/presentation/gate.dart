@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:winr/common/components/ad/banner_ad.dart';
 import 'package:winr/common/components/navbar/custom_navbar.dart';
 import 'package:winr/feature/history/presentation/history_screen.dart';
 import 'package:winr/feature/history/presentation/providers/history_states.dart';
@@ -34,6 +35,9 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
     final historyState = ref.watch(historyControllerProvider);
 
     return Scaffold(
+      appBar: AppBar(
+        title: const BannerAdWidget(), // your banner covers full AppBar
+      ),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [

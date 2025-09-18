@@ -25,6 +25,11 @@ if (keystorePropertiesFile.exists()) {
     keystoreProperties.load(FileInputStream(keystorePropertiesFile))
 }
 
+val secrets = Properties()
+val secretsFile = rootProject.file("secrets.properties")
+if (secretsFile.exists()) {
+    secrets.load(FileInputStream(secretsFile))
+}
 android {
     namespace = "com.tristans.winr"
     compileSdk = 36
@@ -48,7 +53,9 @@ android {
         targetSdk = 36
         versionCode = flutterVersionCode
         versionName = flutterVersionName
-    }
+        secrets.getProperty("BANNER_ADS_APPLICATION_ID")?.let {
+            resValue("string", "banner_ad_app_id", it)
+        }    }
 
     signingConfigs {
         // Keep debug config
