@@ -16,8 +16,8 @@ if (localPropertiesFile.exists()) {
     }
 }
 
-val flutterVersionCode: Int = localProperties.getProperty("flutter.versionCode")?.toInt() ?: 8
-val flutterVersionName: String = localProperties.getProperty("flutter.versionName") ?: "1.0.8"
+val flutterVersionCode: Int = localProperties.getProperty("flutter.versionCode")?.toInt() ?: 9
+val flutterVersionName: String = localProperties.getProperty("flutter.versionName") ?: "1.0.9"
 
 val keystoreProperties = Properties()
 val keystorePropertiesFile = rootProject.file("key.properties")

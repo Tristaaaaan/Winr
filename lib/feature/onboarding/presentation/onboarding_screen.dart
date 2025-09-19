@@ -63,27 +63,28 @@ class OnboardingScreen extends ConsumerWidget {
               ),
             ),
             const SizedBox(height: 20), // Spacing before button
-            Center(
-              child: SmoothPageIndicator(
-                controller: controller,
-                count: 4, // ✅ fixed to match pages
-                onDotClicked: (int index) {
-                  controller.animateToPage(
-                    index,
-                    duration: const Duration(milliseconds: 500),
-                    curve: Curves.easeInOut,
-                  );
-                },
-                effect: WormEffect(
-                  dotHeight: 10,
-                  dotWidth: 10,
-                  dotColor: Theme.of(
-                    context,
-                  ).colorScheme.primary.withValues(alpha: 0.3),
-                  activeDotColor: Theme.of(context).colorScheme.primary,
+            if (isSettings)
+              Center(
+                child: SmoothPageIndicator(
+                  controller: controller,
+                  count: 4, // ✅ fixed to match pages
+                  onDotClicked: (int index) {
+                    controller.animateToPage(
+                      index,
+                      duration: const Duration(milliseconds: 500),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                  effect: WormEffect(
+                    dotHeight: 10,
+                    dotWidth: 10,
+                    dotColor: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: 0.3),
+                    activeDotColor: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
