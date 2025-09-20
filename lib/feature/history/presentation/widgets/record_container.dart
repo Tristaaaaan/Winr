@@ -8,7 +8,7 @@ import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/core/appthemes/app_themes.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
 import 'package:winr/feature/history/presentation/widgets/statistic_item.dart';
-import 'package:winr/feature/records/presentation/providers/image_providers.dart';
+import 'package:winr/feature/records/presentation/providers/record_providers.dart';
 
 import '../../../records/presentation/widgets/add_record.dart';
 
