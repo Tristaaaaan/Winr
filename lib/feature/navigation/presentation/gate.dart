@@ -11,6 +11,12 @@ import 'package:winr/feature/settings/presentation/settings_screen.dart';
 import '../../history/presentation/providers/history_controller.dart';
 import '../../records/presentation/providers/record_providers.dart';
 
+final historyScrollControllerProvider = Provider<ScrollController>((ref) {
+  final controller = ScrollController();
+  ref.onDispose(controller.dispose);
+  return controller;
+});
+
 class NavigationGate extends ConsumerStatefulWidget {
   const NavigationGate({super.key});
 
@@ -28,54 +34,109 @@ class _NavigationGateState extends ConsumerState<NavigationGate> {
     });
   }
 
-  List<Widget> get _screens => [HistoryScreen(), const SettingsScreen()];
+  List<Widget> get _screens => [const HistoryScreen(), const SettingsScreen()];
 
   @override
   Widget build(BuildContext context) {
     final historyState = ref.watch(historyControllerProvider);
+    final showScrollUp = ref.watch(showScrollUpProvider);
+
+    final showHistoryButtons =
+        _selectedIndex == 0 &&
+        historyState.maybeWhen(loaded: (_) => true, orElse: () => false);
 
     return Scaffold(
+      extendBody: true,
       appBar: AppBar(
-        surfaceTintColor: Colors.transparent, // removes overlay tint
+        surfaceTintColor: Colors.transparent,
         title: const BannerAdWidget(),
       ),
       body: Stack(
         alignment: Alignment.bottomCenter,
         children: [
-          // main screen
           AnimatedSwitcher(
             duration: const Duration(milliseconds: 250),
+            switchInCurve: Curves.easeIn,
+            switchOutCurve: Curves.easeOut,
+            layoutBuilder:
+                (currentChild, previousChildren) => Stack(
+                  children: [
+                    if (currentChild != null) currentChild,
+                    ...previousChildren,
+                  ],
+                ),
             child: _screens[_selectedIndex],
           ),
 
-          // ✅ FAB above nav bar (only on HistoryScreen)
-          if (_selectedIndex == 0 &&
-              historyState.maybeWhen(loaded: (_) => true, orElse: () => false))
+          // ✅ FAB group (only on HistoryScreen)
+          if (showHistoryButtons)
             Positioned(
-              bottom: 150, // adjust to sit above your custom nav
+              bottom: 150,
               right: 20,
-              child: FloatingActionButton(
-                elevation: 0,
-                backgroundColor: Theme.of(
-                  context,
-                ).colorScheme.primary.withValues(alpha: .5),
-                onPressed: () {
-                  ref.read(isImageRemovedProvider.notifier).state = false;
-                  ref.read(uploadImageNameProvider.notifier).state = [];
-                  ref.read(uploadImagePathProvider.notifier).state = [];
-                  ref.read(uploadImagePathNameProvider.notifier).state = [];
-                  ref.read(nameProvider.notifier).state = "";
-                  ref.read(desiredWinRateProvider.notifier).state = "0";
-                  ref.read(numberOfBattlesProvider.notifier).state = "0";
-                  ref.read(winRateProvider.notifier).state = "0";
-                  showRecordSheet(context, false, null);
-                },
-                child: Icon(
-                  Icons.add,
-                  color: Theme.of(context).colorScheme.surface,
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  // scroll-up button with fade in/out
+                  AnimatedOpacity(
+                    opacity: showScrollUp ? 1.0 : 0.0,
+                    duration: const Duration(milliseconds: 300),
+                    child: IgnorePointer(
+                      ignoring: !showScrollUp,
+                      child: FloatingActionButton(
+                        heroTag: 'scrollUp',
+                        elevation: 0,
+                        backgroundColor: Theme.of(
+                          context,
+                        ).colorScheme.primary.withValues(alpha: .5),
+                        onPressed: () {
+                          final controller = ref.read(
+                            historyScrollControllerProvider,
+                          );
+                          if (controller.hasClients) {
+                            controller.animateTo(
+                              0,
+                              duration: const Duration(milliseconds: 400),
+                              curve: Curves.easeOut,
+                            );
+                          }
+                        },
+                        child: Icon(
+                          Icons.arrow_upward_outlined,
+                          color: Theme.of(context).colorScheme.surface,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+
+                  FloatingActionButton(
+                    heroTag: 'addRecord',
+                    elevation: 0,
+                    backgroundColor: Theme.of(
+                      context,
+                    ).colorScheme.primary.withValues(alpha: .5),
+                    onPressed: () {
+                      // reset providers before showing sheet
+                      ref.read(isImageRemovedProvider.notifier).state = false;
+                      ref.read(uploadImageNameProvider.notifier).state = [];
+                      ref.read(uploadImagePathProvider.notifier).state = [];
+                      ref.read(uploadImagePathNameProvider.notifier).state = [];
+                      ref.read(nameProvider.notifier).state = "";
+                      ref.read(desiredWinRateProvider.notifier).state = "0";
+                      ref.read(numberOfBattlesProvider.notifier).state = "0";
+                      ref.read(winRateProvider.notifier).state = "0";
+
+                      showRecordSheet(context, false, null);
+                    },
+                    child: Icon(
+                      Icons.add,
+                      color: Theme.of(context).colorScheme.surface,
+                    ),
+                  ),
+                ],
               ),
             ),
+
           // bottom nav bar
           Align(
             alignment: Alignment.bottomCenter,

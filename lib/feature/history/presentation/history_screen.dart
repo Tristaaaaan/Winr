@@ -7,24 +7,55 @@ import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/feature/history/presentation/providers/history_controller.dart';
 import 'package:winr/feature/history/presentation/providers/history_states.dart';
 import 'package:winr/feature/history/presentation/widgets/record_container.dart';
+import 'package:winr/feature/navigation/presentation/gate.dart';
 import 'package:winr/feature/records/presentation/widgets/add_record.dart';
 
-class HistoryScreen extends ConsumerWidget {
+final showScrollUpProvider = StateProvider<bool>((ref) => false);
+
+class HistoryScreen extends ConsumerStatefulWidget {
   const HistoryScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final records = ref.watch(historyControllerProvider);
+  ConsumerState<HistoryScreen> createState() => _HistoryScreenState();
+}
 
-    Future<void> refreshRecord() async {
-      await ref.read(historyControllerProvider.notifier).refreshStory();
+class _HistoryScreenState extends ConsumerState<HistoryScreen> {
+  late final ScrollController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = ref.read(historyScrollControllerProvider);
+    _controller.addListener(_onScroll);
+  }
+
+  void _onScroll() {
+    final show = _controller.offset > 200;
+    if (ref.read(showScrollUpProvider) != show) {
+      ref.read(showScrollUpProvider.notifier).state = show;
     }
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_onScroll);
+    super.dispose();
+  }
+
+  Future<void> _refreshRecord() async {
+    await ref.read(historyControllerProvider.notifier).refreshStory();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final records = ref.watch(historyControllerProvider);
 
     return Scaffold(
       body: SafeArea(
         child: RefreshIndicator(
-          onRefresh: refreshRecord,
+          onRefresh: _refreshRecord,
           child: CustomScrollView(
+            controller: _controller, // ✅ use the state controller
             slivers: [
               ...records.when(
                 initial:
@@ -60,7 +91,7 @@ class HistoryScreen extends ConsumerWidget {
                             imagePath: AppImages.errorImage,
                             imageHeight: 300,
                             imageWidth: 300,
-                            onTap: refreshRecord,
+                            onTap: _refreshRecord,
                             withButton: false,
                             title: "Error",
                             description: "Seems like something went wrong.",
