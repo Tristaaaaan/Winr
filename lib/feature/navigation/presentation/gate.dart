@@ -9,7 +9,7 @@ import 'package:winr/feature/records/presentation/widgets/add_record.dart';
 import 'package:winr/feature/settings/presentation/settings_screen.dart';
 
 import '../../history/presentation/providers/history_controller.dart';
-import '../../records/presentation/providers/image_providers.dart';
+import '../../records/presentation/providers/record_providers.dart';
 
 class NavigationGate extends ConsumerStatefulWidget {
   const NavigationGate({super.key});

@@ -10,13 +10,12 @@ import 'package:winr/common/components/buttons/loading_state_notifier.dart';
 import 'package:winr/common/components/buttons/regular_button.dart';
 import 'package:winr/common/components/snackbar/information_snackbar.dart';
 import 'package:winr/common/components/textfield/form_textfield.dart';
-import 'package:winr/common/utils/convert_images.dart';
 import 'package:winr/common/utils/winrate_input_formatter.dart';
 import 'package:winr/core/appimages/app_images.dart';
 import 'package:winr/core/appmodels/winrate_records.dart';
 import 'package:winr/feature/history/presentation/providers/history_controller.dart';
 import 'package:winr/feature/history/presentation/providers/result_provider.dart';
-import 'package:winr/feature/records/presentation/providers/image_providers.dart';
+import 'package:winr/feature/records/presentation/providers/record_providers.dart';
 
 import '../../../../common/utils/name_formatter.dart';
 
@@ -24,23 +23,6 @@ class RecordForm extends ConsumerWidget {
   final bool isUpdate;
   final WinRateRecords? recordData;
   const RecordForm({super.key, required this.isUpdate, this.recordData});
-
-  Future<String?> _getBackgroundImage(
-    WidgetRef ref,
-    List<File> selectedImages,
-    WinRateRecords? recordData,
-  ) async {
-    final isRemoved = ref.read(isImageRemovedProvider);
-
-    if (selectedImages.isNotEmpty) {
-      final converter = ConvertImages();
-      return await converter.encodeImageToBase64(selectedImages.first);
-    }
-
-    if (isRemoved) return "";
-
-    return recordData?.backgroundImage;
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -334,55 +316,19 @@ class RecordForm extends ConsumerWidget {
                 withIcon: false,
                 text: "Save",
                 onTap: () async {
-                  final requiredWins = ref.read(requiredWinsMessageProvider);
-
-                  if (requiredWins == null) {
-                    if (!context.mounted) return;
-                    informationSnackBar(
-                      context,
-                      Icons.error_outline,
-                      "Invalid input or you already meet your target.",
-                    );
-                    return;
-                  }
-
                   final isLoading = ref.read(
                     regularButtonLoadingProvider.notifier,
                   );
                   isLoading.setLoading("saveButton", true);
 
                   try {
-                    final record = WinRateRecords(
-                      id: recordData?.id,
-                      backgroundImage: await _getBackgroundImage(
-                        ref,
-                        selectedImages,
-                        recordData,
-                      ),
-                      name: ref.read(nameProvider) ?? "",
-                      timeAdded:
-                          isUpdate
-                              ? recordData!.timeAdded
-                              : DateTime.now().microsecondsSinceEpoch,
-                      lastUpdated:
-                          isUpdate ? DateTime.now().millisecondsSinceEpoch : 0,
-                      desiredWinRate:
-                          int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
-                      currentNumberOfBattles:
-                          int.tryParse(ref.read(numberOfBattlesProvider)) ?? 0,
-                      currentWinRate:
-                          int.tryParse(ref.read(winRateProvider)) ?? 0,
-                    );
-
-                    if (isUpdate) {
-                      await ref
-                          .read(historyControllerProvider.notifier)
-                          .updateRecord(recordData!.id!, record);
-                    } else {
-                      await ref
-                          .read(historyControllerProvider.notifier)
-                          .addRecord(record);
-                    }
+                    await ref
+                        .read(saveRecordUseCaseProvider)
+                        .call(
+                          isUpdate: isUpdate,
+                          recordData: recordData,
+                          selectedImages: selectedImages,
+                        );
 
                     if (!context.mounted) return;
                     Navigator.pop(context);
@@ -391,13 +337,15 @@ class RecordForm extends ConsumerWidget {
                       Icons.check_circle_outline_outlined,
                       "Record has been saved!",
                     );
+                  } catch (e) {
+                    if (!context.mounted) return;
+                    informationSnackBar(
+                      context,
+                      Icons.error_outline,
+                      e.toString(),
+                    );
                   } finally {
-                    ref.invalidate(requiredWinsProvider);
-                    ref.invalidate(desiredWinRateProvider);
-                    ref.invalidate(numberOfBattlesProvider);
-                    ref.invalidate(winRateProvider);
                     isLoading.setLoading("saveButton", false);
-
                     InterstitialAdManager().maybeShowInterstitial();
                   }
                 },
