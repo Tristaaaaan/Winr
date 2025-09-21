@@ -322,7 +322,12 @@ class RecordForm extends ConsumerWidget {
                     regularButtonLoadingProvider.notifier,
                   );
                   isLoading.setLoading("saveButton", true);
-
+                  // Validation: required wins check
+                  final requiredWins = ref.read(requiredWinsMessageProvider);
+                  if (requiredWins == null) {
+                    isLoading.setLoading("saveButton", false);
+                    return;
+                  }
                   try {
                     await ref
                         .read(saveRecordUseCaseProvider)
