@@ -9,7 +9,8 @@ class FormTextField extends ConsumerStatefulWidget {
   final void Function(String)? onChanged;
   final bool isUpdate;
   final String? initialValue;
-  final bool showPercentSuffix; // ✅ new flag
+  final bool showPercentSuffix;
+  final bool isText;
 
   const FormTextField({
     super.key,
@@ -20,6 +21,7 @@ class FormTextField extends ConsumerStatefulWidget {
     this.isUpdate = false,
     this.initialValue,
     this.showPercentSuffix = false, // ✅ default off
+    this.isText = false,
   });
 
   @override
@@ -54,8 +56,16 @@ class _FormTextFieldState extends ConsumerState<FormTextField> {
   Widget build(BuildContext context) {
     return TextField(
       key: Key(widget.fieldKey),
+
       controller: _controller,
-      keyboardType: TextInputType.text,
+      keyboardType:
+          widget.isText
+              ? TextInputType.text
+              : TextInputType.numberWithOptions(
+                decimal:
+                    widget.showPercentSuffix ? true : false, // allow decimals
+                signed: false, // no negative values
+              ),
       inputFormatters: widget.inputFormatters,
       decoration: InputDecoration(
         labelText: widget.labelText,

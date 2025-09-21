@@ -175,6 +175,7 @@ class RecordForm extends ConsumerWidget {
         const SizedBox(height: 20),
         FormTextField(
           fieldKey: 'name',
+          isText: true,
           labelText: 'How about adding a name? (optional)',
           inputFormatters: const [MaxLengthFormatter()],
           isUpdate: true,
@@ -184,6 +185,7 @@ class RecordForm extends ConsumerWidget {
         const SizedBox(height: 12),
         FormTextField(
           fieldKey: 'numberOfBattles',
+
           labelText: 'What is your current number of battles?',
           inputFormatters: const [
             WinrateInputFormatter(integersOnly: true, max: 1000000),
