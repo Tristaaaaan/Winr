@@ -1,9 +1,9 @@
 // Helper to calculate needed consecutive wins
 
 int calculateNeededWins({
-  required int desiredWinRate,
+  required double desiredWinRate,
   required int currentNumberOfBattles,
-  required int currentWinRate,
+  required double currentWinRate,
 }) {
   if (desiredWinRate <= 0 ||
       desiredWinRate >= 100 ||

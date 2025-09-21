@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$WinRateRecords {
 
- int? get id; int get timeAdded; int? get lastUpdated; String? get backgroundImage; int get desiredWinRate; String? get name; int get currentNumberOfBattles; int get currentWinRate; int? get progressiveWinRate;
+ int? get id; int get timeAdded; int? get lastUpdated; String? get backgroundImage; double get desiredWinRate; String? get name; int get currentNumberOfBattles; double get currentWinRate; int? get progressiveWinRate;
 /// Create a copy of WinRateRecords
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $WinRateRecordsCopyWith<$Res>  {
   factory $WinRateRecordsCopyWith(WinRateRecords value, $Res Function(WinRateRecords) _then) = _$WinRateRecordsCopyWithImpl;
 @useResult
 $Res call({
- int? id, int timeAdded, int? lastUpdated, String? backgroundImage, int desiredWinRate, String? name, int currentNumberOfBattles, int currentWinRate, int? progressiveWinRate
+ int? id, int timeAdded, int? lastUpdated, String? backgroundImage, double desiredWinRate, String? name, int currentNumberOfBattles, double currentWinRate, int? progressiveWinRate
 });
 
 
@@ -72,10 +72,10 @@ as int?,timeAdded: null == timeAdded ? _self.timeAdded : timeAdded // ignore: ca
 as int,lastUpdated: freezed == lastUpdated ? _self.lastUpdated : lastUpdated // ignore: cast_nullable_to_non_nullable
 as int?,backgroundImage: freezed == backgroundImage ? _self.backgroundImage : backgroundImage // ignore: cast_nullable_to_non_nullable
 as String?,desiredWinRate: null == desiredWinRate ? _self.desiredWinRate : desiredWinRate // ignore: cast_nullable_to_non_nullable
-as int,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as double,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,currentNumberOfBattles: null == currentNumberOfBattles ? _self.currentNumberOfBattles : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
 as int,currentWinRate: null == currentWinRate ? _self.currentWinRate : currentWinRate // ignore: cast_nullable_to_non_nullable
-as int,progressiveWinRate: freezed == progressiveWinRate ? _self.progressiveWinRate : progressiveWinRate // ignore: cast_nullable_to_non_nullable
+as double,progressiveWinRate: freezed == progressiveWinRate ? _self.progressiveWinRate : progressiveWinRate // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
 }
@@ -161,7 +161,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  int timeAdded,  int? lastUpdated,  String? backgroundImage,  int desiredWinRate,  String? name,  int currentNumberOfBattles,  int currentWinRate,  int? progressiveWinRate)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( int? id,  int timeAdded,  int? lastUpdated,  String? backgroundImage,  double desiredWinRate,  String? name,  int currentNumberOfBattles,  double currentWinRate,  int? progressiveWinRate)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _WinRateRecords() when $default != null:
 return $default(_that.id,_that.timeAdded,_that.lastUpdated,_that.backgroundImage,_that.desiredWinRate,_that.name,_that.currentNumberOfBattles,_that.currentWinRate,_that.progressiveWinRate);case _:
@@ -182,7 +182,7 @@ return $default(_that.id,_that.timeAdded,_that.lastUpdated,_that.backgroundImage
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  int timeAdded,  int? lastUpdated,  String? backgroundImage,  int desiredWinRate,  String? name,  int currentNumberOfBattles,  int currentWinRate,  int? progressiveWinRate)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( int? id,  int timeAdded,  int? lastUpdated,  String? backgroundImage,  double desiredWinRate,  String? name,  int currentNumberOfBattles,  double currentWinRate,  int? progressiveWinRate)  $default,) {final _that = this;
 switch (_that) {
 case _WinRateRecords():
 return $default(_that.id,_that.timeAdded,_that.lastUpdated,_that.backgroundImage,_that.desiredWinRate,_that.name,_that.currentNumberOfBattles,_that.currentWinRate,_that.progressiveWinRate);case _:
@@ -202,7 +202,7 @@ return $default(_that.id,_that.timeAdded,_that.lastUpdated,_that.backgroundImage
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  int timeAdded,  int? lastUpdated,  String? backgroundImage,  int desiredWinRate,  String? name,  int currentNumberOfBattles,  int currentWinRate,  int? progressiveWinRate)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( int? id,  int timeAdded,  int? lastUpdated,  String? backgroundImage,  double desiredWinRate,  String? name,  int currentNumberOfBattles,  double currentWinRate,  int? progressiveWinRate)?  $default,) {final _that = this;
 switch (_that) {
 case _WinRateRecords() when $default != null:
 return $default(_that.id,_that.timeAdded,_that.lastUpdated,_that.backgroundImage,_that.desiredWinRate,_that.name,_that.currentNumberOfBattles,_that.currentWinRate,_that.progressiveWinRate);case _:
@@ -224,10 +224,10 @@ class _WinRateRecords extends WinRateRecords {
 @override final  int timeAdded;
 @override final  int? lastUpdated;
 @override final  String? backgroundImage;
-@override final  int desiredWinRate;
+@override final  double desiredWinRate;
 @override final  String? name;
 @override final  int currentNumberOfBattles;
-@override final  int currentWinRate;
+@override final  double currentWinRate;
 @override final  int? progressiveWinRate;
 
 /// Create a copy of WinRateRecords
@@ -263,7 +263,7 @@ abstract mixin class _$WinRateRecordsCopyWith<$Res> implements $WinRateRecordsCo
   factory _$WinRateRecordsCopyWith(_WinRateRecords value, $Res Function(_WinRateRecords) _then) = __$WinRateRecordsCopyWithImpl;
 @override @useResult
 $Res call({
- int? id, int timeAdded, int? lastUpdated, String? backgroundImage, int desiredWinRate, String? name, int currentNumberOfBattles, int currentWinRate, int? progressiveWinRate
+ int? id, int timeAdded, int? lastUpdated, String? backgroundImage, double desiredWinRate, String? name, int currentNumberOfBattles, double currentWinRate, int? progressiveWinRate
 });
 
 
@@ -287,10 +287,10 @@ as int?,timeAdded: null == timeAdded ? _self.timeAdded : timeAdded // ignore: ca
 as int,lastUpdated: freezed == lastUpdated ? _self.lastUpdated : lastUpdated // ignore: cast_nullable_to_non_nullable
 as int?,backgroundImage: freezed == backgroundImage ? _self.backgroundImage : backgroundImage // ignore: cast_nullable_to_non_nullable
 as String?,desiredWinRate: null == desiredWinRate ? _self.desiredWinRate : desiredWinRate // ignore: cast_nullable_to_non_nullable
-as int,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
+as double,name: freezed == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String?,currentNumberOfBattles: null == currentNumberOfBattles ? _self.currentNumberOfBattles : currentNumberOfBattles // ignore: cast_nullable_to_non_nullable
 as int,currentWinRate: null == currentWinRate ? _self.currentWinRate : currentWinRate // ignore: cast_nullable_to_non_nullable
-as int,progressiveWinRate: freezed == progressiveWinRate ? _self.progressiveWinRate : progressiveWinRate // ignore: cast_nullable_to_non_nullable
+as double,progressiveWinRate: freezed == progressiveWinRate ? _self.progressiveWinRate : progressiveWinRate // ignore: cast_nullable_to_non_nullable
 as int?,
   ));
 }

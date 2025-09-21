@@ -12,10 +12,10 @@ _WinRateRecords _$WinRateRecordsFromJson(Map<String, dynamic> json) =>
       timeAdded: (json['timeAdded'] as num).toInt(),
       lastUpdated: (json['lastUpdated'] as num?)?.toInt(),
       backgroundImage: json['backgroundImage'] as String?,
-      desiredWinRate: (json['desiredWinRate'] as num).toInt(),
+      desiredWinRate: (json['desiredWinRate'] as num).toDouble(),
       name: json['name'] as String?,
       currentNumberOfBattles: (json['currentNumberOfBattles'] as num).toInt(),
-      currentWinRate: (json['currentWinRate'] as num).toInt(),
+      currentWinRate: (json['currentWinRate'] as num).toDouble(),
       progressiveWinRate: (json['progressiveWinRate'] as num?)?.toInt(),
     );
 
