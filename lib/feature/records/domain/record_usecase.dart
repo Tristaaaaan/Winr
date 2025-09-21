@@ -38,10 +38,10 @@ class SaveRecordUseCase {
               ? recordData!.timeAdded
               : DateTime.now().microsecondsSinceEpoch,
       lastUpdated: isUpdate ? DateTime.now().millisecondsSinceEpoch : 0,
-      desiredWinRate: int.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
+      desiredWinRate: double.tryParse(ref.read(desiredWinRateProvider)) ?? 0,
       currentNumberOfBattles:
           int.tryParse(ref.read(numberOfBattlesProvider)) ?? 0,
-      currentWinRate: int.tryParse(ref.read(winRateProvider)) ?? 0,
+      currentWinRate: double.tryParse(ref.read(winRateProvider)) ?? 0,
     );
 
     // Save via repository

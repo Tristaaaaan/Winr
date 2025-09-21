@@ -10,10 +10,10 @@ abstract class WinRateRecords with _$WinRateRecords {
     required int timeAdded,
     int? lastUpdated,
     String? backgroundImage,
-    required int desiredWinRate,
+    required double desiredWinRate,
     String? name,
     required int currentNumberOfBattles,
-    required int currentWinRate,
+    required double currentWinRate,
     int? progressiveWinRate, // ✅ made nullable
   }) = _WinRateRecords;
 
@@ -40,10 +40,10 @@ abstract class WinRateRecords with _$WinRateRecords {
     timeAdded: map['timeAdded'] as int,
     lastUpdated: map['lastUpdated'] as int?,
     backgroundImage: map['backgroundImage'] as String?,
-    desiredWinRate: map['desiredWinRate'] as int,
+    desiredWinRate: map['desiredWinRate'] as double,
     name: map['name'] as String?,
     currentNumberOfBattles: map['currentNumberOfBattles'] as int,
-    currentWinRate: map['currentWinRate'] as int,
+    currentWinRate: map['currentWinRate'] as double,
     progressiveWinRate: map['progressiveWinRate'] as int?,
   );
 }

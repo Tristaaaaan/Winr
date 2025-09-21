@@ -41,26 +41,50 @@ class RecordDatabase {
     // await deleteDatabase(path);
     return await openDatabase(
       path,
-      version: 1,
+      version: 2,
       onCreate: create,
+      onUpgrade: upgrade, // ⬅️ migration callback
+
       singleInstance: true,
     );
   }
 
   Future<void> create(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE IF NOT EXISTS records (
-        id INTEGER PRIMARY KEY AUTOINCREMENT,
-        timeAdded INTEGER NOT NULL,
-        lastUpdated INTEGER,
-        backgroundImage TEXT,
-        name TEXT,
-        desiredWinRate INTEGER NOT NULL,
-        currentNumberOfBattles INTEGER NOT NULL,
-        currentWinRate INTEGER NOT NULL,
-        progressiveWinRate INTEGER
-      )
+    CREATE TABLE IF NOT EXISTS records (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      timeAdded INTEGER NOT NULL,
+      lastUpdated INTEGER,
+      backgroundImage TEXT,
+      name TEXT,
+      desiredWinRate REAL NOT NULL,
+      currentNumberOfBattles INTEGER NOT NULL,
+      currentWinRate REAL NOT NULL,
+      progressiveWinRate REAL
+    )
+  ''');
+  }
+
+  Future<void> upgrade(Database db, int oldVersion, int newVersion) async {
+    if (oldVersion < 2) {
+      // Rename old table
+      await db.execute('ALTER TABLE records RENAME TO records_old');
+
+      // Create new table with REAL types
+      await create(db, newVersion);
+
+      // Copy data into new table
+      await db.execute('''
+      INSERT INTO records (id, timeAdded, lastUpdated, backgroundImage, name,
+                           desiredWinRate, currentNumberOfBattles, currentWinRate, progressiveWinRate)
+      SELECT id, timeAdded, lastUpdated, backgroundImage, name,
+             desiredWinRate, currentNumberOfBattles, currentWinRate, progressiveWinRate
+      FROM records_old
     ''');
+
+      // Drop old table
+      await db.execute('DROP TABLE records_old');
+    }
   }
 
   // ----------------------
