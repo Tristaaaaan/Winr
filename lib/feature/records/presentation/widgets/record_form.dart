@@ -186,7 +186,7 @@ class RecordForm extends ConsumerWidget {
           fieldKey: 'numberOfBattles',
           labelText: 'What is your current number of battles?',
           inputFormatters: const [
-            WinrateInputFormatter(integersOnly: true, max: double.infinity),
+            WinrateInputFormatter(integersOnly: true, max: 1000000),
           ],
           isUpdate: isUpdate,
           initialValue: recordData?.currentNumberOfBattles.toString(),

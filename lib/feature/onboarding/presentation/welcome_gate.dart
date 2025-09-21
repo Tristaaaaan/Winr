@@ -56,7 +56,7 @@ Future<void> advancedStatusCheck(
                     child: const Text('Update'),
                     onPressed: () async {
                       Uri url = Uri.parse(
-                        "https://play.google.com/store/apps/details?id=com.tristans.suri",
+                        "https://play.google.com/store/apps/details?id=com.tristans.winr",
                       );
 
                       await launchUrl(
@@ -108,8 +108,7 @@ class Welcome extends HookConsumerWidget {
             child: Container(
               padding: const EdgeInsets.all(30),
               child: Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.center, // Center vertically
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   LoadingAnimationWidget.stretchedDots(
                     color: Theme.of(context).colorScheme.primary,
