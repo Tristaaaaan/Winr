@@ -1,3 +1,5 @@
+import 'dart:developer' as developer;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -44,8 +46,22 @@ class AppConfiguration extends ConsumerWidget {
           title: "Clear Records",
           icon: Icons.delete_forever_outlined,
           onTap: () async {
-            if (!context.mounted) return;
+            final bool hasRecords =
+                await ref
+                    .read(historyControllerProvider.notifier)
+                    .checkRecords();
 
+            developer.log(hasRecords.toString());
+            if (!context.mounted) return;
+            if (!hasRecords) {
+              informationSnackBar(
+                context,
+                Icons.info,
+                "No records to be deleted",
+              );
+
+              return;
+            }
             final confirm = await showDialog<bool>(
               context: context,
               builder: (ctx) {

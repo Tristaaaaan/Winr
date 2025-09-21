@@ -55,4 +55,9 @@ class HistoryController extends StateNotifier<HistoryState> {
     await _historyRepository.deleteAllRecords();
     await getHistory();
   }
+
+  Future<bool> checkRecords() async {
+    final records = await _historyRepository.getRecords();
+    return records.isNotEmpty;
+  }
 }
