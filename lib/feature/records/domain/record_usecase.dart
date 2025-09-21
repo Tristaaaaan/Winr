@@ -18,12 +18,6 @@ class SaveRecordUseCase {
     WinRateRecords? recordData,
     required List<File> selectedImages,
   }) async {
-    // Validation: required wins check
-    final requiredWins = ref.read(requiredWinsMessageProvider);
-    if (requiredWins == null) {
-      throw Exception("Invalid input or you already meet your target.");
-    }
-
     // Build record
     final record = WinRateRecords(
       id: recordData?.id,
