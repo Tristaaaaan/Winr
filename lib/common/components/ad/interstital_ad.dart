@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -8,59 +9,69 @@ class InterstitialAdManager {
   static InterstitialAd? _interstitialAd;
   static bool _isAdLoaded = false;
 
-  /// Load interstitial
-  static void loadAd() {
+  // 🔹 Make loadAd return a Future<bool>
+  static Future<bool> loadAd() async {
+    final completer = Completer<bool>();
+
     InterstitialAd.load(
-      adUnitId: AdHelper.interstitialAdUnitId, // replace with your test/live ID
+      adUnitId: AdHelper.interstitialAdUnitId,
       request: const AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (InterstitialAd ad) {
           _interstitialAd = ad;
           _isAdLoaded = true;
 
-          // Clean up when dismissed
           _interstitialAd
               ?.fullScreenContentCallback = FullScreenContentCallback(
             onAdDismissedFullScreenContent: (ad) {
               ad.dispose();
               _isAdLoaded = false;
-              loadAd(); // preload the next ad
+              loadAd(); // prepare next
             },
             onAdFailedToShowFullScreenContent: (ad, error) {
               ad.dispose();
               _isAdLoaded = false;
-              loadAd();
+              loadAd(); // prepare next
             },
           );
+
+          completer.complete(true);
         },
-        onAdFailedToLoad: (LoadAdError error) {
-          debugPrint('Interstitial failed to load: $error');
+        onAdFailedToLoad: (error) {
+          debugPrint("Interstitial failed to load: $error");
           _isAdLoaded = false;
+          completer.complete(false);
         },
       ),
     );
+
+    return completer.future;
   }
 
-  /// Show interstitial if available
   static void showAd() {
     if (_isAdLoaded && _interstitialAd != null) {
       _interstitialAd?.show();
       _interstitialAd = null;
       _isAdLoaded = false;
     } else {
-      debugPrint('Interstitial not ready yet.');
+      debugPrint("Interstitial not ready yet.");
     }
   }
 
-  // Example: 30% chance to show ad (if random number <= 3)
-  void maybeShowInterstitial() {
+  Future<void> maybeShowInterstitial() async {
     final random = Random();
-    final number = random.nextInt(10) + 1; // gives 1–10
+    final number = random.nextInt(10) + 1;
     debugPrint("Random number: $number");
 
-    if (number <= 3) {
-      // 30% chance
-      InterstitialAdManager.showAd();
+    if (number <= 5) {
+      if (!_isAdLoaded) {
+        final success = await loadAd();
+        if (!success) {
+          debugPrint("Failed to load ad before showing.");
+          return;
+        }
+      }
+      showAd();
     } else {
       debugPrint("Ad not shown this time.");
     }
