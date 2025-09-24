@@ -7,7 +7,7 @@ class AdHelper {
   static String get bannerAdUnitId {
     if (Platform.isAndroid) {
       if (AppConfig.environment == Flavors.development) {
-        return "ca-app-pub-3940256099942544/9214589741";
+        return "ca-app-pub-3940256099942544/6300978111";
       }
       return "ca-app-pub-8645104543342243/1438353830"; // test ca-app-pub-3940256099942544/9214589741 orig ca-app-pub-8645104543342243/1438353830
     } else if (Platform.isIOS) {

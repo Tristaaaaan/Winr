@@ -353,7 +353,7 @@ class RecordForm extends ConsumerWidget {
                     );
                   } finally {
                     isLoading.setLoading("saveButton", false);
-                    InterstitialAdManager().maybeShowInterstitial();
+                    await InterstitialAdManager().maybeShowInterstitial();
                   }
                 },
                 backgroundColor: Theme.of(context).colorScheme.primary,
