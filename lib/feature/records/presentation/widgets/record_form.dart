@@ -174,16 +174,18 @@ class RecordForm extends ConsumerWidget {
             ),
         const SizedBox(height: 20),
         FormTextField(
+          key: ValueKey('name'),
           fieldKey: 'name',
           isText: true,
           labelText: 'How about adding a name? (optional)',
-          inputFormatters: const [MaxLengthFormatter()],
+          inputFormatters: const [MaxLengthFormatter(maxLength: 50)],
           isUpdate: true,
           initialValue: recordData?.name,
           onChanged: (value) => ref.read(nameProvider.notifier).state = value,
         ),
         const SizedBox(height: 12),
         FormTextField(
+          key: ValueKey('numberOfBattles'),
           fieldKey: 'numberOfBattles',
 
           labelText: 'What is your current number of battles?',
@@ -198,6 +200,7 @@ class RecordForm extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         FormTextField(
+          key: ValueKey('winRate'),
           fieldKey: 'winRate',
           showPercentSuffix: true,
           labelText: 'What is your current win rate? (in Percentage)',
@@ -211,6 +214,7 @@ class RecordForm extends ConsumerWidget {
         ),
         const SizedBox(height: 12),
         FormTextField(
+          key: ValueKey('desiredWinRate'),
           fieldKey: 'desiredWinRate',
           showPercentSuffix: true,
           labelText: 'What is your desired win rate? (in Percentage)',
