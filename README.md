@@ -33,8 +33,8 @@ Winr is not linked, associated, sponsored, supported, or otherwise associated wi
 ## Core Technologies
 
 ### App Development
-- **Flutter** (`v3.32.x+`) 
-- **Dart** (`v3.8.x+`) 
+- **Flutter** (`v3.35.x+`) 
+- **Dart** (`v3.9.x+`) 
 - **Riverpod** (`v2.x+`) 
 - **GoRouter** 
 - **SQLite**
