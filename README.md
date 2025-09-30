@@ -1,5 +1,6 @@
-# Winr         [![Get it on Google Play](https://img.shields.io/badge/Google_Play-Winr-34A853?style=for-the-badge&logo=googleplay)](https://play.google.com/store/apps/details?id=com.tristans.winr)
+# Winr
 
+[![Get it on Google Play](https://img.shields.io/badge/Google_Play-Winr-34A853?style=for-the-badge&logo=googleplay)](https://play.google.com/store/apps/details?id=com.tristans.winr)
 
 
 Winr is a win rate calculator that lets users track their progress. Whether offline or online games, Winr got you.
